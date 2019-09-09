@@ -1,26 +1,26 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
+    "username": "nivleM",
+    "password": "password",
+    "database": "po_psr",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "dialect": "postgres"
+    // "operatorsAliases": false
   },
   "test": {
     "username": "root",
     "password": null,
-    "database": "database_test",
+    "database": "po_psr",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "dialect": "postgres"
+    // "operatorsAliases": false
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "database_production",
+    "database": "po_psr",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "dialect": "postgres"
+    // "operatorsAliases": false
   }
 }
