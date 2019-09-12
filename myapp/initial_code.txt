@@ -33,4 +33,6 @@ npx sequelize-cli db:migrate
 
 --------------------------------------
 
+npm install passport passport-local bcrypt validator express-session connect-flash --save
 
+npm install validator lodash --save

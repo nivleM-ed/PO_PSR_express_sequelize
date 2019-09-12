@@ -57,6 +57,25 @@ module.exports = {
             address: {  //address of buyer
                 allowNull: true,
                 type: Sequelize.STRING(1000)
+            },
+            delete_req: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            status_t1: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            status_t2: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            date_approve: {
+                type: Sequelize.STRING,
+                allowNull: true
             }
         });
     },
