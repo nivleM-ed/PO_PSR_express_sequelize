@@ -66,6 +66,10 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false,
             allowNull: false
         },
+        date_pending: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         date_approve: {
             type: DataTypes.STRING,
             allowNull: true

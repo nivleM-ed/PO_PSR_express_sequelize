@@ -77,6 +77,10 @@ module.exports = {
                 defaultValue: false,
                 allowNull: false
             },
+            date_pending: {
+                type: Sequelize.STRING,
+                allowNull: true
+            },
             date_approve: {
                 type: Sequelize.STRING,
                 allowNull: true
