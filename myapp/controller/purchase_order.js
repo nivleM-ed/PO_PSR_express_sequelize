@@ -62,15 +62,17 @@ exports.find = function(req, res, next) {
     })
 }
 
+//ISSUE column 'nan' cannot be found 
 //get po waiting to be accepted
 exports.get_submits = function(req, res, next) {
-    return models.purchase_order.findAndCountAll({
+    return models.purchase_order.findAll({
+        order: [['createdAt', 'DESC']]
+    },{
         where: {
             delete_req: false,
             status_t1: false,
             status_t2: false
         },
-        order: [['createdAt', 'DESC']]
     }).then(purchase_order => {
         res.status(200).send({result: purchase_order})
     }).catch(err => {
@@ -78,9 +80,11 @@ exports.get_submits = function(req, res, next) {
     })
 }
 
+
+//ISSUE column 'nan' cannot be found 
 //get po waiting to be approved
 exports.get_pending = function(req, res, next) {
-    return models.purchase_order.findAndCountAll({
+    return models.purchase_order.findAll({
         where: {
             delete_req: false,
             status_t1: true,
@@ -126,26 +130,31 @@ exports.report = function(req, res, next) {
 
 };
 
-
+//WORKING
 //delete po
 exports.po_del = function(req, res, next) {
     return models.purchase_order.destroy({
         where: {
             id: req.params.id
-        }.then(deleted => {
+        }
+    }).then(deleted => {
             res.status(200).send();
-        }).catch(err => {
-            res.status(500).send("Error -> " + err);
-        })
+    }).catch(err => {
+        res.status(500).send("Error -> " + err);
     })
 }
 
+//WORKING
 //update po
 exports.po_upd = function(req, res, next) {
     return models.purchase_order.update({
         po_no: req.body.po_no,
         address: req.body.address,
         po_desc: req.body.desc
+    }, {
+        where: {
+            id: req.params.id
+        }    
         //more data to be added
     }).then(updated => {
         res.status(200).send();
@@ -154,6 +163,7 @@ exports.po_upd = function(req, res, next) {
     })
 }
 
+//WORKING
 //update po status to pending
 exports.po_stat_1 = function(req, res, next) {
     return models.purchase_order.update({
@@ -169,10 +179,11 @@ exports.po_stat_1 = function(req, res, next) {
     })
 }
 
+//WORKING
 //update po status to approve
 exports.po_stat_2 = function(req, res, next) {
     return models.purchase_order.update({
-        status_t1: true,
+        status_t2: true,
         date_approve: Date.now()
     }, {
     where: {
