@@ -5,22 +5,32 @@
     "database": "po_psr",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "timezone": "+08:00"
+    "port": "5432",
+    "dialectOptions": {
+      "useUTC": false
+    }
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "po_psr",
-    "host": "127.0.0.1",
+    "host": "192.168.193.236",
     "dialect": "postgres",
-    "timezone": "+08:00"
+    "port": "5432",
+    "dialectOptions": {
+      "useUTC": false
+    }
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "po_psr",
-    "host": "127.0.0.1",
+    "host": "192.168.193.236",
     "dialect": "postgres",
-    "timezone": "+08:00"
-  }
+    "port": "5432",
+    "dialectOptions": {
+      "useUTC": false
+    }
+  },
+  "timezone": "+08:00"
 }
