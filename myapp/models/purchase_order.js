@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    var Lead = sequelize.define('purchase_order', {
+    var purchase_order = sequelize.define('purchase_order', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         createdAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: DataTypes.DATE
         },
         po_no: { //purchase order number
             allowNull: false,
@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             type: DataTypes.STRING(1000)
         },
+        po_desc: {
+            type: DataTypes.JSON,
+            allowNull: false
+        },
         delete_req: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
@@ -65,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
         date_approve: {
             type: DataTypes.STRING,
             allowNull: true
-        }
+        },
     });
 
     return purchase_order;

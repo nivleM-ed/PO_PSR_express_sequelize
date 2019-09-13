@@ -1,4 +1,5 @@
 let models = require('../models');
+var sequelize = require('sequelize');
 
 //working //not needed - just for testing purposes
 exports.show_po_all = function(req, res, next) {
@@ -10,17 +11,77 @@ exports.show_po_all = function(req, res, next) {
     })
 };
 
-//working
-//show all existing purchase order with a 20 limit pagination
 exports.show_po_page = function(req, res, next) {
-    const limit = 20;
-
+    const limit = 3; //can be changed
     return models.purchase_order.findAll({
-        attributes: ['po_no', 'po_date'],
+        attributes: ['id', 'po_no', 'createdAt', 'po_date'],
         limit: limit,
-        offset: (req.params.page - 1) * limit
+        offset: (req.params.page - 1) * limit,
+        order: [['createdAt', 'DESC']]
     }).then(purchase_order => {
-        res.send({po_array: purchase_order})
+        models.purchase_order.findAll({
+            attributes: ['po_no', [sequelize.fn('count', sequelize.col('po_no')), 'submit_count']],
+            group : ['purchase_order.po_no'],
+            where : {
+                delete_req : false,
+                status_t1 : false,
+                status_t2 : false
+            }
+        })
+    }).then(submit_count => {
+        models.purchase_order.findAll({
+            attributes: ['po_no', [sequelize.fn('count', sequelize.col('po_no')), 'pending_count']],
+            group : ['purchase_order.po_no'],
+            where : {
+                delete_req : false,
+                status_t1 : false,
+                status_t2 : false
+            }
+        })
+    }).then(pending_count => {
+        res.send({result: purchase_order, submit_count: submit_count, pending_count: pending_count})
+    }).catch(err => {
+    res.status(500).send("Error -> " + err);
+})
+}
+
+exports.find = function(req, res, next) {
+    return models.purchase_order.findOne({
+        where: {
+            po_no: req.params.po_no
+        }
+    }).then(purchase_order => {
+        res.send({msg: "Get specific", result: purchase_order})
+    }).catch(err => {
+        res.status(500).send("Error -> " + err);
+    })
+}
+
+exports.get_submits = function(req, res, next) {
+    return models.purchase_order.findAndCountAll({
+        where: {
+            delete_req: false,
+            status_t1: false,
+            status_t2: false
+        },
+        order: [['createdAt', 'DESC']]
+    }).then(purchase_order => {
+        res.send({msg:"Get submitted po", result: purchase_order})
+    }).catch(err => {
+        res.status(500).send("Error -> " + err);
+    })
+}
+
+exports.get_pending = function(req, res, next) {
+    return models.purchase_order.findAndCountAll({
+        where: {
+            delete_req: false,
+            status_t1: true,
+            status_t2: false
+        },
+        order: [['createdAt', 'DESC']]
+    }).then(purchase_order => {
+        res.send({msg:"Get pending po", result: purchase_order})
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -33,39 +94,12 @@ exports.po_add = function(req, res, next) {
 
     return models.purchase_order.create({
         po_no: req.body.po_no,
-        address: req.body.address
+        address: req.body.address,
+        po_date: Date.now(),
+        po_desc: req.body.desc
         //more data to be added
     }).then(purchase_order => {
         res.send({msg:'created', po: purchase_order})
-    }).catch(err => {
-        res.status(500).send("Error -> " + err);
-    })
-};
-
-//working
-//add a description to a purchase order
-//1 purchase order can have many descriptions
-exports.po_add_data = function(req, res, next) {
-    console.log(req.params.id);
-    return models.purchase_order_data.create({
-        po_id: req.params.id,
-        desc: req.body.text
-    }).then(data => {
-        res.send()
-    }).catch(err => {
-        res.status(500).send("Error -> " + err);
-    })
-};
-
-//working
-//show all description of a single purchase order
-exports.show_sig_data = function(req, res, next) {
-    return models.purchase_order_data.findAll({
-        where: {
-            po_id: req.params.id
-        }
-    }).then(data => {
-        res.send({msg:'created', po: data})
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -75,32 +109,26 @@ exports.show_sig_data = function(req, res, next) {
 //show specific purchase order and description
 exports.report = function(req, res, next) {
     console.log(req.params.id);
-    var sendFile;
 
     return models.purchase_order.findOne({
         where: {
             id: req.params.id
         }
     }).then(po_dat => {
-        return models.purchase_order_data.findAll({
-            where: {
-                po_id: req.params.id
-            }
-        }).then(data => {
-            res.send({po:po_dat, data:data});
-        })
+        res.send({res:po_dat});
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
 
-    res.send({po: sendFile})
 };
 
-
-
-// exports.po_del = function(req, res, next) {
-    
-// }
+exports.po_del = function(req, res, next) {
+    return models.purchase_order_data.delete({
+        where: {
+            po_id: req.params.id
+        }
+    })
+}
 
 // exports.po_upd = function(req, res, next) {
     

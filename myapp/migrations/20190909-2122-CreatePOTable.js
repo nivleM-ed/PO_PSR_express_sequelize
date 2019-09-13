@@ -58,6 +58,10 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING(1000)
             },
+            po_desc: {
+                type: Sequelize.JSON,
+                allowNull: false
+            },
             delete_req: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,

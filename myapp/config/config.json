@@ -4,20 +4,23 @@
     "password": "password",
     "database": "po_psr",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "+08:00"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "po_psr",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "+08:00"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "po_psr",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "+08:00"
   }
 }
