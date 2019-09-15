@@ -21,10 +21,10 @@ module.exports = function(passport) {
 			}
 		}).then(user => {
 			if (user == null) {
-				console.log("user is null");
-				return done(new Error('Wrong user id'))
+				console.log("User is null");
+				return done(new Error('Wrong user.id'))
 			}
-			console.log("deserialized works");
+			console.log("Deserialized works");
 			return done(null, user);
 		})
 	});
