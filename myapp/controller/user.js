@@ -1,7 +1,7 @@
 let models = require('../models');
 let bcrypt = require('bcrypt');
 const passport = require('passport');
-const myPassport = require('../passport_user')(passport);
+const myPassport = require('../passport_admin')(passport);
 const { isEmpty } = require('lodash');
 const { validateUser } = require('../validators/signup');
 

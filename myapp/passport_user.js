@@ -26,9 +26,10 @@ module.exports = function(passport) {
 	});
 	passport.use(new LocalStrategy({
 		usernameField: 'username', 
-		passwordField: 'password'
+		passwordField: 'password',
+		passReqToCallback: true
 	},
-	function(req, email, password, done) {
+	function(req, username, password, done) {
 		return models.User.findOne({
 			where: {
 				'username' : username

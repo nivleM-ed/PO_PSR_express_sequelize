@@ -4,11 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+let passport = require('passport');
+let session = require('express-session');
+
 var indexRouter = require('./routes/index');
 var purchase_order = require('./routes/purchase_order');
 var psr = require('./routes/psr');
 var leave = require('./routes/leave');
 var admin = require('./routes/admin');
+
+require('./passport_admin')(passport);
 
 var app = express();
 
@@ -21,6 +26,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({ secret: 'p@ssw0rd'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/po', purchase_order);

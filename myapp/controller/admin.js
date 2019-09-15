@@ -66,11 +66,18 @@ exports.add_user = function(req, res, next) {
 
 //login for admin
 exports.admin_login = function(req, res, next) {
-    passport.authenticate('local', function(req, res) {
-        res.status(200).send(req.user);
-    }).catch(err => {
-        res.status(500).send("Error -> " + err);
-    })	
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            res.send(err); 
+        } else if(!user) {
+            res.send(info);
+        } else {
+            req.logIn(user, function(err) {
+                if(err) {return res.send(err)}
+                return res.send(user);
+            })
+        }
+      })(req, res, next);
 }
 
 
