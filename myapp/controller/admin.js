@@ -22,7 +22,7 @@ exports.get_all_user = function(req, res, next) {
 
 //NOT FOR FINAL PRODUCT
 //add new admin into database
-exports.add_user = function(req, res, next) {
+exports.add_admin = function(req, res, next) {
 	let errors = {};
 	return validateUser(errors, req).then(errors => {
 		if (!isEmpty(errors)) {
@@ -97,7 +97,7 @@ exports.del_user = function(req, res, next) {
 
 
 //update the tier of user 
-exports.upd_tier = function(req, res, next) {
+exports.update_tier = function(req, res, next) {
     return models.User.update({
         t1: req.body.t1,
         t2: req.body.t2,

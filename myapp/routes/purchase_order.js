@@ -1,28 +1,22 @@
 var express = require('express');
 var router = express.Router();
-var psr = require('../controller/psr');
-
+let po = require('../controller/purchase_order');
 let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticate');
 
-/* psr module */
-router.get('/', psr.show_po_all); //for testing purpose
-router.get('/all/:page', isLoggedIn, psr.show_psr_page); //show all with pagination
-router.get('/search/:psr_no', isLoggedIn, psr.find); //find for specific psr_no
+router.get('/', po.show_po_all); //for testing purpose
+router.get('/all/:page', isLoggedIn, po.show_po_page); //show all with pagination
+router.get('/search/:po_no', isLoggedIn, po.find); //find for specific po_no
 
-router.get('/submits', isLoggedIn, psr.get_submits); //show all psr submitted for approval
-router.get('/pending', isLoggedIn, psr.get_pending); //show all psr that is pending for approval
+router.get('/submits', isLoggedIn, po.get_submits); //show all po submitted for approval
+router.get('/pending', isLoggedIn, po.get_pending); //show all po that is pending for approval
 
-router.post('/add_psr', isLoggedIn, psr.psr_add); //add psr
-router.delete('/del/:id', isLoggedIn, psr.psr_del); //delete psr
-router.get('/:id', isLoggedIn, psr.report); //show specific psr
+router.post('/add_po', isLoggedIn, po.po_add); //add po
+router.delete('/del/:id', isLoggedIn, po.po_del); //delete po
+router.get('/:id', isLoggedIn, po.report); //show specific purchase order
 
-router.post('/:id/upd_psr', isLoggedIn, psr.psr_upd); //update psr
-router.post('/:id/pending', isLoggedIn, auth_no_t1_t1, psr.psr_stat_1); //psr status to pending
-router.post('/:id/approve', isLoggedIn, auth_no_t1_t2, psr.psr_stat_2); //psr status to approved  
-
-
+router.post('/:id/upd_po', isLoggedIn, po.po_upd); //update purchase order
+router.post('/:id/pending', isLoggedIn, auth_no_t1, po.po_stat_1); //po status to pending
+router.post('/:id/approve', isLoggedIn, auth_no_t1_t2, po.po_stat_2); //po status to approved  
 
 
 module.exports = router;
-
-//submitted -> pending approval -> approved

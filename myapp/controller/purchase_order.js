@@ -4,6 +4,7 @@ var sequelize = require('sequelize');
 //working //not needed - just for testing purposes
 exports.show_po_all = function(req, res, next) {
     return models.purchase_order.findAll({
+        order: [['createdAt', 'DESC']]
     }).then(purchase_order => {
         res.send({po: purchase_order})
     }).catch(err => {
@@ -46,7 +47,7 @@ exports.show_po_page = function(req, res, next) {
             })
         })
     })
-}
+};
 
 //WORKING
 //find po_no
@@ -62,7 +63,7 @@ exports.find = function(req, res, next) {
     })
 }
 
-//ISSUE column 'nan' cannot be found 
+
 //get po waiting to be accepted
 exports.get_submits = function(req, res, next) {
     return models.purchase_order.findAll({
@@ -183,8 +184,7 @@ exports.po_stat_1 = function(req, res, next) {
 //update po status to approve
 exports.po_stat_2 = function(req, res, next) {
     return models.purchase_order.update({
-        status_t2: true,
-        date_approve: Date.now()
+        status_t1: true
     }, {
     where: {
         id: req.params.id
@@ -195,4 +195,3 @@ exports.po_stat_2 = function(req, res, next) {
         res.status(500).send("Error -> " + err);
     })
 }
-

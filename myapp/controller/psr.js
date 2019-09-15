@@ -116,7 +116,7 @@ exports.psr_add = function(req, res, next) {
 
 //WORKING
 //show specific purchase order and description
-exports.repsrrt = function(req, res, next) {
+exports.report = function(req, res, next) {
     console.log(req.params.id);
     return models.psr.findOne({
         where: {

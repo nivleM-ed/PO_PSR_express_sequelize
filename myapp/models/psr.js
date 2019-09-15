@@ -1,7 +1,7 @@
 //column needs to be changed
 
 'use strict';
-module.exporrts = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     var psr = sequelize.define('psr', {
         id: {
             type: DataTypes.UUID,

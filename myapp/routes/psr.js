@@ -1,23 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var purchase_order = require('../controller/psr');
+var psr = require('../controller/psr');
 
 let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticate');
 
-router.get('/', purchase_order.show_po_all); //for testing purpose
-router.get('/all/:page', isLoggedIn, purchase_order.show_po_page); //show all with pagination
-router.get('/search/:po_no', isLoggedIn, purchase_order.find); //find for specific po_no
+/* psr module */
+router.get('/', psr.show_psr_all); //for testing purpose
+router.get('/all/:page', isLoggedIn, psr.show_psr_page); //show all with pagination
+router.get('/search/:psr_no', isLoggedIn, psr.find); //find for specific psr_no
 
-router.get('/submits', isLoggedIn, purchase_order.get_submits); //show all po submitted for approval
-router.get('/pending', isLoggedIn, purchase_order.get_pending); //show all po that is pending for approval
+router.get('/submits', isLoggedIn, psr.get_submits); //show all psr submitted for approval
+router.get('/pending', isLoggedIn, psr.get_pending); //show all psr that is pending for approval
 
-router.post('/add_po', isLoggedIn, purchase_order.po_add); //add po
-router.delete('/del/:id', isLoggedIn, purchase_order.po_del); //delete po
-router.get('/:id', isLoggedIn, purchase_order.report); //show specific purchase order
+router.post('/add_psr', isLoggedIn, psr.psr_add); //add psr
+router.delete('/del/:id', isLoggedIn, psr.psr_del); //delete psr
+router.get('/:id', isLoggedIn, psr.report); //show specific psr
 
-router.post('/:id/upd_po', isLoggedIn, purchase_order.po_upd); //update purchase order
-router.post('/:id/pending', isLoggedIn, auth_no_t1, purchase_order.po_stat_1); //po status to pending
-router.post('/:id/approve', isLoggedIn, auth_no_t1_t2, purchase_order.po_stat_2); //po status to approved  
+router.post('/:id/upd_psr', isLoggedIn, psr.psr_upd); //update psr
+// router.post('/:id/pending', isLoggedIn, auth_no_t1_t1, psr.psr_stat_1); //psr status to pending
+// router.post('/:id/approve', isLoggedIn, auth_no_t1_t2, psr.psr_stat_2); //psr status to approved  
+
+
 
 
 module.exports = router;
+
+//submitted -> pending approval -> approved

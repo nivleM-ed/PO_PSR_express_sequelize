@@ -19,7 +19,7 @@ module.exports = function(passport) {
 			}
 		}).then(user => {
 			if (user == null) {
-				done(new Error('Wrong user id.'))
+				done(new Error('Wrong user id'))
 			}
 			done(null, user);
 		})
