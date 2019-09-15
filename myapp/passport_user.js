@@ -1,3 +1,4 @@
+//for user authentication
 let LocalStrategy = require('passport-local').Strategy;
 
 let bcrypt = require('bcrypt');

@@ -35,6 +35,21 @@ module.exports = {
             email: {
                 allowNull: true,
                 type: Sequelize.STRING
+            },
+            t1: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            t2: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            t3: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
             }
         });
     },

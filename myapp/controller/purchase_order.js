@@ -81,7 +81,7 @@ exports.get_submits = function(req, res, next) {
 }
 
 
-//ISSUE column 'nan' cannot be found 
+//WORKING
 //get po waiting to be approved
 exports.get_pending = function(req, res, next) {
     return models.purchase_order.findAll({
