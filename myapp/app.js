@@ -13,7 +13,7 @@ var psr = require('./routes/psr');
 var leave = require('./routes/leave');
 var admin = require('./routes/admin');
 
-require('./passport_admin')(passport);
+require('./passport_setup')(passport);
 
 var app = express();
 

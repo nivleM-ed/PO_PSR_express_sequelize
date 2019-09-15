@@ -1,7 +1,7 @@
 let models = require('../models');
 let bcrypt = require('bcrypt');
 const passport = require('passport');
-const myPassport = require('../passport_admin')(passport);
+const myPassport = require('../passport_setup')(passport);
 const { isEmpty } = require('lodash');
 const { validateUser } = require('../validators/signup');
 
@@ -28,9 +28,10 @@ exports.add_admin = function(req, res, next) {
 		if (!isEmpty(errors)) {
             res.send(errors);
 		} else {
-            newUser = models.admin.build({
+            newUser = models.User.build({
             username: req.body.username,
-            password: generateHash(req.body.password)
+            password: generateHash(req.body.password),
+            is_admin: true
             });	
             return newUser.save().then(result => {
                 res.status(200).send();
