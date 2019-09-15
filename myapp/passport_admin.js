@@ -1,4 +1,4 @@
-//for user authentication
+//for authentication
 let LocalStrategy = require('passport-local').Strategy;
 
 let bcrypt = require('bcrypt');
@@ -9,25 +9,37 @@ const validPassword = function(user, password) {
 }
 
 module.exports = function(passport) {
+	console.log("Strategy Called Admin");
 	passport.serializeUser(function(user, done) {
-		return done(null, user.id)
+		console.log("Serialized");
+		done(null, user.id);
 	});
-
+	
 	passport.deserializeUser(function(id, done) {
-		console.log("deserialize");
+		console.log("Deserialized");
 		models.admin.findOne({
 			where: {
 				'id' : id
 			}
 		}).then(user => {
 			if (user == null) {
-				console.log("user is null");
-				return done(new Error('Wrong user id'))
+				models.User.findOne({
+					where: {
+						'id': id
+					}
+				}).then(user => {
+					if (user == null) {
+						done(new Error('Wrong user id'))
+					}
+					console.log("deserialize admin");
+					done(null, user);
+				})
 			}
-			console.log("deserialized works");
+			console.log("deserialize user");
 			return done(null, user);
 		})
 	});
+
 
 	passport.use(new LocalStrategy({
 		usernameField: 'username', 
@@ -35,24 +47,36 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		return models.admin.findOne({
+		return models.User.findOne({
 			where: {
 				'username' : username
 			},
 		}).then(user => {
 			if (user == null) {
-				console.log("user is null");
-				return done(null, false, { message: 'User does not exist.'})
+				return models.admin.findOne({
+					where: {
+						'username' : username
+					}
+				}).then(user => {
+					if(user == null) {
+						return done(null, false, { message: 'User does not exist.'})
+					} else if (user.password == null || user.password == undefined) {
+						return done(null, false, { message: 'Something is wrong with your password.'})
+					} else if(!validPassword(user, password)) {
+						return done(null, false, {message: 'Incorrect username or password'})
+					}
+					console.log("Admin Log In");
+					return done(null, user);
+				})
 			} else if (user.password == null || user.password == undefined) {
-				console.log("password is null");
 				return done(null, false, { message: 'Something is wrong with your password. Please contact admin.'})
 			} else if(!validPassword(user, password)) {
-				console.log("password is wrong");
 				return done(null, false, { message: 'Incorrect username or password' })
 			}
+			console.log("User Log In");
 			return done(null, user);
 		}).catch(err => {
-			done(err, false);
+			return done(err, false);
 		})
 	}))
 }

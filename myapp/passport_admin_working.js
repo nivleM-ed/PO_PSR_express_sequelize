@@ -10,37 +10,47 @@ const validPassword = function(user, password) {
 
 module.exports = function(passport) {
 	passport.serializeUser(function(user, done) {
-		done(null, user.id)
+		return done(null, user.id)
 	});
+
 	passport.deserializeUser(function(id, done) {
-		models.User.findOne({
+		console.log("deserialize");
+		models.admin.findOne({
 			where: {
 				'id' : id
 			}
 		}).then(user => {
 			if (user == null) {
-				done(new Error('Wrong user id'))
+				console.log("user is null");
+				return done(new Error('Wrong user id'))
 			}
-			done(null, user);
+			console.log("deserialized works");
+			return done(null, user);
 		})
 	});
+
 	passport.use(new LocalStrategy({
 		usernameField: 'username', 
 		passwordField: 'password',
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		return models.User.findOne({
+		return models.admin.findOne({
 			where: {
 				'username' : username
 			},
 		}).then(user => {
 			if (user == null) {
-				return done(null, false, { message: 'User does not exist.'})
+				console.log("user is null");
+				return done(null, false, { error: 'noUserExist'})
 			} else if (user.password == null || user.password == undefined) {
-				return done(null, false, { message: 'Something is wrong with your password. Please contact admin.'})
+				console.log("password is null");
+				return done(null, false, { error: 'pwdProblem'})
 			} else if(!validPassword(user, password)) {
-				return done(null, false, { message: 'Incorrect username or password' })
+				console.log("password is wrong");
+				return done(null, false, { error: 'incorrectPwdUsername' })
+			} else if(user.is_admin == false) {
+				return done(null, false, {error: 'noPermission'});
 			}
 			return done(null, user);
 		}).catch(err => {
