@@ -29,7 +29,7 @@ exports.show_own_leave = function(req, res, next) {
 
 exports.add_leave = function(req, res, next) {
     return models.leave.create({
-        user_id: req.params.user_id,
+        user_id: req.params.id,
         date_from: req.body.date_from,
         date_to: req.body.date_to,
         reason: req.body.reason
@@ -41,7 +41,7 @@ exports.add_leave = function(req, res, next) {
 }
 
 exports.del_leave = function(req, res, next) {
-    return model.leave.destroy({
+    return models.leave.destroy({
         where: {
             id: req.params.leave_id
         }
@@ -53,7 +53,7 @@ exports.del_leave = function(req, res, next) {
 }
 
 exports.approve_leave = function(req, res, next) {
-    return model.leave.update({
+    return models.leave.update({
         status: true
     },{
         where: {
@@ -67,7 +67,7 @@ exports.approve_leave = function(req, res, next) {
 }
 
 exports.upd_leave = function(req, res, next) {
-    return model.leave.update({
+    return models.leave.update({
         date_from: req.body.date_from,
         date_to: req.body.date_to,
         reason: req.body.reason

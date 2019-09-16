@@ -15,7 +15,7 @@ module.exports = function(passport) {
 
 	passport.deserializeUser(function(id, done) {
 		console.log("deserialize");
-		models.admin.findOne({
+		models.User.findOne({
 			where: {
 				'id' : id
 			}
@@ -35,7 +35,7 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		return models.admin.findOne({
+		return models.User.findOne({
 			where: {
 				'username' : username
 			},
@@ -49,9 +49,10 @@ module.exports = function(passport) {
 			} else if(!validPassword(user, password)) {
 				console.log("password is wrong");
 				return done(null, false, { error: 'incorrectPwdUsername' })
-			} else if(user.is_admin == false) {
-				return done(null, false, {error: 'noPermission'});
 			}
+			//  else if(user.is_admin == false) {
+			// 	return done(null, false, {error: 'noPermission'});
+			// }
 			return done(null, user);
 		}).catch(err => {
 			done(err, false);

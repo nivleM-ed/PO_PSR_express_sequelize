@@ -86,7 +86,7 @@ exports.admin_login = function(req, res, next) {
 exports.admin_logout = function(req, res, next) {
     req.logout();
     req.session.destroy();
-    res.status(200).send();
+    res.status(200).send({logout:"logout"});
 }
 
 
