@@ -13,11 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         po_no: { //purchase order number
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER,
+            autoIncrement: true
         },
         po_date: { //purchase order date
             allowNull: true,
-            type: DataTypes.STRING  //cannot be Sequelize.DATE(timestamp)
+            type: DataTypes.STRING  //change to .DATE once moment.js work
         },
         po_ref: { //purchase order reference
             allowNull: true,
@@ -25,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         delv_due: { //delivery due
             allowNull: true,
-            type: DataTypes.STRING  //cannot be Sequelize.DATE(timestamp)
+            type: DataTypes.STRING  //change to .DATE once moment.js work
         },
         ship_mode: { //mode of shipment
             allowNull: true,
@@ -45,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         address: {  //address of buyer
             allowNull: true,
-            type: DataTypes.STRING(1000)
+            type: DataTypes.STRING
         },
         po_desc: {
             type: DataTypes.JSON,

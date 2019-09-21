@@ -15,39 +15,19 @@ exports.show_po_all = function(req, res, next) {
 //WORKING
 exports.show_po_page = function(req, res, next) {
     const limit = 3; //can be changed
+
     return models.purchase_order.findAll({
         attributes: ['id', 'po_no', 'createdAt', 'po_date', 'delete_req', 'status_t1', 'status_t2'],
         limit: limit,
         offset: (req.params.page - 1) * limit,
         order: [['createdAt', 'DESC']]
-    }).then(purchase_order => {
-        models.purchase_order.findAll({
-            attributes: [[sequelize.fn('count', sequelize.col('po_no')), 'submit_count']],
-            where : {
-                delete_req : false,
-                status_t1 : false,
-                status_t2 : false
-            }
-        }).then(submit_count => {
-            models.purchase_order.findAll({
-                attributes: [[sequelize.fn('count', sequelize.col('po_no')), 'pending_count']],
-                where : {
-                    delete_req : false,
-                    status_t1 : false,
-                    status_t2 : false
-                }
-            }).then(pending_count => {
-                models.purchase_order.findAll({
-                    attributes : [[sequelize.fn('count', sequelize.col('po_no')), 'total_count']]
-                }).then(total_count => {
-                    res.status(200).send({result: purchase_order, submit_count: submit_count, pending_count: pending_count, total_count: total_count})
-                }).catch(err => {
-                    res.status(500).send("Error -> " + err);
-                })
-            })
-        })
+    }).then(po => {
+        resolve(po);
+    }).catch(err => {
+        res.status(500).send(err);
     })
-};
+}
+
 
 //WORKING
 //find po_no
@@ -121,7 +101,7 @@ exports.report = function(req, res, next) {
     console.log(req.params.id);
     return models.purchase_order.findOne({
         where: {
-            id: req.params.id
+            id: req.params.po_id
         }
     }).then(po_dat => {
         res.status(200).send({res:po_dat});
@@ -136,7 +116,7 @@ exports.report = function(req, res, next) {
 exports.po_del = function(req, res, next) {
     return models.purchase_order.destroy({
         where: {
-            id: req.params.id
+            id: req.params.po_id
         }
     }).then(deleted => {
             res.status(200).send();
@@ -154,7 +134,7 @@ exports.po_upd = function(req, res, next) {
         po_desc: req.body.desc
     }, {
         where: {
-            id: req.params.id
+            id: req.params.po_id
         }    
         //more data to be added
     }).then(updated => {
@@ -168,10 +148,11 @@ exports.po_upd = function(req, res, next) {
 //update po status to pending
 exports.po_stat_1 = function(req, res, next) {
     return models.purchase_order.update({
-        status_t1: true
+        status_t1: true,
+        date_approve: req.body.date
     }, {
     where: {
-        id: req.params.id
+        id: req.params.po_id
         }
     }).then(updated => {
         res.status(200).send();
@@ -184,10 +165,11 @@ exports.po_stat_1 = function(req, res, next) {
 //update po status to approve
 exports.po_stat_2 = function(req, res, next) {
     return models.purchase_order.update({
-        status_t1: true
+        status_t1: true,
+        date_approve: req.body.date
     }, {
     where: {
-        id: req.params.id
+        id: req.params.po_id
         }
     }).then(updated => {
         res.status(200).send();

@@ -13,12 +13,12 @@ router.get('/submits', isLoggedIn, psr.get_submits); //show all psr submitted fo
 router.get('/pending', isLoggedIn, psr.get_pending); //show all psr that is pending for approval
 
 router.post('/add_psr', isLoggedIn, psr.psr_add); //add psr
-router.delete('/del/:id', isLoggedIn, psr.psr_del); //delete psr
-router.get('/:id', isLoggedIn, psr.report); //show specific psr
+router.delete('/del/:psr_id', isLoggedIn, psr.psr_del); //delete psr
+router.get('/:psr_id', isLoggedIn, psr.report); //show specific psr
 
-router.post('/:id/upd_psr', isLoggedIn, psr.psr_upd); //update psr
-// router.post('/:id/pending', isLoggedIn, auth_no_t1_t1, psr.psr_stat_1); //psr status to pending
-// router.post('/:id/approve', isLoggedIn, auth_no_t1_t2, psr.psr_stat_2); //psr status to approved  
+router.post('/:psr_id/upd_psr', isLoggedIn, psr.psr_upd); //update psr
+router.post('/:psr_id/pending', isLoggedIn, auth_no_t1, psr.psr_stat_1); //psr status to pending
+router.post('/:psr_id/approve', isLoggedIn, auth_no_t1_t2, psr.psr_stat_2); //psr status to approved  
 
 
 

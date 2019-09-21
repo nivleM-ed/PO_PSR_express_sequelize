@@ -22,6 +22,7 @@ exports.get_all_user = function(req, res, next) {
 
 //NOT FOR FINAL PRODUCT
 //add new admin into database
+//default: admin, password
 exports.add_admin = function(req, res, next) {
 	let errors = {};
 	return validateUser(errors, req).then(errors => {
@@ -66,35 +67,37 @@ exports.add_user = function(req, res, next) {
 
 
 //login for admin
-exports.admin_login = function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-        if (err) {
-            res.send(err); 
-        } else if(!user) {
-            res.send(info);
-        } else {
-            req.logIn(user, function(err) {
-                if(err) {return res.send(err)}
-                return res.send(user);
-            })
-        }
-      })(req, res, next);
-}
+//not needed -> normal user login -> check for is_admin is true
+// exports.admin_login = function(req, res, next) {
+//     passport.authenticate('local', function(err, user, info) {
+//         if (err) {
+//             res.send(err); 
+//         } else if(!user) {
+//             res.send(info);
+//         } else {
+//             req.logIn(user, function(err) {
+//                 if(err) {return res.send(err)}
+//                 return res.send(user);
+//             })
+//         }
+//       })(req, res, next);
+// }
 
 
 //logout for admin
-exports.admin_logout = function(req, res, next) {
-    req.logout();
-    req.session.destroy();
-    res.status(200).send({logout:"logout"});
-}
+//logout is the same as user logout
+// exports.admin_logout = function(req, res, next) {
+//     req.logout();
+//     req.session.destroy();
+//     res.status(200).send({logout:"logout"});
+// }
 
 
 //delete user
 exports.del_user = function(req, res, next) {
     return models.User.destroy({
         where: {
-            id: req.params.id
+            id: req.params.user_id
         }
     }).then(result => {
         res.status(200).send();
@@ -112,7 +115,7 @@ exports.update_tier = function(req, res, next) {
         t3: req.body.t3
     },{
         where: {
-            id: req.params.id
+            id: req.params.user_id
         }    
     }).then(result => {
         res.status(200).send();

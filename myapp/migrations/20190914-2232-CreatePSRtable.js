@@ -2,6 +2,10 @@
 //created on 14 September 2019
 //Table Name: psr
 
+//Updated on 17 September 2019
+//UPDATES:
+//added columns to fullfill requirements
+
 //for the sake of developement allowNull: true
 //column name needs to be changed
 
@@ -25,43 +29,44 @@ module.exports = {
             },
             psr_no: { //purchase order number
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.INTEGER,
+                autoIncrement: true
             },
             psr_date: { //purchase order date
                 allowNull: true,
                 type: Sequelize.STRING  //cannot be Sequelize.DATE(timestamp)
             },
-            psr_ref: { //purchase order reference
+            purchase_class: { //purchase class
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            delv_due: { //delivery due
+            purchase_typ: { //purchase type
+                allowNull: true,
+                type: Sequelize.STRING  
+            },
+            purchase_just: { //justification for purchase
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            date_req: {  //date required
                 allowNull: true,
                 type: Sequelize.STRING  //cannot be Sequelize.DATE(timestamp)
             },
-            ship_mode: { //mode of shipment
+            project_title: {  //project title
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            psr_no: {  //purchase and service requisition
+            vessel_code: {  //vessel code
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            cca_no: {  //cca number
+            delv: {  //address of buyer
                 allowNull: true,
                 type: Sequelize.STRING
-            },
-            pay_mode: {  //mode of payment
-                allowNull: true,
-                type: Sequelize.STRING
-            },
-            address: {  //address of buyer
-                allowNull: true,
-                type: Sequelize.STRING(1000)
             },
             psr_desc: {
-                type: Sequelize.JSON,
-                allowNull: false
+                type: Sequelize.JSON,   //json file
+                allowNull: false        // expected format {desc:desc,qty:qty,unit:unit,cost_code:cost_code,remarks:"remarks"}
             },
             delete_req: {
                 type: Sequelize.BOOLEAN,

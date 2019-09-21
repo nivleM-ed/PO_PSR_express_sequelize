@@ -15,39 +15,40 @@ module.exports = (sequelize, DataTypes) => {
         },
         psr_no: { //purchase order number
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER,
+            autoIncrement: true
         },
         psr_date: { //purchase order date
             allowNull: true,
             type: DataTypes.STRING  //cannot be Sequelize.DATE(timestamp)
         },
-        psr_ref: { //purchase order reference
+        purchase_class: { //purchase class
             allowNull: true,
             type: DataTypes.STRING
         },
-        delv_due: { //delivery due
+        purchase_typ: { //purchase type
             allowNull: true,
-            type: DataTypes.STRING  //cannot be Sequelize.DATE(timestamp)
+            type: DataTypes.STRING  
         },
-        ship_mode: { //mode of shipment
+        purchase_just: { //justification for purchase
             allowNull: true,
             type: DataTypes.STRING
         },
-        psr_no: {  //purchase and service requisition
+        date_req: {  //date required
             allowNull: true,
             type: DataTypes.STRING
         },
-        cca_no: {  //cca number
+        project_title: {  //project title
             allowNull: true,
             type: DataTypes.STRING
         },
-        pay_mode: {  //mode of payment
+        vessel_code: {  //vessel code
             allowNull: true,
             type: DataTypes.STRING
         },
-        address: {  //address of buyer
+        delv: {  //address of buyer
             allowNull: true,
-            type: DataTypes.STRING(1000)
+            type: DataTypes.STRING
         },
         psr_desc: {
             type: DataTypes.JSON,
