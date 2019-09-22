@@ -18,7 +18,7 @@ exports.show_own_leave = function(req, res, next) {
         order: [['createdAt', 'DESC']]
     },{
         where: {
-            user_id: req.body.id,
+            user_id: req.user.id,
         }
     }).then(results => {
         res.status(200).send({leave: results});
@@ -29,7 +29,7 @@ exports.show_own_leave = function(req, res, next) {
 
 exports.add_leave = function(req, res, next) {
     return models.leave.create({
-        user_id: req.body.id,
+        user_id: req.user.id,
         date_from: req.body.date_from,
         date_to: req.body.date_to,
         reason: req.body.reason

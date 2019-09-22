@@ -5,8 +5,8 @@ var sequelize = require('sequelize');
 exports.show_po_all = function(req, res, next) {
     return models.purchase_order.findAll({
         order: [['createdAt', 'DESC']]
-    }).then(purchase_order => {
-        res.send({po: purchase_order})
+    }).then(po => {
+        res.send(po)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -17,12 +17,12 @@ exports.show_po_page = function(req, res, next) {
     const limit = 3; //can be changed
 
     return models.purchase_order.findAll({
-        attributes: ['id', 'po_no', 'createdAt', 'po_date', 'delete_req', 'status_t1', 'status_t2'],
+        // attributes: ['id', 'po_no', 'createdAt', 'po_date', 'delete_req', 'status_t1', 'status_t2'],
         limit: limit,
         offset: (req.params.page - 1) * limit,
         order: [['createdAt', 'DESC']]
     }).then(po => {
-        resolve(po);
+        res.status(200).send(po);
     }).catch(err => {
         res.status(500).send(err);
     })
@@ -36,8 +36,8 @@ exports.find = function(req, res, next) {
         where: {
             po_no: req.params.po_no
         }
-    }).then(purchase_order => {
-        res.status(200).send({msg: "Get specific", result: purchase_order})
+    }).then(po => {
+        res.status(200).send(po)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -54,8 +54,8 @@ exports.get_submits = function(req, res, next) {
             status_t1: false,
             status_t2: false
         },
-    }).then(purchase_order => {
-        res.status(200).send({result: purchase_order})
+    }).then(po => {
+        res.status(200).send(po)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -72,8 +72,8 @@ exports.get_pending = function(req, res, next) {
             status_t2: false
         },
         order: [['createdAt', 'DESC']]
-    }).then(purchase_order => {
-        res.status(200).send({result: purchase_order})
+    }).then(po => {
+        res.status(200).send(po)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -84,12 +84,17 @@ exports.get_pending = function(req, res, next) {
 exports.po_add = function(req, res, next) {
     return models.purchase_order.create({
         po_no: req.body.po_no,
+        po_date: req.body.date,
+        po_ref: req.body.po_ref,
+        delv_due: req.body.due,
+        ship_mode: req.body.ship,
+        psr_no: req.body.psr,
+        cca_no: req.body.cca,
+        pay_mode: req.body.pay,
         address: req.body.address,
-        po_date: Date.now(),
         po_desc: req.body.desc
-        //more data to be added
-    }).then(purchase_order => {
-        res.status(201).send({po: purchase_order})
+    }).then(po => {
+        res.status(201).send(po)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -103,8 +108,8 @@ exports.report = function(req, res, next) {
         where: {
             id: req.params.po_id
         }
-    }).then(po_dat => {
-        res.status(200).send({res:po_dat});
+    }).then(po => {
+        res.status(200).send(po);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -119,7 +124,7 @@ exports.po_del = function(req, res, next) {
             id: req.params.po_id
         }
     }).then(deleted => {
-            res.status(200).send();
+            res.status(200).send("deleted");
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -130,6 +135,13 @@ exports.po_del = function(req, res, next) {
 exports.po_upd = function(req, res, next) {
     return models.purchase_order.update({
         po_no: req.body.po_no,
+        po_date: req.body.date,
+        po_ref: req.body.po_ref,
+        delv_due: req.body.due,
+        ship_mode: req.body.ship,
+        psr_no: req.body.psr,
+        cca_no: req.body.cca,
+        pay_mode: req.body.pay,
         address: req.body.address,
         po_desc: req.body.desc
     }, {
@@ -137,8 +149,8 @@ exports.po_upd = function(req, res, next) {
             id: req.params.po_id
         }    
         //more data to be added
-    }).then(updated => {
-        res.status(200).send();
+    }).then(po => {
+        res.status(200).send(po);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -154,8 +166,8 @@ exports.po_stat_1 = function(req, res, next) {
     where: {
         id: req.params.po_id
         }
-    }).then(updated => {
-        res.status(200).send();
+    }).then(po => {
+        res.status(200).send(po);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -171,8 +183,8 @@ exports.po_stat_2 = function(req, res, next) {
     where: {
         id: req.params.po_id
         }
-    }).then(updated => {
-        res.status(200).send();
+    }).then(po => {
+        res.status(200).send(po);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })

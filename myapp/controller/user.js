@@ -4,6 +4,7 @@ const passport = require('passport');
 const myPassport = require('../passport_setup')(passport);
 const { isEmpty } = require('lodash');
 const { validateUser } = require('../validators/signup');
+var sequelize = require('sequelize');
 
 const generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
@@ -34,7 +35,7 @@ exports.logout = function(req, res, next) {
 }
 
 
-//testing promise
+//get counts
 exports.getCounts = function(req, res, next) {
     const getNew_po = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -47,6 +48,8 @@ exports.getCounts = function(req, res, next) {
                 }
             }).then(countPending => {
                 resolve(countPending);
+            }).catch(err => {
+                reject(err);
             })
         })
     }
@@ -62,6 +65,8 @@ exports.getCounts = function(req, res, next) {
                 }
             }).then(countPending => {
                 resolve(countPending);
+            }).catch(err => {
+                reject(err);
             })
         })
     }
@@ -77,6 +82,8 @@ exports.getCounts = function(req, res, next) {
                 }
             }).then(countPending => {
                 resolve(countPending);
+            }).catch(err => {
+                reject(err);
             })
         })
     }
@@ -92,15 +99,29 @@ exports.getCounts = function(req, res, next) {
                 }
             }).then(countPending => {
                 resolve(countPending);
+            }).catch(err => {
+                reject(err);
             })
         })
     }
-    
 
-    Promise.all([getNew_po(), getPending_po(), getNew_psr(), getPending_psr()])
+    if(req.user.t1) {
+        res.status(200).send({status:"t1"});
+    } else if(req.user.t2) {
+        Promise.all([getNew_po(), getNew_psr()]) 
+            .then(count => {
+                res.status(200).send({status:"t2", count});
+            }).catch(err => {
+                res.status(500).send(err);
+            })
+    } else if(req.user.t3){
+        Promise.all([getNew_po(), getPending_po(), getNew_psr(), getPending_psr()])
         .then(count => {
-            res.send({count:count});
+            res.status(200).send({status:"t3", count});
         }).catch(err => {
             res.status(500).send(err);
         })
+    } else {
+        res.status(200).send({status:"Please update permissions"})
+    }
 }

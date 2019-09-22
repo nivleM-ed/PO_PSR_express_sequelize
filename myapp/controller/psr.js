@@ -5,7 +5,7 @@ var sequelize = require('sequelize');
 exports.show_psr_all = function(req, res, next) {
     return models.psr.findAll({
     }).then(psr => {
-        res.send({psr: psr})
+        res.send(psr)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -16,12 +16,12 @@ exports.show_psr_page = function(req, res, next) {
     const limit = 3; //can be changed
 
     return models.psr.findAll({
-        attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
+        // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
         limit: limit,
         offset: (req.params.page - 1) * limit,
         order: [['createdAt', 'DESC']]
     }).then(psr => {
-        resolve(psr);
+        res.status(200).send(psr);
     }).catch(err => {
         res.status(500).send(err);
     })
@@ -35,7 +35,7 @@ exports.find = function(req, res, next) {
             psr_no: req.params.psr_no
         }
     }).then(psr => {
-        res.status(200).send({msg: "Get specific", result: psr})
+        res.status(200).send(psr)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -53,7 +53,7 @@ exports.get_submits = function(req, res, next) {
             status_t2: false
         },
     }).then(psr => {
-        res.status(200).send({result: psr})
+        res.status(200).send(psr)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -71,7 +71,7 @@ exports.get_pending = function(req, res, next) {
         },
         order: [['createdAt', 'DESC']]
     }).then(psr => {
-        res.status(200).send({result: psr})
+        res.status(200).send(psr)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -82,12 +82,18 @@ exports.get_pending = function(req, res, next) {
 exports.psr_add = function(req, res, next) {
     return models.psr.create({
         psr_no: req.body.psr_no,
-        address: req.body.address,
-        psr_date: Date.now(),
+        psr_date: req.body.date,
+        psr_data: req.body.psr_data,
+        purchase_class: req.body.pur_class,
+        purchase_typ: req.body.pur_typ,
+        purchase_just: req.body.pur_just,
+        date_req: req.body.date_req,
+        project_title: req.body.p_title,
+        vessel_code: req.body.vessel_cd,
+        delv: req.body.delv,        
         psr_desc: req.body.desc
-        //more data to be added
     }).then(psr => {
-        res.status(201).send({psr: psr})
+        res.status(201).send(psr)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -101,8 +107,8 @@ exports.report = function(req, res, next) {
         where: {
             id: req.params.psr_id
         }
-    }).then(psr_dat => {
-        res.status(200).send({res:psr_dat});
+    }).then(psr => {
+        res.status(200).send(psr);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -116,8 +122,8 @@ exports.psr_del = function(req, res, next) {
         where: {
             id: req.params.psr_id
         }
-    }).then(deleted => {
-            res.status(200).send();
+    }).then(psr => {
+            res.status(200).send(psr);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -128,15 +134,23 @@ exports.psr_del = function(req, res, next) {
 exports.psr_upd = function(req, res, next) {
     return models.psr.update({
         psr_no: req.body.psr_no,
-        address: req.body.address,
+        psr_date: req.body.date,
+        psr_data: req.body.psr_data,
+        purchase_class: req.body.pur_class,
+        purchase_typ: req.body.pur_typ,
+        purchase_just: req.body.pur_just,
+        date_req: req.body.date_req,
+        project_title: req.body.p_title,
+        vessel_code: req.body.vessel_cd,
+        delv: req.body.delv,        
         psr_desc: req.body.desc
     }, {
         where: {
             id: req.params.psr_id
         }    
         //more data to be added
-    }).then(updated => {
-        res.status(200).send();
+    }).then(psr => {
+        res.status(200).send(psr);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -152,8 +166,8 @@ exports.psr_stat_1 = function(req, res, next) {
     where: {
         id: req.params.psr_id
         }
-    }).then(updated => {
-        res.status(200).send();
+    }).then(psr => {
+        res.status(200).send(psr);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -169,8 +183,8 @@ exports.psr_stat_2 = function(req, res, next) {
     where: {
         id: req.params.psr_id
         }
-    }).then(updated => {
-        res.status(200).send();
+    }).then(psr => {
+        res.status(200).send(psr);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
