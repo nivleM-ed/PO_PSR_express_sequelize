@@ -5,8 +5,8 @@ var sequelize = require('sequelize');
 exports.show_all_leave = function(req, res, next) {
     return models.leave.findAll({
         order: [['createdAt', 'DESC']]
-    }).then(results => {
-        res.status(200).send({leave: results});
+    }).then(leave => {
+        res.status(200).send(leave);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -20,8 +20,8 @@ exports.show_own_leave = function(req, res, next) {
         where: {
             user_id: req.user.id,
         }
-    }).then(results => {
-        res.status(200).send({leave: results});
+    }).then(leave => {
+        res.status(200).send(leave);
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -33,8 +33,8 @@ exports.add_leave = function(req, res, next) {
         date_from: req.body.date_from,
         date_to: req.body.date_to,
         reason: req.body.reason
-    }).then(created => {
-        res.status(201).send()
+    }).then(leave => {
+        res.status(201).send(leave)
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -46,7 +46,7 @@ exports.del_leave = function(req, res, next) {
             id: req.params.leave_id
         }
     }).then(deleted => {
-        res.status(200).send();
+        res.status(200).send("deleted");
     }).catch(err => {
         res.status(500).send("Error -> " + err);
     })
@@ -59,8 +59,8 @@ exports.approve_leave = function(req, res, next) {
         where: {
             id: req.params.leave_id
         }
-    }).then(updated => {
-        res.status(200).send();
+    }).then(leave => {
+        res.status(200).send(leave);
     }).catch(err => {
         res.status(500).send("error -> " + err);
     })
@@ -75,8 +75,8 @@ exports.upd_leave = function(req, res, next) {
         where: {
             id: req.params.leave_id
         }
-    }).then(updated => {
-        res.status(200).send();
+    }).then(leave => {
+        res.status(200).send(leave);
     }).catch(err => {
         res.status(500).send("error -> " + err);
     })

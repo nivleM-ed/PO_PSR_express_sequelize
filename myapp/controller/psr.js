@@ -45,13 +45,14 @@ exports.find = function(req, res, next) {
 //get psr waiting to be accepted
 exports.get_submits = function(req, res, next) {
     return models.psr.findAll({
-        order: [['createdAt', 'DESC']]
-    },{
         where: {
             delete_req: false,
             status_t1: false,
             status_t2: false
         },
+        limit: limit,
+        offset: (req.params.page - 1) * limit,
+        order: [['createdAt', 'DESC']]
     }).then(psr => {
         res.status(200).send(psr)
     }).catch(err => {
@@ -66,9 +67,11 @@ exports.get_pending = function(req, res, next) {
     return models.psr.findAll({
         where: {
             delete_req: false,
-            status_t1: true,
+            status_t1: false,
             status_t2: false
         },
+        limit: limit,
+        offset: (req.params.page - 1) * limit,
         order: [['createdAt', 'DESC']]
     }).then(psr => {
         res.status(200).send(psr)

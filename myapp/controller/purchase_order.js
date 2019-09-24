@@ -32,6 +32,7 @@ exports.show_po_page = function(req, res, next) {
 //WORKING
 //find po_no
 exports.find = function(req, res, next) {
+
     return models.purchase_order.findOne({
         where: {
             po_no: req.params.po_no
@@ -46,14 +47,17 @@ exports.find = function(req, res, next) {
 
 //get po waiting to be accepted
 exports.get_submits = function(req, res, next) {
+    const limit = 3; //can be changed
+
     return models.purchase_order.findAll({
-        order: [['createdAt', 'DESC']]
-    },{
         where: {
             delete_req: false,
             status_t1: false,
             status_t2: false
         },
+        limit: limit,
+        offset: (req.params.page - 1) * limit,
+        order: [['createdAt', 'DESC']]
     }).then(po => {
         res.status(200).send(po)
     }).catch(err => {
@@ -65,13 +69,17 @@ exports.get_submits = function(req, res, next) {
 //WORKING
 //get po waiting to be approved
 exports.get_pending = function(req, res, next) {
+    const limit = 3; //can be changed
+
     return models.purchase_order.findAll({
+        limit: limit,
+        offset: (req.params.page - 1) * limit,
+        order: [['createdAt', 'DESC']],
         where: {
             delete_req: false,
             status_t1: true,
             status_t2: false
-        },
-        order: [['createdAt', 'DESC']]
+        }
     }).then(po => {
         res.status(200).send(po)
     }).catch(err => {
@@ -161,7 +169,7 @@ exports.po_upd = function(req, res, next) {
 exports.po_stat_1 = function(req, res, next) {
     return models.purchase_order.update({
         status_t1: true,
-        date_approve: req.body.date
+        date_pending: req.body.date
     }, {
     where: {
         id: req.params.po_id

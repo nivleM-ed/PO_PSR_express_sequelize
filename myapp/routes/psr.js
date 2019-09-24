@@ -9,8 +9,8 @@ router.get('/', psr.show_psr_all); //for testing purpose
 router.get('/all/:page', isLoggedIn, psr.show_psr_page); //show all with pagination
 router.get('/search/:psr_no', isLoggedIn, psr.find); //find for specific psr_no
 
-router.get('/submits', isLoggedIn, psr.get_submits); //show all psr submitted for approval
-router.get('/pending', isLoggedIn, psr.get_pending); //show all psr that is pending for approval
+router.get('/submits/:page', isLoggedIn, psr.get_submits); //show all psr submitted for approval
+router.get('/pending/:page', isLoggedIn, psr.get_pending); //show all psr that is pending for approval
 
 router.post('/add_psr', isLoggedIn, psr.psr_add); //add psr
 router.delete('/del/:psr_id', isLoggedIn, psr.psr_del); //delete psr

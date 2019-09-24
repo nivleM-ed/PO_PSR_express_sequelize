@@ -8,8 +8,8 @@ router.get('/', po.show_po_all); //for testing purpose
 router.get('/all/:page', /* isLoggedIn,*/ po.show_po_page); //show all with pagination
 router.get('/search/:po_no', isLoggedIn, po.find); //find for specific po_no
 
-router.get('/submits', isLoggedIn, po.get_submits); //show all po submitted for approval
-router.get('/pending', isLoggedIn, po.get_pending); //show all po that is pending for approval
+router.get('/submits/:page', isLoggedIn, po.get_submits); //show all po submitted for approval
+router.get('/pending/:page', isLoggedIn, po.get_pending); //show all po that is pending for approval
 
 router.post('/add_po', /* isLoggedIn,*/ po.po_add); //add po
 router.delete('/del/:po_id', isLoggedIn, po.po_del); //delete po
