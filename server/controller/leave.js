@@ -27,6 +27,19 @@ exports.show_own_leave = function(req, res, next) {
     })
 }
 
+exports.show_own_leave = function(req, res, next) {
+    return models.leave.findOne({
+        where: {
+            user_id: req.user.id,
+            id: req.params.leave_id
+        }
+    }).then(leave => {
+        res.status(200).send(leave);
+    }).catch(err => {
+        res.status(500).send("Error -> " + err);
+    })
+}
+
 exports.add_leave = function(req, res, next) {
     return models.leave.create({
         user_id: req.user.id,

@@ -20,6 +20,18 @@ exports.get_all_user = function(req, res, next) {
     })
 }
 
+exports.get_user = function(req, res, next) {
+    return models.User.findOne({
+        where: {
+            id: req.params.user_id
+        }
+    }).then(users => {
+        res.status(200).send({users: users});
+    }).catch(err => {
+        res.status(500).send("Error -> ", + err);
+    })
+}
+
 //NOT FOR FINAL PRODUCT
 //add new admin into database
 //default: admin, password
@@ -64,33 +76,6 @@ exports.add_user = function(req, res, next) {
 		}
 	})
 }
-
-
-//login for admin
-//not needed -> normal user login -> check for is_admin is true
-// exports.admin_login = function(req, res, next) {
-//     passport.authenticate('local', function(err, user, info) {
-//         if (err) {
-//             res.send(err); 
-//         } else if(!user) {
-//             res.send(info);
-//         } else {
-//             req.logIn(user, function(err) {
-//                 if(err) {return res.send(err)}
-//                 return res.send(user);
-//             })
-//         }
-//       })(req, res, next);
-// }
-
-
-//logout for admin
-//logout is the same as user logout
-// exports.admin_logout = function(req, res, next) {
-//     req.logout();
-//     req.session.destroy();
-//     res.status(200).send({logout:"logout"});
-// }
 
 
 //delete user
