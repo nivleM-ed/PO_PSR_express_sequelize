@@ -27,7 +27,7 @@ exports.show_own_leave = function(req, res, next) {
     })
 }
 
-exports.show_own_leave = function(req, res, next) {
+exports.report = function(req, res, next) {
     return models.leave.findOne({
         where: {
             user_id: req.user.id,
