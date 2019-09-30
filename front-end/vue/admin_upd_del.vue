@@ -1,5 +1,5 @@
 <script>
-import user from '../../src/assets/scripts/admin'; //directory to admin.js
+import admin from '../../src/assets/scripts/admin'; //directory to admin.js
 
 export default {
     data(){

@@ -1,5 +1,5 @@
 <script>
-import user from '../../src/assets/scripts/psr'; //directory to psr.js
+import psr from '../../src/assets/scripts/psr'; //directory to psr.js
 
 export default {
     data(){

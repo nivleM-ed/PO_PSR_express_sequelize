@@ -1,5 +1,5 @@
 <script>
-import user from '../../src/assets/scripts/leave'; //directory to leave.js
+import leave from '../../src/assets/scripts/leave'; //directory to leave.js
 
 export default {
     data(){

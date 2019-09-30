@@ -1,5 +1,5 @@
 <script>
-import user from '../../src/assets/scripts/po'; //directory to po.js
+import po from '../../src/assets/scripts/po'; //directory to po.js
 
 export default {
     data(){

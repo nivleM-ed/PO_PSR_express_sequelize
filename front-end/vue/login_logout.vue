@@ -30,6 +30,7 @@ export default {
             } catch (err) {
                 this.error = err.message;
             }
+        
         }
     }
     
