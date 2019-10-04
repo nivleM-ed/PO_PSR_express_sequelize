@@ -164,7 +164,7 @@ exports.psr_upd = function(req, res, next) {
 exports.psr_stat_1 = function(req, res, next) {
     return models.psr.update({
         status_t1: true,
-        date_approve: req.body.date
+        date_approve: new Date()
     }, {
     where: {
         id: req.params.psr_id
@@ -181,7 +181,7 @@ exports.psr_stat_1 = function(req, res, next) {
 exports.psr_stat_2 = function(req, res, next) {
     return models.psr.update({
         status_t2: true,
-        date_approve: req.body.date
+        date_approve: new Date()
     }, {
     where: {
         id: req.params.psr_id

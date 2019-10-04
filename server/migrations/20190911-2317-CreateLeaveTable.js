@@ -26,11 +26,11 @@ module.exports = {
             },
             date_from: { //purchase order date
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.DATE
             },
             date_to: { //purchase order date
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.DATE
             },
             reason: { //purchase order date
                 allowNull: false,

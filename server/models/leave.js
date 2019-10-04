@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         date_from: { //purchase order date
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.DATE
         },
         date_to: { //purchase order date
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.DATE
         },
         reason: { //purchase order date
             allowNull: false,

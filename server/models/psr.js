@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         psr_date: { //purchase order date
             allowNull: true,
-            type: DataTypes.STRING  //cannot be Sequelize.DATE(timestamp)
+            type: DataTypes.DATE  //cannot be Sequelize.DATE(timestamp)
         },
         purchase_class: { //purchase class
             allowNull: true,
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         date_req: {  //date required
             allowNull: true,
-            type: DataTypes.STRING
+            type: DataTypes.DATE
         },
         project_title: {  //project title
             allowNull: true,

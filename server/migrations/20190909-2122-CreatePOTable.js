@@ -33,7 +33,7 @@ module.exports = {
             },
             po_date: { //purchase order date
                 allowNull: true,
-                type: Sequelize.STRING  //change to .DATE once moment.js work
+                type: Sequelize.DATE  //change to .DATE once moment.js work
             },
             po_ref: { //purchase order reference
                 allowNull: true,
@@ -45,7 +45,7 @@ module.exports = {
             },
             delv_due: { //delivery due
                 allowNull: true,
-                type: Sequelize.STRING  //change to .DATE once moment.js work
+                type: Sequelize.DATE  //change to .DATE once moment.js work
             },
             ship_mode: { //mode of shipment
                 allowNull: true,

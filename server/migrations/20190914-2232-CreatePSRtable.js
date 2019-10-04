@@ -34,7 +34,7 @@ module.exports = {
             },
             psr_date: { //purchase order date
                 allowNull: true,
-                type: Sequelize.STRING  //cannot be Sequelize.DATE(timestamp)
+                type: Sequelize.DATE  //cannot be Sequelize.DATE(timestamp)
             },
             purchase_class: { //purchase class
                 allowNull: true,
@@ -50,7 +50,7 @@ module.exports = {
             },
             date_req: {  //date required
                 allowNull: true,
-                type: Sequelize.STRING  //cannot be Sequelize.DATE(timestamp)
+                type: Sequelize.DATE  //cannot be Sequelize.DATE(timestamp)
             },
             project_title: {  //project title
                 allowNull: true,

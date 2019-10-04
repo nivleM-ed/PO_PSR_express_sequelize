@@ -169,7 +169,7 @@ exports.po_upd = function(req, res, next) {
 exports.po_stat_1 = function(req, res, next) {
     return models.purchase_order.update({
         status_t1: true,
-        date_pending: req.body.date
+        date_pending: new Date()
     }, {
     where: {
         id: req.params.po_id
@@ -186,7 +186,7 @@ exports.po_stat_1 = function(req, res, next) {
 exports.po_stat_2 = function(req, res, next) {
     return models.purchase_order.update({
         status_t1: true,
-        date_approve: req.body.date
+        date_approve: new Date()
     }, {
     where: {
         id: req.params.po_id
