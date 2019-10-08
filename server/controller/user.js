@@ -12,7 +12,7 @@ const generateHash = function(password) {
 
 //login
 exports.login = function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
+    passport.authenticate('local', {session:true}, function(err, user, info) {
         if (err) {
             res.send(err); 
         } else if(!user) {
@@ -20,6 +20,8 @@ exports.login = function(req, res, next) {
         } else {
             req.logIn(user, function(err) {
                 if(err) {return res.send(err)}
+                console.log("Session send:")
+                console.log(req.session)
                 return res.send(user);
             })
         }

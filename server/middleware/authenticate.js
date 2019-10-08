@@ -1,6 +1,8 @@
 let createError = require('http-errors');
 
 exports.isLoggedIn = function(req, res, next) {
+    console.log("Session received:")
+    console.log(req.session);
     if(req.user)
         next();
     else

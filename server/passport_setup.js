@@ -14,7 +14,7 @@ module.exports = function(passport) {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		console.log("deserialize");
+		console.log("passport.deserializeUser");
 		models.User.findOne({
 			where: {
 				'id' : id
@@ -42,13 +42,13 @@ module.exports = function(passport) {
 		}).then(user => {
 			if (user == null) {
 				console.log("user is null");
-				return done(null, false, { error: 'noUserExist'})
+				return done(null, false, { err: 'noUserExist'})
 			} else if (user.password == null || user.password == undefined) {
 				console.log("password is null");
-				return done(null, false, { error: 'pwdProblem'})
+				return done(null, false, { err: 'pwdProblem'})
 			} else if(!validPassword(user, password)) {
 				console.log("password is wrong");
-				return done(null, false, { error: 'incorrectPwdUsername' })
+				return done(null, false, { err: 'incorrectPwdUsername' })
 			}
 			//  else if(user.is_admin == false) {
 			// 	return done(null, false, {error: 'noPermission'});

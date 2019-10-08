@@ -17,11 +17,27 @@ var admin = require('./routes/admin');
 require('./passport_setup')(passport);
 
 var app = express();
-app.use(cors());
+// app.use(cors({
+//   origin: "http://localhost:8080",
+//   credentials: true,
+//   exposedHeaders: ['Content-Length', 'Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+// }));
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
+  if ('OPTIONS' == req.method) {
+       res.send(200);
+   } else {
+       next();
+   }
+  });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,7 +45,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: 'p@ssw0rd'}));
+app.use(session({
+  secret:"apassword",
+  // saveUninitialized:false,
+  // resave:false,
+  //cookie:{secure:false, httpOnly:true, maxAge:600000000, domain: 'http//localhost:8080', path: '/'}
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 

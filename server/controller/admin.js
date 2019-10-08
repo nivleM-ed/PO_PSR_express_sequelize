@@ -12,11 +12,11 @@ const generateHash = function(password) {
 //get all the users for main page
 exports.get_all_user = function(req, res, next) {
     return models.User.findAll({
-
+        order: [['createdAt', 'DESC']]
     }).then(users => {
         res.status(200).send({users: users});
     }).catch(err => {
-        res.status(500).send("Error -> ", + err);
+        res.status(500).send(err);
     })
 }
 
@@ -28,7 +28,7 @@ exports.get_user = function(req, res, next) {
     }).then(users => {
         res.status(200).send({users: users});
     }).catch(err => {
-        res.status(500).send("Error -> ", + err);
+        res.status(500).send(err);
     })
 }
 
@@ -49,7 +49,7 @@ exports.add_admin = function(req, res, next) {
             return newUser.save().then(result => {
                 res.status(200).send();
             }).catch(err => {
-                res.status(500).send("Error -> " + err);
+                res.status(500).send(err);
             })	
 		}
 	})
@@ -71,7 +71,7 @@ exports.add_user = function(req, res, next) {
             return newUser.save().then(result => {
                 res.status(200).send();
             }).catch(err => {
-                res.status(500).send("Error -> " + err);
+                res.status(500).send(err);
             })	
 		}
 	})
@@ -87,7 +87,7 @@ exports.del_user = function(req, res, next) {
     }).then(result => {
         res.status(200).send();
     }).catch(err => {
-        res.status(500).send("Error -> ", + err);
+        res.status(500).send(err);
     })
 }
 
@@ -105,6 +105,6 @@ exports.update_tier = function(req, res, next) {
     }).then(result => {
         res.status(200).send();
     }).catch(err => {
-        res.status(500).send("Error -> ", + err);
+        res.status(500).send(err);
     })
 }
