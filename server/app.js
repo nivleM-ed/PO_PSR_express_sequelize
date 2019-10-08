@@ -47,9 +47,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret:"apassword",
-  // saveUninitialized:false,
-  // resave:false,
-  //cookie:{secure:false, httpOnly:true, maxAge:600000000, domain: 'http//localhost:8080', path: '/'}
+  saveUninitialized:false,
+  resave:false,
+  cookie:{secure:false, httpOnly:true, maxAge:600000, path: '/'}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -59,6 +59,15 @@ app.use('/po', purchase_order);
 app.use('/psr', psr);
 app.use('/leave', leave);
 app.use('/admin', admin);
+
+//For production
+if (process.env.NODE_ENV === 'production') {
+  //Static folder of vue.js dist
+  app.use(express.static(__dirname + '/public'));
+
+  //Handle SPA (Single Page Application)
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -73,7 +82,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error'); //can't render since no views engine
 });
 
 module.exports = app;

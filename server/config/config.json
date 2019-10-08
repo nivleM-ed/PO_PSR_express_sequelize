@@ -22,10 +22,10 @@
     }
   },
   "production": {
-    "username": "root",
-    "password": null,
+    "username": "postgres",
+    "password": "password",
     "database": "po_psr",
-    "host": "192.168.193.236",
+    "host": "127.0.0.1",
     "dialect": "postgres",
     "port": "5432",
     "dialectOptions": {
