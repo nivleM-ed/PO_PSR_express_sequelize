@@ -1,0 +1,136 @@
+2019-10-13T01:37:33.005Z [leave_show_all_leave] error: SequelizeDatabaseError: column "updatedAt" does not exist
+2019-10-13T01:41:32.517Z [leave_show_all_leave] error: SequelizeDatabaseError: column "updatedAt" does not exist
+2019-10-13T01:42:29.255Z [leave_show_all_leave] error: SequelizeDatabaseError: column "updatedAt" does not exist
+2019-10-13T01:42:29.942Z [leave_show_all_leave] error: SequelizeDatabaseError: column "updatedAt" does not exist
+2019-10-13T01:42:38.660Z [leave_show_all_leave] error: SequelizeDatabaseError: column "updatedAt" does not exist
+2019-10-13T03:36:51.193Z [leave_show_all_leave] error: SequelizeDatabaseError: column "updatedAt" does not exist
+2019-10-13T03:53:27.399Z [undefined] error: uncaughtException: Unexpected identifier
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                is_admin: true
+                ^^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:53:29.838Z [undefined] error: uncaughtException: Unexpected token :
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                is_admin: true
+                        ^
+
+SyntaxError: Unexpected token :
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:53:33.261Z [undefined] error: uncaughtException: Unexpected token :
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                is_admin: true
+                        ^
+
+SyntaxError: Unexpected token :
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:54:06.296Z [undefined] error: uncaughtException: Unexpected token }
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:119
+            });
+            ^
+
+SyntaxError: Unexpected token }
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:56:42.081Z [undefined] error: uncaughtException: stream.write is not a function
+TypeError: stream.write is not a function
+    at Array.logRequest (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\morgan\index.js:130:14)
+    at listener (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:169:15)
+    at onFinish (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:100:5)
+    at callback (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:55:10)
+    at Socket.onevent (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:93:5)
+    at Socket.emit (events.js:203:15)
+    at TCP._handle.close (net.js:606:12)
+2019-10-14T12:30:26.920Z [undefined] error: uncaughtException: stream.write is not a function
+TypeError: stream.write is not a function
+    at Array.logRequest (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\morgan\index.js:130:14)
+    at listener (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:169:15)
+    at onFinish (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:100:5)
+    at callback (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:55:10)
+    at Socket.onevent (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:93:5)
+    at Socket.emit (events.js:203:15)
+    at TCP._handle.close (net.js:606:12)

@@ -1,0 +1,1113 @@
+{ level: 'debug',
+  label: 'user_login',
+  message: 'melvin',
+  timestamp: '2019-10-10T21:07:23.109Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'melvin',
+  timestamp: '2019-10-10T21:07:46.306Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-10T21:17:46.310Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'ac9eb271-77dd-4202-aae2-e67cb190fe54' } },
+  timestamp: '2019-10-10T21:08:10.920Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-10T21:47:44.922Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false } },
+  timestamp: '2019-10-10T21:37:44.930Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert1',
+  timestamp: '2019-10-13T01:37:23.163Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T01:47:23.173Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'e889ccfe-291a-4c27-bf9c-eb7e0fdf3521' } },
+  timestamp: '2019-10-13T01:37:32.882Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T01:47:33.006Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'e889ccfe-291a-4c27-bf9c-eb7e0fdf3521' } },
+  timestamp: '2019-10-13T01:41:32.448Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T01:51:32.517Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'e889ccfe-291a-4c27-bf9c-eb7e0fdf3521' } },
+  timestamp: '2019-10-13T01:42:29.149Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T01:52:29.255Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'e889ccfe-291a-4c27-bf9c-eb7e0fdf3521' } },
+  timestamp: '2019-10-13T01:42:29.875Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T01:52:29.943Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'e889ccfe-291a-4c27-bf9c-eb7e0fdf3521' } },
+  timestamp: '2019-10-13T01:42:38.623Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert1',
+  timestamp: '2019-10-13T03:36:42.590Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T03:46:42.608Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'e889ccfe-291a-4c27-bf9c-eb7e0fdf3521' } },
+  timestamp: '2019-10-13T03:36:51.081Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert1',
+  timestamp: '2019-10-13T03:49:15.618Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-13T03:59:15.633Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: '8b3171de-d905-4b7e-81ef-1ddb5a0cdf5c' } },
+  timestamp: '2019-10-13T03:49:31.188Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert1',
+  timestamp: '2019-10-13T03:51:54.238Z' }
+{ error:
+   C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                   is_admin: true
+                   ^^^^^^^^
+   
+   SyntaxError: Unexpected identifier
+       at Module._compile (internal/modules/cjs/loader.js:723:23)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17),
+  level: 'error',
+  message:
+   'uncaughtException: Unexpected identifier\nC:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:86\n                is_admin: true\n                ^^^^^^^^\n\nSyntaxError: Unexpected identifier\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  stack:
+   'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:86\n                is_admin: true\n                ^^^^^^^^\n\nSyntaxError: Unexpected identifier\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  exception: true,
+  date: 'Sun Oct 13 2019 11:53:26 GMT+0800 (Malaysia Time)',
+  process:
+   { pid: 10236,
+     uid: null,
+     gid: null,
+     cwd:
+      'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server',
+     execPath: 'C:\\Program Files\\nodejs\\node.exe',
+     version: 'v10.16.3',
+     argv:
+      [ 'C:\\Program Files\\nodejs\\node.exe',
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\bin\\www' ],
+     memoryUsage:
+      { rss: 57139200,
+        heapTotal: 40673280,
+        heapUsed: 20412728,
+        external: 72939 } },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 46497 },
+  trace:
+   [ { column: 23,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 723,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js',
+       function: null,
+       line: 3,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js',
+       function: null,
+       line: 15,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false } ],
+  timestamp: '2019-10-13T03:53:26.936Z' }
+{ error:
+   C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                   is_admin: true
+                           ^
+   
+   SyntaxError: Unexpected token :
+       at Module._compile (internal/modules/cjs/loader.js:723:23)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17),
+  level: 'error',
+  message:
+   'uncaughtException: Unexpected token :\nC:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:86\n                is_admin: true\n                        ^\n\nSyntaxError: Unexpected token :\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  stack:
+   'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:86\n                is_admin: true\n                        ^\n\nSyntaxError: Unexpected token :\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  exception: true,
+  date: 'Sun Oct 13 2019 11:53:29 GMT+0800 (Malaysia Time)',
+  process:
+   { pid: 13264,
+     uid: null,
+     gid: null,
+     cwd:
+      'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server',
+     execPath: 'C:\\Program Files\\nodejs\\node.exe',
+     version: 'v10.16.3',
+     argv:
+      [ 'C:\\Program Files\\nodejs\\node.exe',
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\bin\\www' ],
+     memoryUsage:
+      { rss: 57327616,
+        heapTotal: 40673280,
+        heapUsed: 20634952,
+        external: 81132 } },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 46499 },
+  trace:
+   [ { column: 23,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 723,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js',
+       function: null,
+       line: 3,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js',
+       function: null,
+       line: 15,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false } ],
+  timestamp: '2019-10-13T03:53:29.286Z' }
+{ error:
+   C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                   is_admin: true
+                           ^
+   
+   SyntaxError: Unexpected token :
+       at Module._compile (internal/modules/cjs/loader.js:723:23)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17),
+  level: 'error',
+  message:
+   'uncaughtException: Unexpected token :\nC:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:86\n                is_admin: true\n                        ^\n\nSyntaxError: Unexpected token :\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  stack:
+   'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:86\n                is_admin: true\n                        ^\n\nSyntaxError: Unexpected token :\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  exception: true,
+  date: 'Sun Oct 13 2019 11:53:31 GMT+0800 (Malaysia Time)',
+  process:
+   { pid: 13388,
+     uid: null,
+     gid: null,
+     cwd:
+      'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server',
+     execPath: 'C:\\Program Files\\nodejs\\node.exe',
+     version: 'v10.16.3',
+     argv:
+      [ 'C:\\Program Files\\nodejs\\node.exe',
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\bin\\www' ],
+     memoryUsage:
+      { rss: 57196544,
+        heapTotal: 40673280,
+        heapUsed: 20544256,
+        external: 72941 } },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 46502 },
+  trace:
+   [ { column: 23,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 723,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js',
+       function: null,
+       line: 3,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js',
+       function: null,
+       line: 15,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false } ],
+  timestamp: '2019-10-13T03:53:32.024Z' }
+{ error:
+   C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:119
+               });
+               ^
+   
+   SyntaxError: Unexpected token }
+       at Module._compile (internal/modules/cjs/loader.js:723:23)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17)
+       at require (internal/modules/cjs/helpers.js:25:18)
+       at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+       at Module._compile (internal/modules/cjs/loader.js:778:30)
+       at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+       at Module.load (internal/modules/cjs/loader.js:653:32)
+       at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+       at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+       at Module.require (internal/modules/cjs/loader.js:692:17),
+  level: 'error',
+  message:
+   'uncaughtException: Unexpected token }\nC:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:119\n            });\n            ^\n\nSyntaxError: Unexpected token }\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  stack:
+   'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\controller\\admin.js:119\n            });\n            ^\n\nSyntaxError: Unexpected token }\n    at Module._compile (internal/modules/cjs/loader.js:723:23)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js:3:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.<anonymous> (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js:15:13)\n    at Module._compile (internal/modules/cjs/loader.js:778:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)\n    at Module.load (internal/modules/cjs/loader.js:653:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:585:3)\n    at Module.require (internal/modules/cjs/loader.js:692:17)',
+  exception: true,
+  date: 'Sun Oct 13 2019 11:54:05 GMT+0800 (Malaysia Time)',
+  process:
+   { pid: 1924,
+     uid: null,
+     gid: null,
+     cwd:
+      'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server',
+     execPath: 'C:\\Program Files\\nodejs\\node.exe',
+     version: 'v10.16.3',
+     argv:
+      [ 'C:\\Program Files\\nodejs\\node.exe',
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\bin\\www' ],
+     memoryUsage:
+      { rss: 57081856,
+        heapTotal: 40148992,
+        heapUsed: 20571536,
+        external: 81132 } },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 46536 },
+  trace:
+   [ { column: 23,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 723,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\routes\\admin.js',
+       function: null,
+       line: 3,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false },
+     { column: 18,
+       file: 'internal/modules/cjs/helpers.js',
+       function: 'require',
+       line: 25,
+       method: null,
+       native: false },
+     { column: 13,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\app.js',
+       function: null,
+       line: 15,
+       method: null,
+       native: false },
+     { column: 30,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._compile',
+       line: 778,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._extensions..js',
+       line: 789,
+       method: '.js',
+       native: false },
+     { column: 32,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.load',
+       line: 653,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'tryModuleLoad',
+       line: 593,
+       method: null,
+       native: false },
+     { column: 3,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module._load',
+       line: 585,
+       method: '_load',
+       native: false },
+     { column: 17,
+       file: 'internal/modules/cjs/loader.js',
+       function: 'Module.require',
+       line: 692,
+       method: 'require',
+       native: false } ],
+  timestamp: '2019-10-13T03:54:05.942Z' }
+{ message: '404 - Not Found - /admin/add_user - POST - 127.0.0.1',
+  level: 'error',
+  timestamp: '2019-10-13T03:56:21.948Z' }
+{ error:
+   TypeError: stream.write is not a function
+       at Array.logRequest (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\morgan\index.js:130:14)
+       at listener (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:169:15)
+       at onFinish (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:100:5)
+       at callback (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:55:10)
+       at Socket.onevent (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:93:5)
+       at Socket.emit (events.js:203:15)
+       at TCP._handle.close (net.js:606:12),
+  level: 'error',
+  message:
+   'uncaughtException: stream.write is not a function\nTypeError: stream.write is not a function\n    at Array.logRequest (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\morgan\\index.js:130:14)\n    at listener (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:169:15)\n    at onFinish (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:100:5)\n    at callback (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:55:10)\n    at Socket.onevent (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:93:5)\n    at Socket.emit (events.js:203:15)\n    at TCP._handle.close (net.js:606:12)',
+  stack:
+   'TypeError: stream.write is not a function\n    at Array.logRequest (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\morgan\\index.js:130:14)\n    at listener (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:169:15)\n    at onFinish (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:100:5)\n    at callback (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:55:10)\n    at Socket.onevent (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:93:5)\n    at Socket.emit (events.js:203:15)\n    at TCP._handle.close (net.js:606:12)',
+  exception: true,
+  date: 'Sun Oct 13 2019 11:56:41 GMT+0800 (Malaysia Time)',
+  process:
+   { pid: 588,
+     uid: null,
+     gid: null,
+     cwd:
+      'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server',
+     execPath: 'C:\\Program Files\\nodejs\\node.exe',
+     version: 'v10.16.3',
+     argv:
+      [ 'C:\\Program Files\\nodejs\\node.exe',
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\bin\\www' ],
+     memoryUsage:
+      { rss: 43352064,
+        heapTotal: 24420352,
+        heapUsed: 18865912,
+        external: 112040 } },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 46692 },
+  trace:
+   [ { column: 14,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\morgan\\index.js',
+       function: 'Array.logRequest',
+       line: 130,
+       method: 'logRequest',
+       native: false },
+     { column: 15,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js',
+       function: 'listener',
+       line: 169,
+       method: null,
+       native: false },
+     { column: 5,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js',
+       function: 'onFinish',
+       line: 100,
+       method: null,
+       native: false },
+     { column: 10,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js',
+       function: 'callback',
+       line: 55,
+       method: null,
+       native: false },
+     { column: 5,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js',
+       function: 'Socket.onevent',
+       line: 93,
+       method: 'onevent',
+       native: false },
+     { column: 15,
+       file: 'events.js',
+       function: 'Socket.emit',
+       line: 203,
+       method: 'emit',
+       native: false },
+     { column: 12,
+       file: 'net.js',
+       function: 'TCP._handle.close',
+       line: 606,
+       method: 'close',
+       native: false } ],
+  timestamp: '2019-10-13T03:56:41.662Z' }
+{ message: '404 - Not Found - /admin_add - POST - 127.0.0.1',
+  level: 'error',
+  timestamp: '2019-10-14T12:30:11.852Z' }
+{ error:
+   TypeError: stream.write is not a function
+       at Array.logRequest (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\morgan\index.js:130:14)
+       at listener (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:169:15)
+       at onFinish (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:100:5)
+       at callback (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:55:10)
+       at Socket.onevent (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:93:5)
+       at Socket.emit (events.js:203:15)
+       at TCP._handle.close (net.js:606:12),
+  level: 'error',
+  message:
+   'uncaughtException: stream.write is not a function\nTypeError: stream.write is not a function\n    at Array.logRequest (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\morgan\\index.js:130:14)\n    at listener (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:169:15)\n    at onFinish (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:100:5)\n    at callback (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:55:10)\n    at Socket.onevent (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:93:5)\n    at Socket.emit (events.js:203:15)\n    at TCP._handle.close (net.js:606:12)',
+  stack:
+   'TypeError: stream.write is not a function\n    at Array.logRequest (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\morgan\\index.js:130:14)\n    at listener (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:169:15)\n    at onFinish (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js:100:5)\n    at callback (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:55:10)\n    at Socket.onevent (C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js:93:5)\n    at Socket.emit (events.js:203:15)\n    at TCP._handle.close (net.js:606:12)',
+  exception: true,
+  date: 'Mon Oct 14 2019 20:30:26 GMT+0800 (Malaysia Time)',
+  process:
+   { pid: 1420,
+     uid: null,
+     gid: null,
+     cwd:
+      'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server',
+     execPath: 'C:\\Program Files\\nodejs\\node.exe',
+     version: 'v10.16.3',
+     argv:
+      [ 'C:\\Program Files\\nodejs\\node.exe',
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\bin\\www' ],
+     memoryUsage:
+      { rss: 42074112,
+        heapTotal: 23896064,
+        heapUsed: 18310816,
+        external: 25100 } },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 163916 },
+  trace:
+   [ { column: 14,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\morgan\\index.js',
+       function: 'Array.logRequest',
+       line: 130,
+       method: 'logRequest',
+       native: false },
+     { column: 15,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js',
+       function: 'listener',
+       line: 169,
+       method: null,
+       native: false },
+     { column: 5,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\on-finished\\index.js',
+       function: 'onFinish',
+       line: 100,
+       method: null,
+       native: false },
+     { column: 10,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js',
+       function: 'callback',
+       line: 55,
+       method: null,
+       native: false },
+     { column: 5,
+       file:
+        'C:\\Users\\Melvin\\Documents\\GithubRepo\\PO_PSR_express_sequelize\\server\\node_modules\\ee-first\\index.js',
+       function: 'Socket.onevent',
+       line: 93,
+       method: 'onevent',
+       native: false },
+     { column: 15,
+       file: 'events.js',
+       function: 'Socket.emit',
+       line: 203,
+       method: 'emit',
+       native: false },
+     { column: 12,
+       file: 'net.js',
+       function: 'TCP._handle.close',
+       line: 606,
+       method: 'close',
+       native: false } ],
+  timestamp: '2019-10-14T12:30:26.486Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert1',
+  timestamp: '2019-10-14T13:14:41.475Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-14T13:24:41.503Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: '1c437be2-b147-42a1-af6b-6ebe559b8cb4' } },
+  timestamp: '2019-10-14T13:14:47.811Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert2',
+  timestamp: '2019-10-14T13:15:20.004Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-14T13:25:20.011Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'acb3da2f-760e-407a-a96c-a92ef409984c' } },
+  timestamp: '2019-10-14T13:15:25.406Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-14T13:25:25.475Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: 'acb3da2f-760e-407a-a96c-a92ef409984c' } },
+  timestamp: '2019-10-14T13:16:07.952Z' }
+{ level: 'debug',
+  label: 'user_login',
+  message: 'usert3',
+  timestamp: '2019-10-14T13:28:50.955Z' }
+{ level: 'debug',
+  label: 'Login Session',
+  message:
+   Session {
+     cookie:
+      { path: '/',
+        _expires: 2019-10-14T13:38:50.979Z,
+        originalMaxAge: 600000,
+        httpOnly: true,
+        secure: false },
+     passport: { user: '1a7bdef5-9900-4346-bbc6-c30db59b86d4' } },
+  timestamp: '2019-10-14T13:29:06.970Z' }

@@ -13,7 +13,7 @@ const validateCreateUserFields = function(errors, req) {
 exports.validateUser = function(errors, req) {
 	return new Promise(function(resolve, reject) {
 		validateCreateUserFields(errors, req);
-		return models.User.findOne({
+		return models.Users.findOne({
 			where: {
 				username: req.body.username
 			}

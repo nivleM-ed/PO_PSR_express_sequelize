@@ -16,7 +16,7 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updateAt: {
+            updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
@@ -26,11 +26,11 @@ module.exports = {
             },
             date_from: { //purchase order date
                 allowNull: false,
-                type: Sequelize.DATE
+                type: Sequelize.DATEONLY
             },
             date_to: { //purchase order date
                 allowNull: false,
-                type: Sequelize.DATE
+                type: Sequelize.DATEONLY
             },
             reason: { //purchase order date
                 allowNull: false,
@@ -41,6 +41,8 @@ module.exports = {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false
             },
+        }, {
+            freezeTableName: true
         });
     },
     down: (queryInterface, Sequelize) => {

@@ -23,7 +23,7 @@ module.exports = function(passport) {
 			}
 		}).then(user => {
 			if (user == null) {
-				models.User.findOne({
+				models.Users.findOne({
 					where: {
 						'id': id
 					}
@@ -47,7 +47,7 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		return models.User.findOne({
+		return models.Users.findOne({
 			where: {
 				'username' : username
 			},

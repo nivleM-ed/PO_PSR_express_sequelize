@@ -20,11 +20,11 @@ module.exports = {
                 defaultValue: Sequelize.UUIDV4
             },
             createdAt: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.DATE
             },
-            updateAt: {
-                allowNull: false,
+            updatedAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
             psr_no: { //purchase order number
@@ -50,7 +50,7 @@ module.exports = {
             },
             date_req: {  //date required
                 allowNull: true,
-                type: Sequelize.DATE  //cannot be Sequelize.DATE(timestamp)
+                type: Sequelize.DATEONLY  //cannot be Sequelize.DATE(timestamp)
             },
             project_title: {  //project title
                 allowNull: true,
@@ -84,13 +84,15 @@ module.exports = {
                 allowNull: false
             },
             date_pending: {
-                type: Sequelize.STRING,
+                type: Sequelize.DATEONLY,
                 allowNull: true
             },
             date_approve: {
-                type: Sequelize.STRING,
+                type: Sequelize.DATEONLY,
                 allowNull: true
             }
+        }, {
+            freezeTableName: true
         });
     },
     down: (queryInterface, Sequelize) => {

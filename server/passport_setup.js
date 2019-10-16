@@ -1,8 +1,10 @@
 //for user authentication
 let LocalStrategy = require('passport-local').Strategy;
-
 let bcrypt = require('bcrypt');
 let models = require('./models');
+let loggerDebug = require('./logs/loggerDebug.js');
+let loggerInfo = require('./logs/loggerInfo.js');
+let loggerError = require('./logs/loggerError.js');
 
 const validPassword = function(user, password) {
 	return bcrypt.compareSync(password, user.password);
@@ -10,21 +12,38 @@ const validPassword = function(user, password) {
 
 module.exports = function(passport) {
 	passport.serializeUser(function(user, done) {
+		loggerInfo.log({
+			level: 'info',
+			label: 'Passport',
+			message: 'Serialize User'
+		})
 		return done(null, user.id)
 	});
 
 	passport.deserializeUser(function(id, done) {
-		console.log("passport.deserializeUser");
-		models.User.findOne({
+		loggerInfo.log({
+			level: 'info',
+			label: 'Passport',
+			message: 'Deserialize User - Start'
+		})
+		models.Users.findOne({
 			where: {
 				'id' : id
 			}
 		}).then(user => {
 			if (user == null) {
-				console.log("User is null");
+				loggerInfo.log({
+					level: 'info',
+					label: 'Passport',
+					message: 'Deserialize User - Wrong UserId'
+				})
 				return done(new Error('Wrong user.id'))
 			}
-			console.log("Deserialized works");
+			loggerInfo.log({
+				level: 'info',
+				label: 'Passport',
+				message: 'Deserialize User - Done'
+			})
 			return done(null, user);
 		})
 	});
@@ -35,7 +54,12 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		return models.User.findOne({
+		loggerInfo.log({
+			level: 'info',
+			label: 'Passport',
+			message: 'Find User'
+		})
+		return models.Users.findOne({
 			where: {
 				'username' : username
 			},
@@ -50,11 +74,13 @@ module.exports = function(passport) {
 				console.log("password is wrong");
 				return done(null, false, { err: 'incorrectPwdUsername' })
 			}
-			//  else if(user.is_admin == false) {
-			// 	return done(null, false, {error: 'noPermission'});
-			// }
 			return done(null, user);
 		}).catch(err => {
+			loggerError.log({
+				level: 'error',
+				label: 'Passport',
+				message: err
+			})
 			done(err, false);
 		})
 	}))

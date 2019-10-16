@@ -1,0 +1,28 @@
+{
+	"username":"admin",
+	"firstname":"admin",
+	"lastname":"admin",
+	"password":"password",
+	"is_admin":"true"
+}
+{
+	"username":"usert1",
+	"firstname":"usert1_fn",
+	"lastname":"usert1_ln",
+	"password":"password",
+	"t1":"true"
+}
+{
+	"username":"usert2",
+	"firstname":"usert2_fn",
+	"lastname":"usert2_ln",
+	"password":"password",
+	"t2":"true"
+}
+{
+	"username":"usert3",
+	"firstname":"usert3_fn",
+	"lastname":"usert3_ln",
+	"password":"password",
+	"t3":"true"
+}

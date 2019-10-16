@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         date_from: { //purchase order date
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         date_to: { //purchase order date
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         reason: { //purchase order date
             allowNull: false,
@@ -28,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+    }, {
+        freezeTableName: true
     });
 
     return leave;

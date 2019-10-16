@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         createdAt: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.DATE
         },
         psr_no: { //purchase order number
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         date_req: {  //date required
             allowNull: true,
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         project_title: {  //project title
             allowNull: true,
@@ -70,13 +70,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         date_pending: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATEONLY,
             allowNull: true
         },
         date_approve: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATEONLY,
             allowNull: true
         },
+    }, {
+        freezeTableName: true
     });
 
     return psr;

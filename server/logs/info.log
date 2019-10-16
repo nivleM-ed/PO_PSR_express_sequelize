@@ -1,0 +1,235 @@
+2019-10-10T21:07:22.792Z [user] info: login
+2019-10-10T21:07:22.801Z [Passport] info: Find User
+2019-10-10T21:07:23.108Z [Passport] info: Serialize User
+2019-10-10T21:07:46.180Z [Passport] info: Deserialize User - Start
+2019-10-10T21:07:46.255Z [Passport] info: Deserialize User - Done
+2019-10-10T21:07:46.256Z [user] info: login
+2019-10-10T21:07:46.256Z [Passport] info: Find User
+2019-10-10T21:07:46.305Z [Passport] info: Serialize User
+2019-10-10T21:08:10.868Z [Passport] info: Deserialize User - Start
+2019-10-10T21:08:10.919Z [Passport] info: Deserialize User - Done
+2019-10-10T21:08:10.932Z [Authenticate] info: LoggedIn
+2019-10-10T21:08:10.933Z [Authenticate] info: auth_no_t1
+2019-10-10T21:08:10.933Z [leave] info: show_all_leave
+2019-10-10T21:37:44.983Z [Authenticate] info: LoggedIn
+2019-10-10T21:37:44.984Z [Authenticate_logged_in] info: notLoggedIn
+2019-10-10T21:38:40.050Z [Admin] info: add_admin
+2019-10-13T01:34:25.077Z [user] info: login
+2019-10-13T01:34:25.083Z [Passport] info: Find User
+2019-10-13T01:35:11.602Z [Admin] info: add_admin
+2019-10-13T01:36:41.755Z [Admin] info: add_admin
+2019-10-13T01:36:54.512Z [Admin] info: add_admin
+2019-10-13T01:37:03.664Z [Admin] info: add_admin
+2019-10-13T01:37:22.979Z [user] info: login
+2019-10-13T01:37:22.980Z [Passport] info: Find User
+2019-10-13T01:37:23.163Z [Passport] info: Serialize User
+2019-10-13T01:37:32.872Z [Passport] info: Deserialize User - Start
+2019-10-13T01:37:32.881Z [Passport] info: Deserialize User - Done
+2019-10-13T01:37:32.969Z [Authenticate] info: LoggedIn
+2019-10-13T01:37:32.970Z [Authenticate] info: auth_no_t1
+2019-10-13T01:37:32.970Z [leave] info: show_all_leave
+2019-10-13T01:41:32.329Z [Passport] info: Deserialize User - Start
+2019-10-13T01:41:32.448Z [Passport] info: Deserialize User - Done
+2019-10-13T01:41:32.501Z [Authenticate] info: LoggedIn
+2019-10-13T01:41:32.501Z [Authenticate] info: auth_no_t1
+2019-10-13T01:41:32.502Z [leave] info: show_all_leave
+2019-10-13T01:42:29.040Z [Passport] info: Deserialize User - Start
+2019-10-13T01:42:29.148Z [Passport] info: Deserialize User - Done
+2019-10-13T01:42:29.248Z [Authenticate] info: LoggedIn
+2019-10-13T01:42:29.248Z [Authenticate] info: auth_no_t1
+2019-10-13T01:42:29.248Z [leave] info: show_all_leave
+2019-10-13T01:42:29.869Z [Passport] info: Deserialize User - Start
+2019-10-13T01:42:29.875Z [Passport] info: Deserialize User - Done
+2019-10-13T01:42:29.914Z [Authenticate] info: LoggedIn
+2019-10-13T01:42:29.914Z [Authenticate] info: auth_no_t1
+2019-10-13T01:42:29.914Z [leave] info: show_all_leave
+2019-10-13T01:42:38.618Z [Passport] info: Deserialize User - Start
+2019-10-13T01:42:38.623Z [Passport] info: Deserialize User - Done
+2019-10-13T01:42:38.654Z [Authenticate] info: LoggedIn
+2019-10-13T01:42:38.654Z [Authenticate] info: auth_no_t1
+2019-10-13T01:42:38.654Z [leave] info: show_all_leave
+2019-10-13T03:36:42.337Z [user] info: login
+2019-10-13T03:36:42.342Z [Passport] info: Find User
+2019-10-13T03:36:42.589Z [Passport] info: Serialize User
+2019-10-13T03:36:51.073Z [Passport] info: Deserialize User - Start
+2019-10-13T03:36:51.081Z [Passport] info: Deserialize User - Done
+2019-10-13T03:36:51.150Z [Authenticate] info: LoggedIn
+2019-10-13T03:36:51.150Z [Authenticate] info: auth_no_t1
+2019-10-13T03:36:51.150Z [leave] info: show_all_leave
+2019-10-13T03:47:51.068Z [Admin] info: add_admin
+2019-10-13T03:48:01.023Z [Admin] info: add_admin
+2019-10-13T03:48:08.488Z [Admin] info: add_admin
+2019-10-13T03:48:27.269Z [Admin] info: add_admin
+2019-10-13T03:49:15.413Z [user] info: login
+2019-10-13T03:49:15.415Z [Passport] info: Find User
+2019-10-13T03:49:15.617Z [Passport] info: Serialize User
+2019-10-13T03:49:31.132Z [Passport] info: Deserialize User - Start
+2019-10-13T03:49:31.187Z [Passport] info: Deserialize User - Done
+2019-10-13T03:49:31.219Z [Authenticate] info: LoggedIn
+2019-10-13T03:49:31.219Z [Authenticate] info: auth_no_t1
+2019-10-13T03:49:31.219Z [leave] info: show_all_leave
+2019-10-13T03:51:38.908Z [user] info: login
+2019-10-13T03:51:54.018Z [user] info: login
+2019-10-13T03:51:54.019Z [Passport] info: Find User
+2019-10-13T03:51:54.237Z [Passport] info: Serialize User
+2019-10-13T03:53:27.396Z [undefined] error: uncaughtException: Unexpected identifier
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                is_admin: true
+                ^^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:53:29.834Z [undefined] error: uncaughtException: Unexpected token :
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                is_admin: true
+                        ^
+
+SyntaxError: Unexpected token :
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:53:33.257Z [undefined] error: uncaughtException: Unexpected token :
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:86
+                is_admin: true
+                        ^
+
+SyntaxError: Unexpected token :
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:54:06.292Z [undefined] error: uncaughtException: Unexpected token }
+C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\controller\admin.js:119
+            });
+            ^
+
+SyntaxError: Unexpected token }
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\routes\admin.js:3:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\app.js:15:13)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+2019-10-13T03:56:42.074Z [undefined] error: uncaughtException: stream.write is not a function
+TypeError: stream.write is not a function
+    at Array.logRequest (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\morgan\index.js:130:14)
+    at listener (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:169:15)
+    at onFinish (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:100:5)
+    at callback (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:55:10)
+    at Socket.onevent (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:93:5)
+    at Socket.emit (events.js:203:15)
+    at TCP._handle.close (net.js:606:12)
+2019-10-14T12:30:26.911Z [undefined] error: uncaughtException: stream.write is not a function
+TypeError: stream.write is not a function
+    at Array.logRequest (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\morgan\index.js:130:14)
+    at listener (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:169:15)
+    at onFinish (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\on-finished\index.js:100:5)
+    at callback (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:55:10)
+    at Socket.onevent (C:\Users\Melvin\Documents\GithubRepo\PO_PSR_express_sequelize\server\node_modules\ee-first\index.js:93:5)
+    at Socket.emit (events.js:203:15)
+    at TCP._handle.close (net.js:606:12)
+2019-10-14T13:14:41.258Z [user] info: login
+2019-10-14T13:14:41.264Z [Passport] info: Find User
+2019-10-14T13:14:41.474Z [Passport] info: Serialize User
+2019-10-14T13:14:47.801Z [Passport] info: Deserialize User - Start
+2019-10-14T13:14:47.809Z [Passport] info: Deserialize User - Done
+2019-10-14T13:14:47.829Z [Authenticate] info: LoggedIn
+2019-10-14T13:14:47.829Z [Authenticate] info: auth_no_t1
+2019-10-14T13:14:47.829Z [Authenticate_auth_no_t1] info: noPermission
+2019-10-14T13:15:19.809Z [Passport] info: Deserialize User - Start
+2019-10-14T13:15:19.916Z [Passport] info: Deserialize User - Done
+2019-10-14T13:15:19.916Z [user] info: login
+2019-10-14T13:15:19.917Z [Passport] info: Find User
+2019-10-14T13:15:20.003Z [Passport] info: Serialize User
+2019-10-14T13:15:25.399Z [Passport] info: Deserialize User - Start
+2019-10-14T13:15:25.405Z [Passport] info: Deserialize User - Done
+2019-10-14T13:15:25.429Z [Authenticate] info: LoggedIn
+2019-10-14T13:15:25.429Z [Authenticate] info: auth_no_t1
+2019-10-14T13:15:25.430Z [leave] info: show_all_leave
+2019-10-14T13:16:07.856Z [Passport] info: Deserialize User - Start
+2019-10-14T13:16:07.951Z [Passport] info: Deserialize User - Done
+2019-10-14T13:16:07.986Z [Authenticate] info: LoggedIn
+2019-10-14T13:16:07.986Z [Authenticate] info: auth_no_t1
+2019-10-14T13:16:07.986Z [leave] info: show_all_leave
+2019-10-14T13:28:50.701Z [user] info: login
+2019-10-14T13:28:50.702Z [Passport] info: Find User
+2019-10-14T13:28:50.955Z [Passport] info: Serialize User
+2019-10-14T13:29:06.843Z [Passport] info: Deserialize User - Start
+2019-10-14T13:29:06.969Z [Passport] info: Deserialize User - Done
+2019-10-14T13:29:07.035Z [Authenticate] info: LoggedIn
+2019-10-14T13:29:07.036Z [Authenticate] info: auth_no_t1
+2019-10-14T13:29:07.036Z [leave] info: show_all_leave

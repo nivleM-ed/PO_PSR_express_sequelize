@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('User', {
+        return queryInterface.createTable('Users', {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -56,10 +56,12 @@ module.exports = {
                 defaultValue: false,
                 allowNull: false
             }
+        }, {
+            freezeTableName: true
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('User');
+        return queryInterface.dropTable('Users');
     }
 };
 

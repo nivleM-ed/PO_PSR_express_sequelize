@@ -1,35 +1,64 @@
 let models = require('../models');
 var sequelize = require('sequelize');
+let loggerDebug = require('../logs/loggerDebug.js');
+let loggerInfo = require('../logs/loggerInfo.js');
+let loggerError = require('../logs/loggerError.js');
 
 //working //not needed - just for testing purporses
-exports.show_psr_all = function(req, res, next) {
-    return models.psr.findAll({
-    }).then(psr => {
+exports.show_psr_all = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'show_psr_all'
+    })
+    return models.psr.findAll({}).then(psr => {
         res.send(psr)
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_show_psr_all',
+            message: err
+        })
+        res.status(500).send(err);
     })
 };
 
 //WORKING
-exports.show_psr_page = function(req, res, next) {
-    const limit = 3; //can be changed
+exports.show_psr_page = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'show_psr_page'
+    })
+    const limit = 8; //can be changed
 
     return models.psr.findAll({
         // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
         limit: limit,
         offset: (req.params.page - 1) * limit,
-        order: [['createdAt', 'DESC']]
+        order: [
+            ['createdAt', 'DESC']
+        ]
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'psr_show_psr_page',
+            message: err
+        })
         res.status(500).send(err);
     })
 }
 
 //WORKING
 //find psr_no
-exports.find = function(req, res, next) {
+exports.find = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'find'
+    })
     return models.psr.findOne({
         where: {
             psr_no: req.params.psr_no
@@ -37,13 +66,23 @@ exports.find = function(req, res, next) {
     }).then(psr => {
         res.status(200).send(psr)
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_find',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
 
 //ISSUE column 'nan' cannot be found 
 //get psr waiting to be accepted
-exports.get_submits = function(req, res, next) {
+exports.get_submits = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'get_submits'
+    })
     return models.psr.findAll({
         where: {
             delete_req: false,
@@ -52,18 +91,30 @@ exports.get_submits = function(req, res, next) {
         },
         limit: limit,
         offset: (req.params.page - 1) * limit,
-        order: [['createdAt', 'DESC']]
+        order: [
+            ['createdAt', 'DESC']
+        ]
     }).then(psr => {
         res.status(200).send(psr)
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_get_submits',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
 
 
 //WORKING
 //get psr waiting to be approved
-exports.get_pending = function(req, res, next) {
+exports.get_pending = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'get_pending'
+    })
     return models.psr.findAll({
         where: {
             delete_req: false,
@@ -72,17 +123,29 @@ exports.get_pending = function(req, res, next) {
         },
         limit: limit,
         offset: (req.params.page - 1) * limit,
-        order: [['createdAt', 'DESC']]
+        order: [
+            ['createdAt', 'DESC']
+        ]
     }).then(psr => {
         res.status(200).send(psr)
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_get_pending',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
 
 //WORKING
 //add purchase order
-exports.psr_add = function(req, res, next) {
+exports.psr_add = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'add'
+    })
     return models.psr.create({
         psr_no: req.body.psr_no,
         psr_date: req.body.date,
@@ -93,19 +156,28 @@ exports.psr_add = function(req, res, next) {
         date_req: req.body.date_req,
         project_title: req.body.p_title,
         vessel_code: req.body.vessel_cd,
-        delv: req.body.delv,        
+        delv: req.body.delv,
         psr_desc: req.body.desc
     }).then(psr => {
         res.status(201).send(psr)
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_add',
+            message: err
+        })
+        res.status(500).send(err);
     })
 };
 
 //WORKING
 //show specific purchase order and description
-exports.report = function(req, res, next) {
-    console.log(req.params.id);
+exports.report = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'report'
+    })
     return models.psr.findOne({
         where: {
             id: req.params.psr_id
@@ -113,28 +185,48 @@ exports.report = function(req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_report',
+            message: err
+        })
+        res.status(500).send(err);
     })
 
 };
 
 //WORKING
 //delete psr
-exports.psr_del = function(req, res, next) {
+exports.psr_del = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_del'
+    })
     return models.psr.destroy({
         where: {
             id: req.params.psr_id
         }
     }).then(psr => {
-            res.status(200).send(psr);
+        res.status(200).send(psr);
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_del',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
 
 //WORKING
 //update psr
-exports.psr_upd = function(req, res, next) {
+exports.psr_upd = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_upd'
+    })
     return models.psr.update({
         psr_no: req.body.psr_no,
         psr_date: req.body.date,
@@ -145,51 +237,75 @@ exports.psr_upd = function(req, res, next) {
         date_req: req.body.date_req,
         project_title: req.body.p_title,
         vessel_code: req.body.vessel_cd,
-        delv: req.body.delv,        
+        delv: req.body.delv,
         psr_desc: req.body.desc
     }, {
         where: {
             id: req.params.psr_id
-        }    
+        }
         //more data to be added
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_upd',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
 
 //WORKING
 //update psr status to pending
-exports.psr_stat_1 = function(req, res, next) {
+exports.psr_stat_1 = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_stat_1'
+    })
     return models.psr.update({
         status_t1: true,
         date_approve: new Date()
     }, {
-    where: {
-        id: req.params.psr_id
+        where: {
+            id: req.params.psr_id
         }
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_stat_1',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
 
 //WORKING
 //update psr status to approve
-exports.psr_stat_2 = function(req, res, next) {
+exports.psr_stat_2 = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_stat_2'
+    })
     return models.psr.update({
         status_t2: true,
         date_approve: new Date()
     }, {
-    where: {
-        id: req.params.psr_id
+        where: {
+            id: req.params.psr_id
         }
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        res.status(500).send("Error -> " + err);
+        loggerError.log({
+            level: 'error',
+            label: 'psr_stat_2',
+            message: err
+        })
+        res.status(500).send(err);
     })
 }
-

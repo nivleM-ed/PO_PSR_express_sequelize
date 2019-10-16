@@ -13,6 +13,7 @@ var purchase_order = require('./routes/purchase_order');
 var psr = require('./routes/psr');
 var leave = require('./routes/leave');
 var admin = require('./routes/admin');
+var winston = require('./logs/loggerDebug');
 
 require('./passport_setup')(passport);
 
@@ -29,7 +30,7 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
   if ('OPTIONS' == req.method) {
-       res.send(200);
+       res.sendStatus(200);
    } else {
        next();
    }
@@ -59,6 +60,7 @@ app.use('/po', purchase_order);
 app.use('/psr', psr);
 app.use('/leave', leave);
 app.use('/admin', admin);
+app.use(logger('combined', { stream: winston.stream.write }));
 
 //For production
 if (process.env.NODE_ENV === 'production') {
@@ -79,6 +81,8 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 
   // render the error page
   res.status(err.status || 500);

@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         delv_due: { //delivery due
             allowNull: true,
-            type: DataTypes.DATE  //change to .DATE once moment.js work
+            type: DataTypes.DATEONLY  //change to .DATE once moment.js work
         },
         ship_mode: { //mode of shipment
             allowNull: true,
@@ -68,13 +68,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         date_pending: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATEONLY,
             allowNull: true
         },
         date_approve: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATEONLY,
             allowNull: true
         },
+    }, {
+        freezeTableName: true
     });
 
     return purchase_order;
