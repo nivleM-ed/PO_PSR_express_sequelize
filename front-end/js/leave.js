@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const url = "http://localhost:3000/leave/"; //for production use localhost:3000
+// const url = "http://localhost:3000/leave/"; //for production use localhost:3000
+const url = "http://192.168.193.236/leave/";
 
 class leave {
   static show_all_leave() {
