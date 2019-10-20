@@ -176,7 +176,7 @@ exports.report = function (req, res, next) {
             label: 'leave_report',
             message: err
         })
-        res.status(500).send("Error -> " + err);
+        res.status(500).send(err);
     })
 }
 
@@ -199,7 +199,7 @@ exports.add_leave = function (req, res, next) {
             label: 'leave_add_leave',
             message: err
         })
-        res.status(500).send("Error -> " + err);
+        res.status(500).send(err);
     })
 }
 
@@ -221,7 +221,7 @@ exports.del_leave = function (req, res, next) {
             label: 'leave_del_leave',
             message: err
         })
-        res.status(500).send("Error -> " + err);
+        res.status(500).send(err);
     })
 }
 
@@ -245,7 +245,7 @@ exports.approve_leave = function (req, res, next) {
             label: 'leave_approve_leave',
             message: err
         })
-        res.status(500).send("error -> " + err);
+        res.status(500).send(err);
     })
 }
 
@@ -271,6 +271,6 @@ exports.upd_leave = function (req, res, next) {
             label: 'leave_upd_leave',
             message: err
         })
-        res.status(500).send("error -> " + err);
+        res.status(500).send(err);
     })
 }

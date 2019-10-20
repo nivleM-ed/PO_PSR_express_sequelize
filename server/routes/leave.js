@@ -13,7 +13,7 @@ router.get('/:leave_id', isLoggedIn, leave.report);
 router.post('/add_leave', isLoggedIn, leave.add_leave);
 router.post('/:leave_id/upd_leave', isLoggedIn, leave.upd_leave);
 router.delete('/:leave_id/del_leave', isLoggedIn, leave.del_leave);
-router.post('/:leave_id/upd', isLoggedIn, leave.approve_leave);
+router.post('/:leave_id/approve', isLoggedIn, leave.approve_leave);
 
 
 module.exports = router;

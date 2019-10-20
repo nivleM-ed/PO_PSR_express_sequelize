@@ -112,7 +112,7 @@ class leave {
   static approve_leave(leave_id) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}${leave_id}/upd`, {
+        const res = await axios.post(`${url}${leave_id}/approve`, {
           withCredentials: true
         });
         resolve(res.data);
