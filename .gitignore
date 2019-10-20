@@ -1,3 +1,6 @@
 node_modules
 *.log
 *.log
+server/logs/debug.log
+server/logs/error.log
+server/logs/info.log
