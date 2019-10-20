@@ -1,6 +1,7 @@
 node_modules
-*.log
-*.log
 server/logs/debug.log
 server/logs/error.log
 server/logs/info.log
+Documentation/Backend documentation.xlsx
+Documentation/Database documentation.xlsx
+server/logs/debug.log

@@ -77,10 +77,10 @@ exports.getCounts = function (req, res, next) {
             message: 'get_new_po'
         })
         return new Promise((resolve, reject) => {
-            return models.purchase_order.findAll({
-                attributes: [
-                    [sequelize.fn('count', sequelize.col('po_no')), 'new_count_po']
-                ],
+            return models.purchase_order.count({
+                // attributes: [
+                //     [sequelize.fn('count', sequelize.col('po_no')), 'new_count_po']
+                // ],
                 where: {
                     delete_req: false,
                     status_t1: false,
@@ -106,10 +106,10 @@ exports.getCounts = function (req, res, next) {
                 label: 'user',
                 message: 'get_pending_po'
             })
-            return models.purchase_order.findAll({
-                attributes: [
-                    [sequelize.fn('count', sequelize.col('po_no')), 'pending_count_po']
-                ],
+            return models.purchase_order.count({
+                // attributes: [
+                //     [sequelize.fn('count', sequelize.col('po_no')), 'pending_count_po']
+                // ],
                 where: {
                     delete_req: false,
                     status_t1: true,
@@ -135,10 +135,10 @@ exports.getCounts = function (req, res, next) {
             message: 'get_new_psr'
         })
         return new Promise((resolve, reject) => {
-            return models.psr.findAll({
-                attributes: [
-                    [sequelize.fn('count', sequelize.col('psr_no')), 'new_count_psr']
-                ],
+            return models.psr.count({
+                // attributes: [
+                //     [sequelize.fn('count', sequelize.col('psr_no')), 'new_count_psr']
+                // ],
                 where: {
                     delete_req: false,
                     status_t1: false,
@@ -164,10 +164,10 @@ exports.getCounts = function (req, res, next) {
             message: 'get_pending_psr'
         })
         return new Promise((resolve, reject) => {
-            return models.psr.findAll({
-                attributes: [
-                    [sequelize.fn('count', sequelize.col('psr_no')), 'pending_count_psr']
-                ],
+            return models.psr.count({
+                // attributes: [
+                //     [sequelize.fn('count', sequelize.col('psr_no')), 'pending_count_psr']
+                // ],
                 where: {
                     delete_req: false,
                     status_t1: true,
