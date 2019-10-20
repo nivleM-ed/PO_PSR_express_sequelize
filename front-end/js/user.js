@@ -4,16 +4,17 @@ import axios from "axios";
 const url = "http://192.168.193.236/";
 
 class user {
+
   static login(username, password) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}login`,
-          {
+          `${url}login`, {
             username,
             password
-          },
-          { withCredentials: true }
+          }, {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {
@@ -25,7 +26,22 @@ class user {
   static logout() {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}logout`, { withCredentials: true });
+        const res = await axios.post(`${url}logout`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static notifications() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(`${url}count`, {
+          withCredentials: true
+        });
         resolve(res.data);
       } catch (err) {
         reject(err);
@@ -33,5 +49,6 @@ class user {
     });
   }
 }
+
 
 export default user;

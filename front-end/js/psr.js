@@ -8,7 +8,9 @@ class psr {
     //only for dev purposes
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}`, { withCredentials: true });
+        const res = await axios.get(`${url}`, {
+          withCredentials: true
+        });
         resolve(res.data);
       } catch (err) {
         reject(err);
@@ -20,6 +22,19 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.get(`${url}all/${page}`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static show_all_psr() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(`${url}all_psr`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -42,10 +57,12 @@ class psr {
     });
   }
 
-  static get_submits() {
+  static get_submits(page) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}submits`, { withCredentials: true });
+        const res = await axios.get(`${url}submits/${page}`, {
+          withCredentials: true
+        });
         resolve(res.data);
       } catch (err) {
         reject(err);
@@ -53,10 +70,12 @@ class psr {
     });
   }
 
-  static get_pending() {
+  static get_pending(page) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}pending`, { withCredentials: true });
+        const res = await axios.get(`${url}pending/${page}`, {
+          withCredentials: true
+        });
         resolve(res.data);
       } catch (err) {
         reject(err);
@@ -80,8 +99,7 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}add_po`,
-          {
+          `${url}add_po`, {
             psr_no,
             date,
             psr_data,
@@ -93,8 +111,9 @@ class psr {
             vessel_cd,
             delv,
             desc
-          },
-          { withCredentials: true }
+          }, {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {
@@ -146,8 +165,7 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/upd_psr`,
-          {
+          `${url}${psr_id}/upd_psr`, {
             psr_no,
             date,
             psr_data,
@@ -159,8 +177,9 @@ class psr {
             vessel_cd,
             delv,
             desc
-          },
-          { withCredentials: true }
+          }, {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {
@@ -173,11 +192,11 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/pending`,
-          {
+          `${url}${psr_id}/pending`, {
             date_pending: Date.now()
-          },
-          { withCredentials: true }
+          }, {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {
@@ -190,11 +209,11 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/approve`,
-          {
+          `${url}${psr_id}/approve`, {
             date_approve: Date.now()
-          },
-          { withCredentials: true }
+          }, {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {

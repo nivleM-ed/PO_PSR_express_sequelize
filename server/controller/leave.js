@@ -5,12 +5,142 @@ let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
 
 
+//show all leaves WITH pagination
+exports.show_leave_page = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'leave',
+        message: 'show_leave_page'
+    })
+
+    const limit = 8;
+
+    const leave_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.leave.findAll({
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(leave => {
+                resolve(leave);
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'leave_show_all_leave',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const totalLeave = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.leave.count({
+            }).then(total => {
+                resolve(Math.ceil(total / limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'leave_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([leave_page(req, res), totalLeave()])
+        .then(result => {
+            res.status(200).send(result);
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'leave_page_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+
+}
+
+
+exports.show_own_leave = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'leave',
+        message: 'show_own_leave'
+    })
+
+    const limit = 8;
+
+    const leave_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.leave.findAll({
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }, {
+                where: {
+                    user_id: req.user.id,
+                }
+            }).then(leave => {
+                resolve(leave);
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'leave_show_own_leave',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const totalLeave = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.leave.count({
+                where: {
+                    user_id: req.user.id
+                }
+            }).then(total => {
+                resolve(Math.ceil(total / limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'leave_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([leave_page(), totalLeave()])
+        .then(result => {
+            res.status(200).send(result);
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'leave_page_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+}
+
+//show all leaves WITHOUT pagination
 exports.show_all_leave = function (req, res, next) {
     loggerInfo.log({
         level: 'info',
         label: 'leave',
         message: 'show_all_leave'
     })
+
     return models.leave.findAll({
         order: [
             ['createdAt', 'DESC']
@@ -23,34 +153,7 @@ exports.show_all_leave = function (req, res, next) {
             label: 'leave_show_all_leave',
             message: err
         })
-        res.status(500).send("Error -> " + err);
-    })
-}
-
-
-exports.show_own_leave = function (req, res, next) {
-    loggerInfo.log({
-        level: 'info',
-        label: 'leave',
-        message: 'show_own_leave'
-    })
-    return models.leave.findAll({
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    }, {
-        where: {
-            user_id: req.user.id,
-        }
-    }).then(leave => {
-        res.status(200).send(leave);
-    }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'leave_show_own_leave',
-            message: err
-        })
-        res.status(500).send("Error -> " + err);
+        res.status(500).send(err);
     })
 }
 

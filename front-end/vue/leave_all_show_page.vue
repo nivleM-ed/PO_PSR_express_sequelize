@@ -1,7 +1,7 @@
-//ONLY showing own leave - t1
+//ONLY showing all leave - t2/t3
 
 <script>
-import user from '../../src/assets/scripts/leave'; //directory to leave.js
+import leave from '../../src/assets/scripts/leave'; //directory to leave.js
 
 export default {
     data(){
@@ -9,14 +9,20 @@ export default {
             leaves: [], //do for leave in leaves
             error: '',
             page: 1,
+            total_page: '',
         };
     },
     async created() {
         try {
-            const data = await leave.show_own_leave();
-            this.leaves = data.map(leave => ({
-                ...leave
-            })) 
+            const data = await psr.show_leave_page(this.page);
+            
+            const leave1 = data.result[0]
+            this.total_page = data.result[1]
+
+            this.leaves = leave1.map(leaves => ({
+                ...leaves
+            }))
+
         } catch (err) {
             this.error = err.message;
         }

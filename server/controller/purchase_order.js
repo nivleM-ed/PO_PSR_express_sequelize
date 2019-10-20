@@ -36,21 +36,72 @@ exports.show_po_page = function (req, res, next) {
     })
     const limit = 8; //can be changed
 
+    const po_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.findAll({
+                // attributes: ['id', 'po_no', 'createdAt', 'po_date', 'delete_req', 'status_t1', 'status_t2'],
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(po => {
+                resolve(po);
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_show_po_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const total_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.count({
+                // attributes: [[sequelize.fn('COUNT', sequelize.col('id'))]]
+            }).then(total => {
+                resolve(Math.ceil(total/limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_show_po_page_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([po_page(), total_page()])
+        .then(result => {
+            res.status(200).send({result});
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'po_show_po_page_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+}
+
+//show all po WITHOUT pagination
+exports.show_all_po = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'po',
+        message: 'show_all_po'
+    })
     return models.purchase_order.findAll({
-        // attributes: ['id', 'po_no', 'createdAt', 'po_date', 'delete_req', 'status_t1', 'status_t2'],
-        limit: limit,
-        offset: (req.params.page - 1) * limit,
         order: [
             ['createdAt', 'DESC']
         ]
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'po_show_po_page',
-            message: err
-        })
         res.status(500).send(err);
     })
 }
@@ -90,27 +141,64 @@ exports.get_submits = function (req, res, next) {
     })
     const limit = 8; //can be changed
 
-    return models.purchase_order.findAll({
-        where: {
-            delete_req: false,
-            status_t1: false,
-            status_t2: false
-        },
-        limit: limit,
-        offset: (req.params.page - 1) * limit,
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    }).then(po => {
-        res.status(200).send(po)
-    }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'po_get_submits',
-            message: err
+    const getSubmits = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.findAll({
+                where: {
+                    delete_req: false,
+                    status_t1: false,
+                    status_t2: false
+                },
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(po => {
+                resolve(po)
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_get_submits',
+                    message: err
+                })
+                reject(err);
+            })
         })
-        res.status(500).send(err);
-    })
+    }
+
+    const getSubmitsTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.count({
+                where: {
+                    delete_req: false,
+                    status_t1: false,
+                    status_t2: false
+                },
+            }).then(total => {
+                resolve(Math.ceil(total/limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_get_submits_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getSubmits(req), getSubmitsTotal()])
+        .then(result => {
+            res.status(200).send({result});
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'po_get_submits_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
 }
 
 
@@ -124,27 +212,64 @@ exports.get_pending = function (req, res, next) {
     })
     const limit = 8; //can be changed
 
-    return models.purchase_order.findAll({
-        limit: limit,
-        offset: (req.params.page - 1) * limit,
-        order: [
-            ['createdAt', 'DESC']
-        ],
-        where: {
-            delete_req: false,
-            status_t1: true,
-            status_t2: false
-        }
-    }).then(po => {
-        res.status(200).send(po)
-    }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'po_get_pending',
-            message: err
+    const getPending = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.findAll({
+                where: {
+                    delete_req: false,
+                    status_t1: true,
+                    status_t2: false
+                },
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(po => {
+                resolve(po)
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_get_pending',
+                    message: err
+                })
+                reject(err);
+            })
         })
-        res.status(500).send(err);
-    })
+    }
+
+    const getPendingTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.findAll({
+                where: {
+                    delete_req: false,
+                    status_t1: true,
+                    status_t2: false
+                },
+            }).then(total => {
+                resolve(Math.ceil(total/limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_get_pending_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getPending(req), getPendingTotal()])
+        .then(result => {
+            res.status(200).send({result});
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'po_get_pending_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
 }
 
 //WORKING

@@ -23,7 +23,7 @@ exports.show_psr_all = function (req, res, next) {
     })
 };
 
-//WORKING
+//WORKING  //send with pagination and total page number
 exports.show_psr_page = function (req, res, next) {
     loggerInfo.log({
         level: 'info',
@@ -32,21 +32,73 @@ exports.show_psr_page = function (req, res, next) {
     })
     const limit = 8; //can be changed
 
+    const psr_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.findAll({
+                // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(psr => {
+                resolve(psr);
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_show_psr_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const total_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.count({
+                // attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']]
+            }).then(total => {
+                resolve(Math.ceil(total/limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_show_psr_page_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([psr_page(req), total_page()])
+        .then(result => {
+            res.status(200).send({result});
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'psr_show_psr_page_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+}
+
+
+//show all psr WITHOUT pagination
+exports.show_all_psr = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'show_all_psr'
+    })
     return models.psr.findAll({
-        // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
-        limit: limit,
-        offset: (req.params.page - 1) * limit,
         order: [
             ['createdAt', 'DESC']
         ]
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'psr_show_psr_page',
-            message: err
-        })
         res.status(500).send(err);
     })
 }
@@ -75,7 +127,6 @@ exports.find = function (req, res, next) {
     })
 }
 
-//ISSUE column 'nan' cannot be found 
 //get psr waiting to be accepted
 exports.get_submits = function (req, res, next) {
     loggerInfo.log({
@@ -83,27 +134,68 @@ exports.get_submits = function (req, res, next) {
         label: 'psr',
         message: 'get_submits'
     })
-    return models.psr.findAll({
-        where: {
-            delete_req: false,
-            status_t1: false,
-            status_t2: false
-        },
-        limit: limit,
-        offset: (req.params.page - 1) * limit,
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    }).then(psr => {
-        res.status(200).send(psr)
-    }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'psr_get_submits',
-            message: err
+
+    const limit = 8; //can be changed
+
+    const getSubmits = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.findAll({
+                where: {
+                    delete_req: false,
+                    status_t1: false,
+                    status_t2: false
+                },
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(psr => {
+                resolve(psr)
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_get_submits',
+                    message: err
+                })
+                reject(err);
+            })
         })
-        res.status(500).send(err);
-    })
+    }
+
+    const getSubmitsTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.count({
+                where: {
+                    delete_req: false,
+                    status_t1: false,
+                    status_t2: false
+                }
+            }).then(total => {
+                resolve(Math.ceil(total/limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_get_submits_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getSubmits(req), getSubmitsTotal()])
+        .then(result => {
+            res.status(200).send({result});
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'psr_get_submits_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+
 }
 
 
@@ -115,27 +207,68 @@ exports.get_pending = function (req, res, next) {
         label: 'psr',
         message: 'get_pending'
     })
-    return models.psr.findAll({
-        where: {
-            delete_req: false,
-            status_t1: false,
-            status_t2: false
-        },
-        limit: limit,
-        offset: (req.params.page - 1) * limit,
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    }).then(psr => {
-        res.status(200).send(psr)
-    }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'psr_get_pending',
-            message: err
+
+    const limit = 8; //can be changed
+
+    const getPending = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.findAll({
+                where: {
+                    delete_req: false,
+                    status_t1: true,
+                    status_t2: false
+                },
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(psr => {
+                resolve(psr)
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_get_pending',
+                    message: err
+                })
+                reject(err);
+            })
         })
-        res.status(500).send(err);
-    })
+    }
+
+    const getPendingTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.count({
+                where: {
+                    delete_req: false,
+                    status_t1: true,
+                    status_t2: false
+                }
+            }).then(total => {
+                resolve(Math.ceil(total/limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_get_pending_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getPending(req), getPendingTotal()])
+        .then(result => {
+            res.status(200).send({result});
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'psr_get_pending_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+
 }
 
 //WORKING
@@ -272,7 +405,7 @@ exports.psr_stat_1 = function (req, res, next) {
             id: req.params.psr_id
         }
     }).then(psr => {
-        res.status(200).send(psr);
+        res.status(200).send();
     }).catch(err => {
         loggerError.log({
             level: 'error',
