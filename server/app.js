@@ -50,7 +50,7 @@ app.use(session({
   secret:"apassword",
   saveUninitialized:false,
   resave:false,
-  cookie:{secure:false, httpOnly:true, maxAge:600000, path: '/'}
+  cookie:{secure:false, httpOnly:true, path: '/'} //maxAge:15 * 1000 * 3600
 }));
 app.use(passport.initialize());
 app.use(passport.session());

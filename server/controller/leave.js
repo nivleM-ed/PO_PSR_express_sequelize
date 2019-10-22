@@ -120,7 +120,7 @@ exports.show_own_leave = function (req, res, next) {
         })
     }
 
-    Promise.all([leave_page(), totalLeave()])
+    Promise.all([leave_page(req), totalLeave()])
         .then(result => {
             res.status(200).send(result);
         }).catch(err => {

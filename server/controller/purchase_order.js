@@ -75,7 +75,7 @@ exports.show_po_page = function (req, res, next) {
         })
     }
 
-    Promise.all([po_page(), total_page()])
+    Promise.all([po_page(req), total_page()])
         .then(result => {
             res.status(200).send({result});
         }).catch(err => {
