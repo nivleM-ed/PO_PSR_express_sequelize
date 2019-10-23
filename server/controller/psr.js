@@ -30,7 +30,7 @@ exports.show_psr_page = function (req, res, next) {
         label: 'psr',
         message: 'show_psr_page'
     })
-    const limit = 8; //can be changed
+    const limit = 10; //can be changed
 
     const psr_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -135,7 +135,7 @@ exports.get_submits = function (req, res, next) {
         message: 'get_submits'
     })
 
-    const limit = 8; //can be changed
+    const limit = 10; //can be changed
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -208,7 +208,7 @@ exports.get_pending = function (req, res, next) {
         message: 'get_pending'
     })
 
-    const limit = 8; //can be changed
+    const limit = 10; //can be changed
 
     const getPending = (req, res, next) => {
         return new Promise((resolve, reject) => {

@@ -1,5 +1,3 @@
-//column needs to be changed
-
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     var psr = sequelize.define('psr', {

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        user_id: { //purchase order id (references id from purchase_order)
+        user_id: { //purchase order id (references id from Users table)
             allowNull: false,
             type: DataTypes.STRING
         },

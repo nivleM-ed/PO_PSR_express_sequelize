@@ -34,7 +34,7 @@ exports.show_po_page = function (req, res, next) {
         label: 'po',
         message: 'show_po_page'
     })
-    const limit = 8; //can be changed
+    const limit = 10; //can be changed
 
     const po_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -139,7 +139,7 @@ exports.get_submits = function (req, res, next) {
         label: 'po',
         message: 'get_submits'
     })
-    const limit = 8; //can be changed
+    const limit = 10; //can be changed
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -210,7 +210,7 @@ exports.get_pending = function (req, res, next) {
         label: 'po',
         message: 'get_pending'
     })
-    const limit = 8; //can be changed
+    const limit = 10; //can be changed
 
     const getPending = (req, res, next) => {
         return new Promise((resolve, reject) => {
