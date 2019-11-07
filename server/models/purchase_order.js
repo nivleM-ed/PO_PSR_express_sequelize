@@ -16,48 +16,65 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             autoIncrement: true
         },
-        po_date: { //purchase order date
-            allowNull: true,
-            type: DataTypes.DATE  //change to .DATE once moment.js work
-        },
+        // po_date: { //purchase order date
+        //     allowNull: true,
+        //     type: DataTypes.DATE //change to .DATE once moment.js work
+        // },
         po_ref: { //purchase order reference
             allowNull: true,
             type: DataTypes.STRING
         },
         delv_due: { //delivery due
             allowNull: true,
-            type: DataTypes.DATEONLY  //change to .DATE once moment.js work
+            type: DataTypes.DATEONLY //change to .DATE once moment.js work
         },
         ship_mode: { //mode of shipment
             allowNull: true,
             type: DataTypes.STRING
         },
-        psr_no: {  //purchase and service requisition
+        psr_no: { //purchase and service requisition
             allowNull: true,
             type: DataTypes.STRING
         },
-        cca_no: {  //cca number
+        cca_no: { //cca number
             allowNull: true,
             type: DataTypes.STRING
         },
-        pay_mode: {  //mode of payment
+        pay_mode: { //mode of payment
             allowNull: true,
             type: DataTypes.STRING
         },
-        address: {  //address of buyer
+        address: { //address of buyer
             allowNull: true,
             type: DataTypes.STRING
         },
         po_desc: {
             type: DataTypes.JSON,
-            allowNull: false
+            allowNull: true
         },
+        cl_name: { //client's name
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        cl_company: { //client's company
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        decline_reason: {
+                allowNull: true,
+                type: DataTypes.STRING
+            },
         delete_req: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
         },
-        status_t1: {
+        status_t1_1: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
+        status_t1_2: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
@@ -67,11 +84,48 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false,
             allowNull: false
         },
-        date_pending: {
+        status_decline: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
+        create_user: { //user_id of creator
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        del_user: { //user_id of delete request
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        t2_user_1: { //user_id of 1st t2 user
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        t2_user_2: { //user_id of 1st t2 user
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        approver_user: { //user_id of approver user
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        decline_user: { //user_id of decline user
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        date_pending_1: {
+            type: DataTypes.DATEONLY,
+            allowNull: true
+        },
+        date_pending_2: {
             type: DataTypes.DATEONLY,
             allowNull: true
         },
         date_approve: {
+            type: DataTypes.DATEONLY,
+            allowNull: true
+        },
+        date_decline: {
             type: DataTypes.DATEONLY,
             allowNull: true
         },

@@ -26,9 +26,7 @@ export default {
     async created() {
         try {
             const psr = await psr.report(this.psr_id);
-            this.psr_id = psr.id, 
-            this.psr_no = psr_no,
-            this.date = date,
+            this.psr_id = psr.id,
             this.psr_data = psr_data,
             this.pur_class = pur_class,
             this.pur_typ = pur_typ,
@@ -52,9 +50,7 @@ export default {
                 await psr.psr_del(this.psr_no, this.date, this.psr_data, this.pur_class, this.pur_typ, this.pur_just, this.date_req, this.p_title, this.vessel_cd, this.delv, this.desc);
 
                 const po = await po.report(this.psr_id)
-                this.psr_id = psr.id, 
-                this.psr_no = psr_no,
-                this.date = date,
+                this.psr_id = psr.id,
                 this.psr_data = psr_data,
                 this.pur_class = pur_class,
                 this.pur_typ = pur_typ,
@@ -70,6 +66,16 @@ export default {
                 this.error = err.message;
             }
         },
+        //request to delete
+        async psr_delete_request() {
+            try {
+                const data = await psr.psr_del_req(this.psr_id);
+                console.log(data);
+            } catch(err) {
+                this.error = err.message;
+            }
+        },
+        //approve delete
         async psr_del() {
             try {
                 const psr = await psr.psr_del(this.psr_id);
@@ -79,7 +85,16 @@ export default {
                 this.error = err.message;
             }
         },
-        async po_stat_1() {
+        //decline delete request
+        async psr_decline_delete_request() {
+            try {
+                const data = await psr.psr_decline_del(this.psr_id);
+                console.log(data);
+            } catch(err) {
+                this.error = err.message;
+            }
+        },
+        async psr_stat_1() {
             try {
                 const psr = await psr.psr_stat_1(this.psr_id);
                 this.status_t1 = psr.status_t1;
@@ -88,11 +103,19 @@ export default {
                 this.error = err.message;
             }
         },
-        async po_stat_2() {
+        async psr_stat_2() {
             try {
                 const psr = await psr.psr_stat_2(this.psr_id);
                 this.status_t2 = psr.status_t1;
                 console.log(psr); //can be ignored
+            } catch (err) {
+                this.error = err.message;
+            }
+        },
+        async decline_psr() {
+            try {
+                const data = await psr.psr_decline(this.psr_id);
+                console.log(data); //can be ignored
             } catch (err) {
                 this.error = err.message;
             }

@@ -83,13 +83,33 @@ class po {
     });
   }
 
-  static po_add(po_no, date, po_ref, due, ship, psr, cca, pay, address, desc) {
+  static get_del_req(po_id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(`${url}req_del_po/${po_id}`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static po_add(
+    po_ref,
+    due,
+    ship,
+    psr,
+    cca,
+    pay,
+    address,
+    desc
+  ) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}add_po`, {
-            po_no,
-            date,
             po_ref,
             due,
             ship,
@@ -109,10 +129,36 @@ class po {
     });
   }
 
+  static po_del_req(po_id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(`${url}req_del_po/${po_id}`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
   static po_del(po_id) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.delete(`${url}del/${po_id}`, {
+        const res = await axios.delete(`${url}app_del/${po_id}`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static po_decline_del(po_id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(`${url}dec_del/${po_id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -137,8 +183,6 @@ class po {
 
   static po_upd(
     po_id,
-    po_no,
-    date,
     po_ref,
     due,
     ship,
@@ -152,8 +196,6 @@ class po {
       try {
         const res = await axios.post(
           `${url}${po_id}/upd_po`, {
-            po_no,
-            date,
             po_ref,
             due,
             ship,
@@ -178,8 +220,6 @@ class po {
       try {
         const res = await axios.post(
           `${url}${po_id}/pending`, {
-            date_pending: Date.now()
-          }, {
             withCredentials: true
           }
         );
@@ -195,8 +235,21 @@ class po {
       try {
         const res = await axios.post(
           `${url}${po_id}/approve`, {
-            date_approve: Date.now()
-          }, {
+            withCredentials: true
+          }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static po_decline(po_id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(
+          `${url}${po_id}/decline`, {
             withCredentials: true
           }
         );

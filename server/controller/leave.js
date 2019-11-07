@@ -1,9 +1,11 @@
 let models = require('../models');
 var sequelize = require('sequelize');
+const {
+    dbJoin_leave
+} = require('../dbJoin');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
-
 
 //show all leaves WITH pagination
 exports.show_leave_page = function (req, res, next) {
@@ -13,16 +15,30 @@ exports.show_leave_page = function (req, res, next) {
         message: 'show_leave_page'
     })
 
-    const limit = 8;
+    const limit = 10;
+    dbJoin_leave();
 
     const leave_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.leave.findAll({
+                // attributes: ['*'],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
-                ]
+                ],
+                include: [{
+                    model: models.Users,
+                    required: true,
+                    as: 'user',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: true,
+                    as: 'approver',
+                    attributes: ['username', 'firstname', 'lastname']
+                }]
             }).then(leave => {
                 resolve(leave);
             }).catch(err => {
@@ -38,8 +54,7 @@ exports.show_leave_page = function (req, res, next) {
 
     const totalLeave = (req, res, next) => {
         return new Promise((resolve, reject) => {
-            return models.leave.count({
-            }).then(total => {
+            return models.leave.count({}).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
@@ -74,7 +89,8 @@ exports.show_own_leave = function (req, res, next) {
         message: 'show_own_leave'
     })
 
-    const limit = 8;
+    const limit = 10;
+    dbJoin_leave();
 
     const leave_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -83,7 +99,13 @@ exports.show_own_leave = function (req, res, next) {
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
-                ]
+                ],
+                include: [{
+                    model: models.Users,
+                    required: true,
+                    as: 'user',
+                    attributes: ['username', 'firstname', 'lastname']
+                }]
             }, {
                 where: {
                     user_id: req.user.id,
@@ -140,11 +162,18 @@ exports.show_all_leave = function (req, res, next) {
         label: 'leave',
         message: 'show_all_leave'
     })
+    dbJoin_leave();
 
     return models.leave.findAll({
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+        include: [{
+            model: models.Users,
+            required: true,
+            as: 'user',
+            attributes: ['username', 'firstname', 'lastname']
+        }]
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
@@ -163,7 +192,16 @@ exports.report = function (req, res, next) {
         label: 'leave',
         message: 'report'
     })
+    dbJoin_leave();
+
     return models.leave.findOne({
+        include: [{
+            model: models.Users,
+            required: true,
+            as: 'user',
+            attributes: ['username', 'firstname', 'lastname']
+        }]
+    }, {
         where: {
             user_id: req.user.id,
             id: req.params.leave_id
@@ -232,7 +270,9 @@ exports.approve_leave = function (req, res, next) {
         message: 'approve_leave'
     })
     return models.leave.update({
-        status: true
+        status: true,
+        approver_id: req.user.id,
+        date_approve: new Date()
     }, {
         where: {
             id: req.params.leave_id
@@ -274,3 +314,29 @@ exports.upd_leave = function (req, res, next) {
         res.status(500).send(err);
     })
 }
+
+// exports.search_user = function (req, res, next) {
+//     loggerInfo.log({
+//         level: 'info',
+//         label: 'leave',
+//         message: 'search_user'
+//     })
+//     return models.leave.findAll({
+//         date_from: req.body.date_from,
+//         date_to: req.body.date_to,
+//         reason: req.body.reason
+//     }, {
+//         where: {
+//             id: req.params.leave_id
+//         }
+//     }).then(leave => {
+//         res.status(200).send(leave);
+//     }).catch(err => {
+//         loggerError.log({
+//             level: 'error',
+//             label: 'leave_upd_leave',
+//             message: err
+//         })
+//         res.status(500).send(err);
+//     })
+// }

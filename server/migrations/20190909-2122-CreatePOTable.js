@@ -31,10 +31,10 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 autoIncrement: true
             },
-            po_date: { //purchase order date
-                allowNull: true,
-                type: Sequelize.DATE //change to .DATE once moment.js work
-            },
+            // po_date: { //purchase order date
+            //     allowNull: true,
+            //     type: Sequelize.DATE //change to .DATE once moment.js work
+            // },
             po_ref: { //purchase order reference
                 allowNull: true,
                 type: Sequelize.STRING
@@ -69,31 +69,85 @@ module.exports = {
             },
             po_desc: {
                 type: Sequelize.JSON, //json file
-                allowNull: false //expected format   {quantity:quantity,description:"description",price:price,total:total}
+                allowNull: true //expected format   {quantity:quantity,description:"description",price:price,total:total}
+            },
+            cl_name: { //client's name
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            cl_company: { //client's company
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            decline_reason: {
+                allowNull: true,
+                type: Sequelize.STRING
             },
             delete_req: {
                 type: Sequelize.BOOLEAN, //request for deletion
                 defaultValue: false,
                 allowNull: false
             },
-            status_t1: { //everyone can see
+            status_t1_1: { //everyone can see - need to be approved by t2 user#1 -for manager to set to pending
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
             },
-            status_t2: { //for manager to set to pending
+            status_t1_2: { //everyone can see - need to be approved by t2 user#2 -for manager to set to pending
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
             },
-            date_pending: { //for higher ups to approve
+            status_t2: { //for manager to set to approve
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            status_decline: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            create_user: { //user_id of creator
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            del_user: { //user_id of delete request
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            t2_user_1: { //user_id of 1st t2 user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            t2_user_2: { //user_id of 1st t2 user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            approver_user: { //user_id of approver user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            decline_user: { //user_id of approver user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            date_pending_1: {
+                type: Sequelize.DATEONLY,
+                allowNull: true
+            },
+            date_pending_2: { //for higher ups to approve
                 type: Sequelize.DATEONLY,
                 allowNull: true
             },
             date_approve: {
                 type: Sequelize.DATEONLY,
                 allowNull: true
-            }
+            },
+            date_decline: {
+                type: Sequelize.DATEONLY,
+                allowNull: true
+            },
         }, {
             freezeTableName: true
         });

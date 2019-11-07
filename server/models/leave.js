@@ -23,11 +23,19 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.STRING(1000)
         },
+        approver_id: {
+            allowNull: false,
+            type: DataTypes.STRING
+        },
         status: { //purchase order date
             allowNull: false,
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        date_approve: {
+            allowNull: true,
+            type: DataTypes.DATEONLY
+        }
     }, {
         freezeTableName: true
     });

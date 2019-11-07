@@ -20,27 +20,35 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            user_id: { //purchase order id (references id from purchase_order)
+            user_id: { 
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            date_from: { //purchase order date
+            date_from: {
                 allowNull: false,
                 type: Sequelize.DATEONLY
             },
-            date_to: { //purchase order date
+            date_to: {
                 allowNull: false,
                 type: Sequelize.DATEONLY
             },
-            reason: { //purchase order date
+            reason: { 
                 allowNull: false,
                 type: Sequelize.STRING(1000)
             },
-            status: { //purchase order date
+            approver_id: {
+                allowNull: false,
+                type: Sequelize.STRING
+            },
+            status: {
                 allowNull: false,
                 type: Sequelize.BOOLEAN,
                 defaultValue: false
             },
+            date_approve: {
+                allowNull: true,
+                type: Sequelize.DATEONLY
+            }
         }, {
             freezeTableName: true
         });

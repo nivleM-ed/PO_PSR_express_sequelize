@@ -9,6 +9,7 @@ const {
     validateUser
 } = require('../validators/signup');
 var sequelize = require('sequelize');
+const op = sequelize.Op;
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
@@ -257,4 +258,31 @@ exports.getCounts = function (req, res, next) {
             status: "Please update permissions"
         })
     }
+}
+
+//search
+exports.search = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'user',
+        message: 'search'
+    })
+
+    return models.Users.findAll({
+        attributes: ['id','username','firstname','lastname'],
+        where: {
+            username: {
+                [op.like]: '%'+req.body.username.toLowerCase()+'%'
+            }
+        }
+    }).then(users => {
+        res.status(200).send(users);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'user_search',
+            message: err
+        })
+        res.status(500).send(err);
+    })
 }

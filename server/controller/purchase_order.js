@@ -3,6 +3,10 @@ var sequelize = require('sequelize');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
+const {
+    dbJoin_po
+} = require('../dbJoin');
+const op = sequelize.Op
 
 //working //not needed - just for testing purposes
 exports.show_po_all = function (req, res, next) {
@@ -11,7 +15,40 @@ exports.show_po_all = function (req, res, next) {
         label: 'po',
         message: 'show_po_all'
     })
+    dbJoin_po();
+
     return models.purchase_order.findAll({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -34,6 +71,7 @@ exports.show_po_page = function (req, res, next) {
         label: 'po',
         message: 'show_po_page'
     })
+    dbJoin_po();
     const limit = 10; //can be changed
 
     const po_page = (req, res, next) => {
@@ -44,6 +82,37 @@ exports.show_po_page = function (req, res, next) {
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
                 ]
             }).then(po => {
                 resolve(po);
@@ -63,7 +132,7 @@ exports.show_po_page = function (req, res, next) {
             return models.purchase_order.count({
                 // attributes: [[sequelize.fn('COUNT', sequelize.col('id'))]]
             }).then(total => {
-                resolve(Math.ceil(total/limit));
+                resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
                     level: 'error',
@@ -77,7 +146,9 @@ exports.show_po_page = function (req, res, next) {
 
     Promise.all([po_page(req), total_page()])
         .then(result => {
-            res.status(200).send({result});
+            res.status(200).send({
+                result
+            });
         }).catch(err => {
             loggerError.log({
                 level: 'error',
@@ -95,9 +166,41 @@ exports.show_all_po = function (req, res, next) {
         label: 'po',
         message: 'show_all_po'
     })
+    dbJoin_po();
     return models.purchase_order.findAll({
         order: [
             ['createdAt', 'DESC']
+        ],
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
         ]
     }).then(po => {
         res.status(200).send(po);
@@ -115,7 +218,41 @@ exports.find = function (req, res, next) {
         label: 'po',
         message: 'find'
     })
+    dbJoin_po();
+
     return models.purchase_order.findOne({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ]
+    }, {
         where: {
             po_no: req.params.po_no
         }
@@ -139,6 +276,7 @@ exports.get_submits = function (req, res, next) {
         label: 'po',
         message: 'get_submits'
     })
+    dbJoin_po();
     const limit = 10; //can be changed
 
     const getSubmits = (req, res, next) => {
@@ -146,13 +284,53 @@ exports.get_submits = function (req, res, next) {
             return models.purchase_order.findAll({
                 where: {
                     delete_req: false,
-                    status_t1: false,
-                    status_t2: false
+                    [op.or]: [{
+                            status_t1_1: false
+                        },
+                        {
+                            status_t1_2: false
+                        }
+                    ],
+                    status_t2: false,
+                    t2_user_1: {
+                        [op.not]: req.user.id
+                    }
                 },
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
                 ]
             }).then(po => {
                 resolve(po)
@@ -172,11 +350,20 @@ exports.get_submits = function (req, res, next) {
             return models.purchase_order.count({
                 where: {
                     delete_req: false,
-                    status_t1: false,
-                    status_t2: false
-                },
+                    [op.or]: [{
+                            status_t1_1: false
+                        },
+                        {
+                            status_t1_2: false
+                        }
+                    ],
+                    status_t2: false,
+                    t2_user_1: {
+                        [op.not]: req.user.id
+                    }
+                }
             }).then(total => {
-                resolve(Math.ceil(total/limit));
+                resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
                     level: 'error',
@@ -190,7 +377,9 @@ exports.get_submits = function (req, res, next) {
 
     Promise.all([getSubmits(req), getSubmitsTotal()])
         .then(result => {
-            res.status(200).send({result});
+            res.status(200).send({
+                result
+            });
         }).catch(err => {
             loggerError.log({
                 level: 'error',
@@ -210,6 +399,7 @@ exports.get_pending = function (req, res, next) {
         label: 'po',
         message: 'get_pending'
     })
+    dbJoin_po();
     const limit = 10; //can be changed
 
     const getPending = (req, res, next) => {
@@ -217,13 +407,45 @@ exports.get_pending = function (req, res, next) {
             return models.purchase_order.findAll({
                 where: {
                     delete_req: false,
-                    status_t1: true,
+                    status_t1_1: true,
+                    status_t1_2: true,
                     status_t2: false
                 },
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
                 ]
             }).then(po => {
                 resolve(po)
@@ -243,11 +465,12 @@ exports.get_pending = function (req, res, next) {
             return models.purchase_order.findAll({
                 where: {
                     delete_req: false,
-                    status_t1: true,
+                    status_t1_1: true,
+                    status_t1_2: true,
                     status_t2: false
-                },
+                }
             }).then(total => {
-                resolve(Math.ceil(total/limit));
+                resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
                     level: 'error',
@@ -261,7 +484,9 @@ exports.get_pending = function (req, res, next) {
 
     Promise.all([getPending(req), getPendingTotal()])
         .then(result => {
-            res.status(200).send({result});
+            res.status(200).send({
+                result
+            });
         }).catch(err => {
             loggerError.log({
                 level: 'error',
@@ -273,6 +498,107 @@ exports.get_pending = function (req, res, next) {
 }
 
 //WORKING
+//get po waiting to be approved
+exports.get_del_req = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'po',
+        message: 'get_del_req'
+    })
+    dbJoin_psr();
+    const limit = 10; //can be changed
+
+    const getDel = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.findAll({
+                where: {
+                    delete_req: true
+                },
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ]
+            }).then(po => {
+                resolve(po)
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_get_delreq',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const getDelTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.po.count({
+                where: {
+                    delete_req: true
+                }
+            }).then(total => {
+                resolve(Math.ceil(total / limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_get_delreq_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getDel(req), getDelTotal()])
+        .then(result => {
+            res.status(200).send({
+                result
+            });
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'po_get_delreq_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+
+}
+
+//WORKING
 //add purchase order
 exports.po_add = function (req, res, next) {
     loggerInfo.log({
@@ -281,8 +607,8 @@ exports.po_add = function (req, res, next) {
         message: 'po_add'
     })
     return models.purchase_order.create({
-        po_no: req.body.po_no,
-        po_date: req.body.date,
+        //po_no: req.body.po_no,
+        // po_date: req.body.date,
         po_ref: req.body.po_ref,
         delv_due: req.body.due,
         ship_mode: req.body.ship,
@@ -290,7 +616,8 @@ exports.po_add = function (req, res, next) {
         cca_no: req.body.cca,
         pay_mode: req.body.pay,
         address: req.body.address,
-        po_desc: req.body.desc
+        po_desc: req.body.desc,
+        create_user: req.user.id
     }).then(po => {
         res.status(201).send(po)
     }).catch(err => {
@@ -311,7 +638,41 @@ exports.report = function (req, res, next) {
         label: 'po',
         message: 'report'
     })
+    dbJoin_psr();
+
     return models.purchase_order.findOne({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ]
+    }, {
         where: {
             id: req.params.po_id
         }
@@ -328,8 +689,35 @@ exports.report = function (req, res, next) {
 
 };
 
+//request delete
+exports.po_req_del = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'po',
+        message: 'po_del_req'
+    })
+    return models.purchase_order.update({
+        delete_req: true,
+        del_user: req.user.id
+    }, {
+        where: {
+            id: req.params.po_id,
+
+        }
+    }).then(po => {
+        res.status(200).send(po);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'po_del_req',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
 //WORKING
-//delete po
+//approve delete po
 exports.po_del = function (req, res, next) {
     loggerInfo.log({
         level: 'info',
@@ -338,10 +726,11 @@ exports.po_del = function (req, res, next) {
     })
     return models.purchase_order.destroy({
         where: {
-            id: req.params.po_id
+            id: req.params.po_id,
+            delete_req: true
         }
-    }).then(deleted => {
-        res.status(200).send("deleted");
+    }).then(po => {
+        res.status(200).send(po);
     }).catch(err => {
         loggerError.log({
             level: 'error',
@@ -352,6 +741,33 @@ exports.po_del = function (req, res, next) {
     })
 }
 
+//decline delete request
+exports.po_decline_del = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'po',
+        message: 'po_del_decline'
+    })
+    return models.purchase_order.update({
+        delete_req: false,
+        del_user: null
+    }, {
+        where: {
+            id: req.params.po_id,
+        }
+    }).then(po => {
+        res.status(200).send(po);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'po_del_decline',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+
 //WORKING
 //update po
 exports.po_upd = function (req, res, next) {
@@ -361,7 +777,7 @@ exports.po_upd = function (req, res, next) {
         message: 'po_upd'
     })
     return models.purchase_order.update({
-        po_no: req.body.po_no,
+        //po_no: req.body.po_no,
         po_date: req.body.date,
         po_ref: req.body.po_ref,
         delv_due: req.body.due,
@@ -370,7 +786,11 @@ exports.po_upd = function (req, res, next) {
         cca_no: req.body.cca,
         pay_mode: req.body.pay,
         address: req.body.address,
-        po_desc: req.body.desc
+        po_desc: req.body.desc,
+        status_decline: false,
+        date_decline: null,
+        decline_user: null,
+        decline_reason: null
     }, {
         where: {
             id: req.params.po_id
@@ -395,19 +815,66 @@ exports.po_stat_1 = function (req, res, next) {
         label: 'po',
         message: 'po_stat_1'
     })
-    return models.purchase_order.update({
-        status_t1: true,
-        date_pending: new Date()
-    }, {
+    return models.purchase_order.findOne({
         where: {
             id: req.params.po_id
         }
-    }).then(po => {
-        res.status(200).send(po);
+    }).then(exist => {
+        if (exist.status_t1_1 == true) {
+            if (req.user.id == exist.t2_user_1) {
+                res.status(200).send({
+                    err: "notAllowed"
+                });
+            } else {
+                return models.purchase_order.update({
+                    status_t1_2: true,
+                    date_pending_2: new Date(),
+                    t2_user_2: req.user.id
+                }, {
+                    where: {
+                        id: req.params.po_id,
+                        delete_req: {
+                            [op.not]: true
+                        }
+                    }
+                }).then(po => {
+                    res.status(200).send(po);
+                }).catch(err => {
+                    loggerError.log({
+                        level: 'error',
+                        label: 'po_stat_1_1',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                });
+            }
+        } else {
+            return models.purchase_order.update({
+                status_t1_1: true,
+                date_pending_1: new Date(),
+                t2_user_1: req.user.id
+            }, {
+                where: {
+                    id: req.params.po_id,
+                    delete_req: {
+                        [op.not]: true
+                    }
+                }
+            }).then(po => {
+                res.status(200).send(po);
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'po_stat_1_2',
+                    message: err
+                })
+                res.status(500).send(err);
+            });
+        }
     }).catch(err => {
         loggerError.log({
             level: 'error',
-            label: 'po_stat_1',
+            label: 'po_stat_1_3',
             message: err
         })
         res.status(500).send(err);
@@ -423,8 +890,9 @@ exports.po_stat_2 = function (req, res, next) {
         message: 'po_stat_2'
     })
     return models.purchase_order.update({
-        status_t1: true,
-        date_approve: new Date()
+        status_t2: true,
+        date_approve: new Date(),
+        approver_user: req.user.id
     }, {
         where: {
             id: req.params.po_id
@@ -435,6 +903,34 @@ exports.po_stat_2 = function (req, res, next) {
         loggerError.log({
             level: 'error',
             label: 'po_stat_2',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+//decline po
+exports.po_stat_decline = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'po',
+        message: 'po_stat_decline'
+    })
+    return models.purchase_order.update({
+        status_decline: true,
+        date_decline: new Date(),
+        decline_user: req.user.id,
+        decline_reason: req.body.decline_reason
+    }, {
+        where: {
+            id: req.params.po_id
+        }
+    }).then(po => {
+        res.status(200).send(po);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'po_stat_decline',
             message: err
         })
         res.status(500).send(err);

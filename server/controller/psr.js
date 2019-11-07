@@ -3,6 +3,10 @@ var sequelize = require('sequelize');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
+const {
+    dbJoin_psr
+} = require('../dbJoin');
+const op = sequelize.Op
 
 //working //not needed - just for testing purporses
 exports.show_psr_all = function (req, res, next) {
@@ -11,7 +15,44 @@ exports.show_psr_all = function (req, res, next) {
         label: 'psr',
         message: 'show_psr_all'
     })
-    return models.psr.findAll({}).then(psr => {
+    dbJoin_psr();
+
+    return models.psr.findAll({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ],
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then(psr => {
         res.send(psr)
     }).catch(err => {
         loggerError.log({
@@ -30,6 +71,7 @@ exports.show_psr_page = function (req, res, next) {
         label: 'psr',
         message: 'show_psr_page'
     })
+    dbJoin_psr();
     const limit = 10; //can be changed
 
     const psr_page = (req, res, next) => {
@@ -40,6 +82,37 @@ exports.show_psr_page = function (req, res, next) {
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
                 ]
             }).then(psr => {
                 resolve(psr);
@@ -59,7 +132,7 @@ exports.show_psr_page = function (req, res, next) {
             return models.psr.count({
                 // attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']]
             }).then(total => {
-                resolve(Math.ceil(total/limit));
+                resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
                     level: 'error',
@@ -73,7 +146,9 @@ exports.show_psr_page = function (req, res, next) {
 
     Promise.all([psr_page(req), total_page()])
         .then(result => {
-            res.status(200).send({result});
+            res.status(200).send({
+                result
+            });
         }).catch(err => {
             loggerError.log({
                 level: 'error',
@@ -92,9 +167,42 @@ exports.show_all_psr = function (req, res, next) {
         label: 'psr',
         message: 'show_all_psr'
     })
+    dbJoin_psr();
+
     return models.psr.findAll({
         order: [
             ['createdAt', 'DESC']
+        ],
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
         ]
     }).then(psr => {
         res.status(200).send(psr);
@@ -111,7 +219,41 @@ exports.find = function (req, res, next) {
         label: 'psr',
         message: 'find'
     })
+    dbJoin_psr();
+
     return models.psr.findOne({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ]
+    }, {
         where: {
             psr_no: req.params.psr_no
         }
@@ -134,7 +276,7 @@ exports.get_submits = function (req, res, next) {
         label: 'psr',
         message: 'get_submits'
     })
-
+    dbJoin_psr();
     const limit = 10; //can be changed
 
     const getSubmits = (req, res, next) => {
@@ -142,13 +284,53 @@ exports.get_submits = function (req, res, next) {
             return models.psr.findAll({
                 where: {
                     delete_req: false,
-                    status_t1: false,
-                    status_t2: false
+                    [op.or]: [{
+                            status_t1_1: false
+                        },
+                        {
+                            status_t1_2: false
+                        }
+                    ],
+                    status_t2: false,
+                    t2_user_1: {
+                        [op.not]: req.user.id
+                    }
                 },
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
                 ]
             }).then(psr => {
                 resolve(psr)
@@ -168,11 +350,20 @@ exports.get_submits = function (req, res, next) {
             return models.psr.count({
                 where: {
                     delete_req: false,
-                    status_t1: false,
-                    status_t2: false
+                    [op.or]: [{
+                            status_t1_1: false
+                        },
+                        {
+                            status_t1_2: false
+                        }
+                    ],
+                    status_t2: false,
+                    t2_user_1: {
+                        [op.not]: req.user.id
+                    }
                 }
             }).then(total => {
-                resolve(Math.ceil(total/limit));
+                resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
                     level: 'error',
@@ -186,7 +377,9 @@ exports.get_submits = function (req, res, next) {
 
     Promise.all([getSubmits(req), getSubmitsTotal()])
         .then(result => {
-            res.status(200).send({result});
+            res.status(200).send({
+                result
+            });
         }).catch(err => {
             loggerError.log({
                 level: 'error',
@@ -195,7 +388,6 @@ exports.get_submits = function (req, res, next) {
             })
             res.status(500).send(err);
         })
-
 }
 
 
@@ -207,7 +399,7 @@ exports.get_pending = function (req, res, next) {
         label: 'psr',
         message: 'get_pending'
     })
-
+    dbJoin_psr();
     const limit = 10; //can be changed
 
     const getPending = (req, res, next) => {
@@ -215,13 +407,45 @@ exports.get_pending = function (req, res, next) {
             return models.psr.findAll({
                 where: {
                     delete_req: false,
-                    status_t1: true,
+                    status_t1_1: true,
+                    status_t1_2: true,
                     status_t2: false
                 },
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
                     ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
                 ]
             }).then(psr => {
                 resolve(psr)
@@ -241,11 +465,12 @@ exports.get_pending = function (req, res, next) {
             return models.psr.count({
                 where: {
                     delete_req: false,
-                    status_t1: true,
+                    status_t1_1: true,
+                    status_t1_2: true,
                     status_t2: false
                 }
             }).then(total => {
-                resolve(Math.ceil(total/limit));
+                resolve(Math.ceil(total / limit));
             }).catch(err => {
                 loggerError.log({
                     level: 'error',
@@ -259,11 +484,114 @@ exports.get_pending = function (req, res, next) {
 
     Promise.all([getPending(req), getPendingTotal()])
         .then(result => {
-            res.status(200).send({result});
+            res.status(200).send({
+                result
+            });
         }).catch(err => {
             loggerError.log({
                 level: 'error',
                 label: 'psr_get_pending_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+
+}
+
+//WORKING
+//get psr waiting to be approved
+exports.get_del_req = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'get_del_req'
+    })
+    dbJoin_psr();
+    const limit = 10; //can be changed
+
+    const getDel = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.findAll({
+                where: {
+                    delete_req: true
+                },
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'creator_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ]
+            }).then(psr => {
+                resolve(psr)
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_get_delreq',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const getDelTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.count({
+                where: {
+                    delete_req: true
+                }
+            }).then(total => {
+                resolve(Math.ceil(total / limit));
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_get_delreq_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getDel(req), getDelTotal()])
+        .then(result => {
+            res.status(200).send({
+                result
+            });
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'psr_get_delreq_promise',
                 message: err
             })
             res.status(500).send(err);
@@ -280,8 +608,8 @@ exports.psr_add = function (req, res, next) {
         message: 'add'
     })
     return models.psr.create({
-        psr_no: req.body.psr_no,
-        psr_date: req.body.date,
+        // psr_no: req.body.psr_no,
+        // psr_date: req.body.date,
         psr_data: req.body.psr_data,
         purchase_class: req.body.pur_class,
         purchase_typ: req.body.pur_typ,
@@ -290,7 +618,8 @@ exports.psr_add = function (req, res, next) {
         project_title: req.body.p_title,
         vessel_code: req.body.vessel_cd,
         delv: req.body.delv,
-        psr_desc: req.body.desc
+        psr_desc: req.body.desc,
+        create_user: req.user.id
     }).then(psr => {
         res.status(201).send(psr)
     }).catch(err => {
@@ -311,7 +640,41 @@ exports.report = function (req, res, next) {
         label: 'psr',
         message: 'report'
     })
+    dbJoin_psr();
+
     return models.psr.findOne({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'creator_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user2',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ]
+    }, {
         where: {
             id: req.params.psr_id
         }
@@ -328,8 +691,35 @@ exports.report = function (req, res, next) {
 
 };
 
+//request delete
+exports.psr_req_del = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_del_req'
+    })
+    return models.psr.update({
+        delete_req: true,
+        del_user: req.user.id
+    }, {
+        where: {
+            id: req.params.psr_id,
+
+        }
+    }).then(psr => {
+        res.status(200).send(psr);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'psr_del_req',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
 //WORKING
-//delete psr
+//approve delete psr
 exports.psr_del = function (req, res, next) {
     loggerInfo.log({
         level: 'info',
@@ -338,7 +728,8 @@ exports.psr_del = function (req, res, next) {
     })
     return models.psr.destroy({
         where: {
-            id: req.params.psr_id
+            id: req.params.psr_id,
+            delete_req: true
         }
     }).then(psr => {
         res.status(200).send(psr);
@@ -352,6 +743,33 @@ exports.psr_del = function (req, res, next) {
     })
 }
 
+//decline delete request
+exports.psr_decline_del = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_del_decline'
+    })
+    return models.psr.update({
+        delete_req: false,
+        del_user: null
+    }, {
+        where: {
+            id: req.params.psr_id,
+        }
+    }).then(psr => {
+        res.status(200).send(psr);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'psr_del_decline',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+
 //WORKING
 //update psr
 exports.psr_upd = function (req, res, next) {
@@ -361,7 +779,7 @@ exports.psr_upd = function (req, res, next) {
         message: 'psr_upd'
     })
     return models.psr.update({
-        psr_no: req.body.psr_no,
+        // psr_no: req.body.psr_no,
         psr_date: req.body.date,
         psr_data: req.body.psr_data,
         purchase_class: req.body.pur_class,
@@ -371,7 +789,11 @@ exports.psr_upd = function (req, res, next) {
         project_title: req.body.p_title,
         vessel_code: req.body.vessel_cd,
         delv: req.body.delv,
-        psr_desc: req.body.desc
+        psr_desc: req.body.desc,
+        status_decline: false,
+        date_decline: null,
+        decline_user: null,
+        decline_reason: null
     }, {
         where: {
             id: req.params.psr_id
@@ -397,19 +819,66 @@ exports.psr_stat_1 = function (req, res, next) {
         label: 'psr',
         message: 'psr_stat_1'
     })
-    return models.psr.update({
-        status_t1: true,
-        date_approve: new Date()
-    }, {
+    return models.psr.findOne({
         where: {
             id: req.params.psr_id
         }
-    }).then(psr => {
-        res.status(200).send();
+    }).then(exist => {
+        if (exist.status_t1_1 == true) {
+            if (req.user.id == exist.t2_user_1) {
+                res.status(200).send({
+                    err: "notAllowed"
+                });
+            } else {
+                return models.psr.update({
+                    status_t1_2: true,
+                    date_pending_2: new Date(),
+                    t2_user_2: req.user.id
+                }, {
+                    where: {
+                        id: req.params.psr_id,
+                        delete_req: {
+                            [op.not]: true
+                        }
+                    }
+                }).then(psr => {
+                    res.status(200).send(psr);
+                }).catch(err => {
+                    loggerError.log({
+                        level: 'error',
+                        label: 'psr_stat_1_1',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                });
+            }
+        } else {
+            return models.psr.update({
+                status_t1_1: true,
+                date_pending_1: new Date(),
+                t2_user_1: req.user.id
+            }, {
+                where: {
+                    id: req.params.psr_id,
+                    delete_req: {
+                        [op.not]: true
+                    }
+                }
+            }).then(psr => {
+                res.status(200).send(psr);
+            }).catch(err => {
+                loggerError.log({
+                    level: 'error',
+                    label: 'psr_stat_1_2',
+                    message: err
+                })
+                res.status(500).send(err);
+            });
+        }
     }).catch(err => {
         loggerError.log({
             level: 'error',
-            label: 'psr_stat_1',
+            label: 'psr_stat_1_3',
             message: err
         })
         res.status(500).send(err);
@@ -426,7 +895,8 @@ exports.psr_stat_2 = function (req, res, next) {
     })
     return models.psr.update({
         status_t2: true,
-        date_approve: new Date()
+        date_approve: new Date(),
+        approver_user: req.user.id
     }, {
         where: {
             id: req.params.psr_id
@@ -437,6 +907,34 @@ exports.psr_stat_2 = function (req, res, next) {
         loggerError.log({
             level: 'error',
             label: 'psr_stat_2',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+//decline psr
+exports.psr_stat_decline = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'psr',
+        message: 'psr_stat_decline'
+    })
+    return models.psr.update({
+        status_decline: true,
+        date_decline: new Date(),
+        decline_user: req.user.id,
+        decline_reason: req.body.decline_reason
+    }, {
+        where: {
+            id: req.params.psr_id
+        }
+    }).then(psr => {
+        res.status(200).send(psr);
+    }).catch(err => {
+        loggerError.log({
+            level: 'error',
+            label: 'psr_stat_decline',
             message: err
         })
         res.status(500).send(err);

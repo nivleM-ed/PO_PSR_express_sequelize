@@ -9,4 +9,7 @@ router.post('/login', user.login);
 router.post('/logout', isLoggedIn, user.logout);
 router.get('/count', isLoggedIn, user.getCounts);
 
+// router.post('/search', isLoggedIn, auth_no_t1, user.search);
+router.post('/search', user.search);
+
 module.exports = router;

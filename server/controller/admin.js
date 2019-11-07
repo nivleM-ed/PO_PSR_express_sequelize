@@ -11,6 +11,9 @@ const {
 const {
     validateUser
 } = require('../validators/signup');
+const {
+    dbJoin
+} = require('../dbJoin');
 
 const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)

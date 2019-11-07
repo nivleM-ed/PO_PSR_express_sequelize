@@ -20,11 +20,11 @@ module.exports = {
                 defaultValue: Sequelize.UUIDV4
             },
             createdAt: {
-                allowNull: true,
+                allowNull: false,
                 type: Sequelize.DATE
             },
             updatedAt: {
-                allowNull: true,
+                allowNull: false,
                 type: Sequelize.DATE
             },
             psr_no: { //purchase order number
@@ -32,10 +32,10 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 autoIncrement: true
             },
-            psr_date: { //purchase order date
-                allowNull: true,
-                type: Sequelize.DATE  //cannot be Sequelize.DATE(timestamp)
-            },
+            // psr_date: { //purchase order date
+            //     allowNull: true,
+            //     type: Sequelize.DATE  //cannot be Sequelize.DATE(timestamp)
+            // },
             purchase_class: { //purchase class
                 allowNull: true,
                 type: Sequelize.STRING
@@ -45,6 +45,10 @@ module.exports = {
                 type: Sequelize.STRING  
             },
             purchase_just: { //justification for purchase
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            cost_typ: { //cost type
                 allowNull: true,
                 type: Sequelize.STRING
             },
@@ -66,14 +70,23 @@ module.exports = {
             },
             psr_desc: {
                 type: Sequelize.JSON,   //json file
-                allowNull: false        // expected format {desc:desc,qty:qty,unit:unit,cost_code:cost_code,remarks:"remarks"}
+                allowNull: true        // expected format {desc:desc,qty:qty,unit:unit,cost_code:cost_code,remarks:"remarks"}
+            },
+            decline_reason: {
+                allowNull: true,
+                type: Sequelize.STRING
             },
             delete_req: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
             },
-            status_t1: {
+            status_t1_1: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            status_t1_2: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
@@ -83,14 +96,51 @@ module.exports = {
                 defaultValue: false,
                 allowNull: false
             },
-            date_pending: {
+            status_decline: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
+            create_user: { //user_id of creator
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            del_user: { //user_id of delete request
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            t2_user_1: { //user_id of 1st t2 user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            t2_user_2: { //user_id of 1st t2 user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            approver_user: { //user_id of approver user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            decline_user: { //user_id of approver user
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            date_pending_1: {
+                type: Sequelize.DATEONLY,
+                allowNull: true
+            },
+            date_pending_2: {
                 type: Sequelize.DATEONLY,
                 allowNull: true
             },
             date_approve: {
                 type: Sequelize.DATEONLY,
                 allowNull: true
-            }
+            },
+            date_decline: {
+                type: Sequelize.DATEONLY,
+                allowNull: true
+            },
         }, {
             freezeTableName: true
         });
