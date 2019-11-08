@@ -67,7 +67,6 @@ exports.show_psr_page = function (req, res, next) {
         label: 'psr',
         message: 'show_psr_page'
     })
-    dbJoin_psr();
     const limit = 10; //can be changed
 
     const psr_page = (req, res, next) => {
@@ -163,7 +162,6 @@ exports.show_all_psr = function (req, res, next) {
         label: 'psr',
         message: 'show_all_psr'
     })
-    dbJoin_psr();
 
     return models.psr.findAll({
         order: [
@@ -215,7 +213,6 @@ exports.find = function (req, res, next) {
         label: 'psr',
         message: 'find'
     })
-    dbJoin_psr();
 
     return models.psr.findOne({
         include: [{
@@ -272,7 +269,6 @@ exports.get_submits = function (req, res, next) {
         label: 'psr',
         message: 'get_submits'
     })
-    dbJoin_psr();
     const limit = 10; //can be changed
 
     const getSubmits = (req, res, next) => {
@@ -401,7 +397,6 @@ exports.get_pending = function (req, res, next) {
         label: 'psr',
         message: 'get_pending'
     })
-    dbJoin_psr();
     const limit = 10; //can be changed
 
     const getPending = (req, res, next) => {
@@ -508,7 +503,6 @@ exports.get_del_req = function (req, res, next) {
         label: 'psr',
         message: 'get_del_req'
     })
-    dbJoin_psr();
     const limit = 10; //can be changed
 
     const getDel = (req, res, next) => {
@@ -642,7 +636,6 @@ exports.report = function (req, res, next) {
         label: 'psr',
         message: 'report'
     })
-    dbJoin_psr();
 
     return models.psr.findOne({
         include: [{
