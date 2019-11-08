@@ -41,7 +41,7 @@ exports.dbJoin_po_psr = function() {
 exports.dbJoin_psr = function() {
     //user can create psr (required:true -inner join)
     models.Users.hasMany(models.psr, {
-        as: 'psr',
+        as: 'psr1',
         foreignKey: 'create_user'
     });
     models.psr.belongsTo(models.Users, {
@@ -52,7 +52,7 @@ exports.dbJoin_psr = function() {
 
     //t2_user_1 for psr  (required:false -left join)
     models.Users.hasMany(models.psr, {
-        as: 'psr1',
+        as: 'psr2',
         foreignKey: 't2_user_1'
     });
     models.psr.belongsTo(models.Users, {
@@ -63,7 +63,7 @@ exports.dbJoin_psr = function() {
 
     //t2_user_2 for psr  (required:false -left join)
     models.Users.hasMany(models.psr, {
-        as: 'psr2',
+        as: 'psr3',
         foreignKey: 't2_user_2'
     });
     models.psr.belongsTo(models.Users, {
@@ -74,7 +74,7 @@ exports.dbJoin_psr = function() {
 
     //approver for psr  (required:false -left join)
     models.Users.hasMany(models.psr, {
-        as: 'psr3',
+        as: 'psr4',
         foreignKey: 'approver_user'
     });
     models.psr.belongsTo(models.Users, {
@@ -85,7 +85,7 @@ exports.dbJoin_psr = function() {
 
     //del request for psr  (required:false -left join)
     models.Users.hasMany(models.psr, {
-        as: 'psr4',
+        as: 'psr5',
         foreignKey: 'del_user'
     });
     models.psr.belongsTo(models.Users, {
@@ -98,7 +98,7 @@ exports.dbJoin_psr = function() {
 exports.dbJoin_po = function() {
     //user can create po (required:true -inner join)
     models.Users.hasMany(models.purchase_order, {
-        as: 'po',
+        as: 'po1',
         foreignKey: 'create_user'
     });
     models.purchase_order.belongsTo(models.Users, {

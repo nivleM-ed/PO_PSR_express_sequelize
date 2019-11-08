@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(1000)
         },
         approver_id: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING
         },
         status: { //purchase order date

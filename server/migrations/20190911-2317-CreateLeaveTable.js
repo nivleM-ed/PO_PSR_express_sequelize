@@ -37,7 +37,7 @@ module.exports = {
                 type: Sequelize.STRING(1000)
             },
             approver_id: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.STRING
             },
             status: {
