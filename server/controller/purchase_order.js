@@ -3,9 +3,6 @@ var sequelize = require('sequelize');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
-const {
-    dbJoin_po
-} = require('../dbJoin');
 const op = sequelize.Op
 
 //working //not needed - just for testing purposes
@@ -15,37 +12,36 @@ exports.show_po_all = function (req, res, next) {
         label: 'po',
         message: 'show_po_all'
     })
-    dbJoin_po();
 
     return models.purchase_order.findAll({
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             }
         ],
@@ -71,7 +67,6 @@ exports.show_po_page = function (req, res, next) {
         label: 'po',
         message: 'show_po_page'
     })
-    dbJoin_po();
     const limit = 10; //can be changed
 
     const po_page = (req, res, next) => {
@@ -86,31 +81,31 @@ exports.show_po_page = function (req, res, next) {
                 include: [{
                         model: models.Users,
                         required: true,
-                        as: 'creator_user',
+                        as: 'create_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user',
+                        as: 't2_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2',
+                        as: 't2_user2_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'approver',
+                        as: 'approver_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'del_req_user',
+                        as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     }
                 ]
@@ -144,7 +139,7 @@ exports.show_po_page = function (req, res, next) {
         })
     }
 
-    Promise.all([po_page(req), total_page()])
+    Promise.all([po_page(req), total_page(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -166,7 +161,7 @@ exports.show_all_po = function (req, res, next) {
         label: 'po',
         message: 'show_all_po'
     })
-    dbJoin_po();
+    // dbJoin_po();
     return models.purchase_order.findAll({
         order: [
             ['createdAt', 'DESC']
@@ -174,31 +169,31 @@ exports.show_all_po = function (req, res, next) {
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             }
         ]
@@ -218,37 +213,36 @@ exports.find = function (req, res, next) {
         label: 'po',
         message: 'find'
     })
-    dbJoin_po();
 
     return models.purchase_order.findOne({
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             }
         ]
@@ -276,12 +270,47 @@ exports.get_submits = function (req, res, next) {
         label: 'po',
         message: 'get_submits'
     })
-    dbJoin_po();
     const limit = 10; //can be changed
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: false,
+                        as: 'create_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ],
                 where: {
                     delete_req: false,
                     [op.or]: [{
@@ -292,46 +321,16 @@ exports.get_submits = function (req, res, next) {
                         }
                     ],
                     status_t2: false,
-                    t2_user_1: {
-                        [op.not]: req.user.id
-                    }
-                },
-                limit: limit,
-                offset: (req.params.page - 1) * limit,
-                order: [
-                    ['createdAt', 'DESC']
-                ],
-                include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'creator_user',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user2',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user',
-                        attributes: ['username', 'firstname', 'lastname']
-                    }
-                ]
+                    [op.or]: [{
+                        t2_user_1: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t2_user_1: {
+                            [op.is]: null
+                        }
+                    }]
+                } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(po => {
                 resolve(po)
             }).catch(err => {
@@ -375,7 +374,7 @@ exports.get_submits = function (req, res, next) {
         })
     }
 
-    Promise.all([getSubmits(req), getSubmitsTotal()])
+    Promise.all([getSubmits(req), getSubmitsTotal(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -399,7 +398,6 @@ exports.get_pending = function (req, res, next) {
         label: 'po',
         message: 'get_pending'
     })
-    dbJoin_po();
     const limit = 10; //can be changed
 
     const getPending = (req, res, next) => {
@@ -419,31 +417,31 @@ exports.get_pending = function (req, res, next) {
                 include: [{
                         model: models.Users,
                         required: true,
-                        as: 'creator_user',
+                        as: 'create_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user',
+                        as: 't2_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2',
+                        as: 't2_user2_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'approver',
+                        as: 'approver_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'del_req_user',
+                        as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     }
                 ]
@@ -482,7 +480,7 @@ exports.get_pending = function (req, res, next) {
         })
     }
 
-    Promise.all([getPending(req), getPendingTotal()])
+    Promise.all([getPending(req), getPendingTotal(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -505,7 +503,6 @@ exports.get_del_req = function (req, res, next) {
         label: 'po',
         message: 'get_del_req'
     })
-    dbJoin_psr();
     const limit = 10; //can be changed
 
     const getDel = (req, res, next) => {
@@ -522,31 +519,31 @@ exports.get_del_req = function (req, res, next) {
                 include: [{
                         model: models.Users,
                         required: true,
-                        as: 'creator_user',
+                        as: 'create_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user',
+                        as: 't2_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2',
+                        as: 't2_user2_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'approver',
+                        as: 'approver_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'del_req_user',
+                        as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     }
                 ]
@@ -582,7 +579,7 @@ exports.get_del_req = function (req, res, next) {
         })
     }
 
-    Promise.all([getDel(req), getDelTotal()])
+    Promise.all([getDel(req), getDelTotal(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -638,37 +635,36 @@ exports.report = function (req, res, next) {
         label: 'po',
         message: 'report'
     })
-    dbJoin_psr();
 
     return models.purchase_order.findOne({
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             }
         ]

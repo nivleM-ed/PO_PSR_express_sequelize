@@ -16,6 +16,7 @@ var admin = require('./routes/admin');
 var winston = require('./logs/loggerDebug');
 
 require('./passport_setup')(passport);
+let {run_db} = require('./dbJoin');
 
 var app = express();
 // app.use(cors({
@@ -61,7 +62,7 @@ app.use('/psr', psr);
 app.use('/leave', leave);
 app.use('/admin', admin);
 app.use(logger('combined', { stream: winston.stream.write }));
-
+run_db();
 //For production
 if (process.env.NODE_ENV === 'production') {
   //Static folder of vue.js dist

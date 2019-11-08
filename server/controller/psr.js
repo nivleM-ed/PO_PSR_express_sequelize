@@ -3,9 +3,6 @@ var sequelize = require('sequelize');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
-const {
-    dbJoin_psr
-} = require('../dbJoin');
 const op = sequelize.Op
 
 //working //not needed - just for testing purporses
@@ -15,37 +12,36 @@ exports.show_psr_all = function (req, res, next) {
         label: 'psr',
         message: 'show_psr_all'
     })
-    dbJoin_psr();
 
     return models.psr.findAll({
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             }
         ],
@@ -86,31 +82,31 @@ exports.show_psr_page = function (req, res, next) {
                 include: [{
                         model: models.Users,
                         required: true,
-                        as: 'creator_user',
+                        as: 'create_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user',
+                        as: 't2_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2',
+                        as: 't2_user2_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'approver',
+                        as: 'approver_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'del_req_user',
+                        as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     }
                 ]
@@ -144,7 +140,7 @@ exports.show_psr_page = function (req, res, next) {
         })
     }
 
-    Promise.all([psr_page(req), total_page()])
+    Promise.all([psr_page(req), total_page(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -176,34 +172,34 @@ exports.show_all_psr = function (req, res, next) {
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             }
-        ]
+        ],
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
@@ -225,34 +221,34 @@ exports.find = function (req, res, next) {
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             }
-        ]
+        ],
     }, {
         where: {
             psr_no: req.params.psr_no
@@ -282,6 +278,42 @@ exports.get_submits = function (req, res, next) {
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'create_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user2_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ],
                 where: {
                     delete_req: false,
                     [op.or]: [{
@@ -292,46 +324,16 @@ exports.get_submits = function (req, res, next) {
                         }
                     ],
                     status_t2: false,
-                    t2_user_1: {
-                        [op.not]: req.user.id
-                    }
-                },
-                limit: limit,
-                offset: (req.params.page - 1) * limit,
-                order: [
-                    ['createdAt', 'DESC']
-                ],
-                include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'creator_user',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user2',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user',
-                        attributes: ['username', 'firstname', 'lastname']
-                    }
-                ]
+                    [op.or]: [{
+                        t2_user_1: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t2_user_1: {
+                            [op.is]: null
+                        }
+                    }]
+                } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
@@ -375,7 +377,7 @@ exports.get_submits = function (req, res, next) {
         })
     }
 
-    Promise.all([getSubmits(req), getSubmitsTotal()])
+    Promise.all([getSubmits(req), getSubmitsTotal(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -419,34 +421,34 @@ exports.get_pending = function (req, res, next) {
                 include: [{
                         model: models.Users,
                         required: true,
-                        as: 'creator_user',
+                        as: 'create_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user',
+                        as: 't2_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2',
+                        as: 't2_user2_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'approver',
+                        as: 'approver_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'del_req_user',
+                        as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     }
-                ]
+                ],
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
@@ -482,7 +484,7 @@ exports.get_pending = function (req, res, next) {
         })
     }
 
-    Promise.all([getPending(req), getPendingTotal()])
+    Promise.all([getPending(req), getPendingTotal(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -523,34 +525,34 @@ exports.get_del_req = function (req, res, next) {
                 include: [{
                         model: models.Users,
                         required: true,
-                        as: 'creator_user',
+                        as: 'create_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user',
+                        as: 't2_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2',
+                        as: 't2_user2_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'approver',
+                        as: 'approver_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
                         model: models.Users,
                         required: false,
-                        as: 'del_req_user',
+                        as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     }
-                ]
+                ],
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
@@ -583,7 +585,7 @@ exports.get_del_req = function (req, res, next) {
         })
     }
 
-    Promise.all([getDel(req), getDelTotal()])
+    Promise.all([getDel(req), getDelTotal(req)])
         .then(result => {
             res.status(200).send({
                 result
@@ -646,34 +648,34 @@ exports.report = function (req, res, next) {
         include: [{
                 model: models.Users,
                 required: true,
-                as: 'creator_user',
+                as: 'create_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user',
+                as: 't2_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2',
+                as: 't2_user2_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'approver',
+                as: 'approver_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
                 model: models.Users,
                 required: false,
-                as: 'del_req_user',
+                as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             }
-        ]
+        ],
     }, {
         where: {
             id: req.params.psr_id
