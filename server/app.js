@@ -19,11 +19,6 @@ require('./passport_setup')(passport);
 let {run_db} = require('./dbJoin');
 
 var app = express();
-// app.use(cors({
-//   origin: "http://localhost:8080",
-//   credentials: true,
-//   exposedHeaders: ['Content-Length', 'Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
-// }));
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);

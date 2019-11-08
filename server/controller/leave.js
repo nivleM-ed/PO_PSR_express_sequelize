@@ -1,8 +1,5 @@
 let models = require('../models');
 var sequelize = require('sequelize');
-const {
-    dbJoin_leave
-} = require('../dbJoin');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
@@ -16,7 +13,6 @@ exports.show_leave_page = function (req, res, next) {
     })
 
     const limit = 10;
-    dbJoin_leave();
 
     const leave_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -28,17 +24,18 @@ exports.show_leave_page = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                    model: models.Users,
-                    required: true,
-                    as: 'user',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: true,
-                    as: 'approver',
-                    attributes: ['username', 'firstname', 'lastname']
-                }]
+                        model: models.Users,
+                        required: true,
+                        as: 'user_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ]
             }).then(leave => {
                 resolve(leave);
             }).catch(err => {
@@ -88,9 +85,7 @@ exports.show_own_leave = function (req, res, next) {
         label: 'leave',
         message: 'show_own_leave'
     })
-
     const limit = 10;
-    dbJoin_leave();
 
     const leave_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -103,7 +98,13 @@ exports.show_own_leave = function (req, res, next) {
                 include: [{
                     model: models.Users,
                     required: true,
-                    as: 'user',
+                    as: 'user_leave',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_leave',
                     attributes: ['username', 'firstname', 'lastname']
                 }]
             }, {
@@ -162,7 +163,6 @@ exports.show_all_leave = function (req, res, next) {
         label: 'leave',
         message: 'show_all_leave'
     })
-    dbJoin_leave();
 
     return models.leave.findAll({
         order: [
@@ -171,7 +171,13 @@ exports.show_all_leave = function (req, res, next) {
         include: [{
             model: models.Users,
             required: true,
-            as: 'user',
+            as: 'user_leave',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_leave',
             attributes: ['username', 'firstname', 'lastname']
         }]
     }).then(leave => {
@@ -192,13 +198,19 @@ exports.report = function (req, res, next) {
         label: 'leave',
         message: 'report'
     })
-    dbJoin_leave();
+
 
     return models.leave.findOne({
         include: [{
             model: models.Users,
             required: true,
             as: 'user',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_leave',
             attributes: ['username', 'firstname', 'lastname']
         }]
     }, {
