@@ -356,10 +356,16 @@ exports.get_submits = function (req, res, next) {
                         }
                     ],
                     status_t2: false,
-                    t2_user_1: {
-                        [op.not]: req.user.id
-                    }
-                }
+                    [op.or]: [{
+                        t2_user_1: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t2_user_1: {
+                            [op.is]: null
+                        }
+                    }]
+                } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
