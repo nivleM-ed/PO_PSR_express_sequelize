@@ -5,3 +5,4 @@ server/logs/info.log
 Documentation/Backend documentation.xlsx
 Documentation/Database documentation.xlsx
 server/logs/debug.log
+user.csv

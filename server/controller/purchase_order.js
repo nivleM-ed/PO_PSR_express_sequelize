@@ -3,6 +3,7 @@ var sequelize = require('sequelize');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
+var CONST = require('../const');
 const op = sequelize.Op
 
 //working //not needed - just for testing purposes
@@ -67,7 +68,7 @@ exports.show_po_page = function (req, res, next) {
         label: 'po',
         message: 'show_po_page'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const po_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -270,7 +271,7 @@ exports.get_submits = function (req, res, next) {
         label: 'po',
         message: 'get_submits'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -404,7 +405,7 @@ exports.get_pending = function (req, res, next) {
         label: 'po',
         message: 'get_pending'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const getPending = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -509,7 +510,7 @@ exports.get_del_req = function (req, res, next) {
         label: 'po',
         message: 'get_del_req'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const getDel = (req, res, next) => {
         return new Promise((resolve, reject) => {

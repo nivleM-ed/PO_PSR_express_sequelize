@@ -34,6 +34,14 @@ export default {
                 this.error = err.message;
             }
         },
+        async del_req_leave(del_reason) {
+            try {
+                const leave = await leave.del_req_leave(del_rason);
+                console.log(leave);
+            } catch (err) {
+                this.error = err.message;
+            }
+        },
         async del_leave() {
             try {
                 const leave = await leave.del_leave();

@@ -7,27 +7,31 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        user_id: { //purchase order id (references id from Users table)
+        user_id: { 
             allowNull: false,
             type: DataTypes.STRING
         },
-        date_from: { //purchase order date
+        date_from: { 
             allowNull: false,
             type: DataTypes.DATEONLY
         },
-        date_to: { //purchase order date
+        date_to: { 
             allowNull: false,
             type: DataTypes.DATEONLY
         },
-        reason: { //purchase order date
+        reason: { 
             allowNull: false,
+            type: DataTypes.STRING(1000)
+        },
+        del_reason: { 
+            allowNull: true,
             type: DataTypes.STRING(1000)
         },
         approver_id: {
             allowNull: true,
             type: DataTypes.STRING
         },
-        status: { //purchase order date
+        status: { 
             allowNull: false,
             type: DataTypes.BOOLEAN,
             defaultValue: false

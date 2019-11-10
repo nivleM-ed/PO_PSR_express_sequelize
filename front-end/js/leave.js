@@ -1,7 +1,6 @@
 import axios from "axios";
-
-// const url = "http://localhost:3000/leave/"; //for production use localhost:3000
-const url = "http://192.168.193.236/leave/";
+import { CONST } from './const';
+const url = CONST.CONST_URL.concat('leave/');
 
 class leave {
   static show_all_leave() {
@@ -21,6 +20,19 @@ class leave {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.get(`${url}all/${page}`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static show_pending_page(page) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(`${url}pending_leave/${page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -89,6 +101,21 @@ class leave {
             withCredentials: true
           }
         );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static del_req_leave(leave_id, del_reason) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(`${url}${leave_id}/delreq_leave`,{
+          del_reason
+        }, {
+          withCredentials: true
+        });
         resolve(res.data);
       } catch (err) {
         reject(err);

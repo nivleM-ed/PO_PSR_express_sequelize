@@ -7,6 +7,8 @@ let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticat
 //for t2 & t3 ONLY
 router.get('/all/:page', leave.show_leave_page); //WITH pagination
 router.get('/all_leave', isLoggedIn, auth_no_t1, leave.show_all_leave); //WITHOUT pagination
+router.get('/pending_leave', isLoggedIn, auth_no_t1, leave.show_pending_leave); //get pending leaves WITHOUT pagination
+
 
 //own leaves
 router.get('/own/:page', isLoggedIn, leave.show_own_leave);
@@ -17,6 +19,7 @@ router.get('/own/:page', isLoggedIn, leave.show_own_leave);
 router.get('/:leave_id', isLoggedIn, leave.report);
 router.post('/add_leave', isLoggedIn, leave.add_leave);
 router.post('/:leave_id/upd_leave', isLoggedIn, leave.upd_leave);
+router.post('/:leave_id/delreq_leave', isLoggedIn, leave.del_req_leave); //request to delete leave
 router.delete('/:leave_id/del_leave', isLoggedIn, leave.del_leave);
 router.post('/:leave_id/approve', isLoggedIn, leave.approve_leave);
 

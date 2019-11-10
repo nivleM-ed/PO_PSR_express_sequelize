@@ -36,6 +36,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING(1000)
             },
+            del_reason: { 
+                allowNull: true,
+                type: Sequelize.STRING(1000)
+            },
             approver_id: {
                 allowNull: true,
                 type: Sequelize.STRING

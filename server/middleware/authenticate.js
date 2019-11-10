@@ -78,7 +78,7 @@ exports.auth_no_t1_t2 = function (req, res, next) {
         message: 'auth_no_t1_t2'
     })
     try {
-        if (req.user && req.user.t1 != true && req.user.user.t2 != true)
+        if (req.user && req.user.t1 != true && req.user.t2 != true)
             next();
         else {
             loggerInfo.log({

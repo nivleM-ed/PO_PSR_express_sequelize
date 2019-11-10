@@ -1,7 +1,6 @@
 import axios from "axios";
-
-// const url = "http://localhost:3000/po/"; //for production use localhost:3000
-const url = "http://192.168.193.236/po/";
+import { CONST } from './const';
+const url = CONST.CONST_URL.concat('po/');
 
 class po {
   static show_po_all() {

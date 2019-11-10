@@ -3,62 +3,64 @@ var sequelize = require('sequelize');
 let loggerDebug = require('../logs/loggerDebug.js');
 let loggerInfo = require('../logs/loggerInfo.js');
 let loggerError = require('../logs/loggerError.js');
+var CONST = require('../const');
 const op = sequelize.Op
 
 //working //not needed - just for testing purporses
-exports.show_psr_all = function (req, res, next) {
-    loggerInfo.log({
-        level: 'info',
-        label: 'psr',
-        message: 'show_psr_all'
-    })
+// exports.show_psr_all = function (req, res, next) {
+//     loggerInfo.log({
+//         level: 'info',
+//         label: 'psr',
+//         message: 'show_psr_all'
+//     })
 
-    return models.psr.findAll({
-        include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user2_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            }
-        ],
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    }).then(psr => {
-        res.send(psr)
-    }).catch(err => {
-        loggerError.log({
-            level: 'error',
-            label: 'psr_show_psr_all',
-            message: err
-        })
-        res.status(500).send(err);
-    })
-};
+//     return models.psr.findAll({
+//         // attributes: [],
+//         include: [{
+//                 model: models.Users,
+//                 required: true,
+//                 as: 'create_user_psr',
+//                 attributes: ['username', 'firstname', 'lastname']
+//             },
+//             {
+//                 model: models.Users,
+//                 required: false,
+//                 as: 't2_user_psr',
+//                 attributes: ['username', 'firstname', 'lastname']
+//             },
+//             {
+//                 model: models.Users,
+//                 required: false,
+//                 as: 't2_user2_psr',
+//                 attributes: ['username', 'firstname', 'lastname']
+//             },
+//             {
+//                 model: models.Users,
+//                 required: false,
+//                 as: 'approver_psr',
+//                 attributes: ['username', 'firstname', 'lastname']
+//             },
+//             {
+//                 model: models.Users,
+//                 required: false,
+//                 as: 'del_req_user_psr',
+//                 attributes: ['username', 'firstname', 'lastname']
+//             }
+//         ],
+//         order: [
+//             ['createdAt', 'DESC']
+//         ]
+//     }).then(psr => {
+//         res.send(psr)
+//     }).catch(err => {
+//         loggerError.log({
+//             level: 'error',
+//             label: 'psr_show_psr_all',
+//             message: err
+//         })
+//         res.status(500).send(err);
+//     })
+// };
 
 //WORKING  //send with pagination and total page number
 exports.show_psr_page = function (req, res, next) {
@@ -67,7 +69,7 @@ exports.show_psr_page = function (req, res, next) {
         label: 'psr',
         message: 'show_psr_page'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const psr_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -125,7 +127,6 @@ exports.show_psr_page = function (req, res, next) {
     const total_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.count({
-                // attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']]
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
@@ -154,7 +155,6 @@ exports.show_psr_page = function (req, res, next) {
         })
 }
 
-
 //show all psr WITHOUT pagination
 exports.show_all_psr = function (req, res, next) {
     loggerInfo.log({
@@ -164,6 +164,7 @@ exports.show_all_psr = function (req, res, next) {
     })
 
     return models.psr.findAll({
+        // attributes: [],
         order: [
             ['createdAt', 'DESC']
         ],
@@ -269,7 +270,7 @@ exports.get_submits = function (req, res, next) {
         label: 'psr',
         message: 'get_submits'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -403,7 +404,7 @@ exports.get_pending = function (req, res, next) {
         label: 'psr',
         message: 'get_pending'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const getPending = (req, res, next) => {
         return new Promise((resolve, reject) => {
@@ -509,7 +510,7 @@ exports.get_del_req = function (req, res, next) {
         label: 'psr',
         message: 'get_del_req'
     })
-    const limit = 10; //can be changed
+    const limit = CONST.CONST_page_limit; //can be changed
 
     const getDel = (req, res, next) => {
         return new Promise((resolve, reject) => {

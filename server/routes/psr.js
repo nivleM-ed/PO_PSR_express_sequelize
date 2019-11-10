@@ -4,7 +4,7 @@ let psr = require('../controller/psr');
 let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticate');
 
 // psr module 
-router.get('/', psr.show_psr_all); //for testing purpose
+// router.get('/', psr.show_psr_all); //for testing purpose
 router.get('/all/:page', isLoggedIn, psr.show_psr_page); //show all with pagination
 router.get('/all_psr', isLoggedIn, psr.show_all_psr); //show all WITHOUT pagination
 router.get('/search/:psr_no', isLoggedIn, psr.find); //find for specific psr_no
