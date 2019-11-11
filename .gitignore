@@ -6,3 +6,4 @@ Documentation/Backend documentation.xlsx
 Documentation/Database documentation.xlsx
 server/logs/debug.log
 user.csv
+*.log

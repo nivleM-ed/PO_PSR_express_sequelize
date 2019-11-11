@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CONST } from './const';
-const url = CONST.CONST_URL.concat('user/');
+const url = CONST.CONST_URL;
 
 class user {
 

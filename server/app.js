@@ -51,11 +51,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
   
-app.use('/', indexRouter);
-app.use('/po', purchase_order);
-app.use('/psr', psr);
-app.use('/leave', leave);
-app.use('/admin', admin);
+app.use('/api/', indexRouter);
+app.use('/api/po', purchase_order);
+app.use('/api/psr', psr);
+app.use('/api/leave', leave);
+app.use('/api/admin', admin);
 app.use(logger('combined', { stream: winston.stream.write }));
 run_db();
 //For production
