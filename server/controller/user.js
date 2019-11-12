@@ -53,6 +53,37 @@ exports.login = function (req, res, next) {
     })(req, res, next);
 }
 
+//check if logged in
+exports.check_logged = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'user',
+        message: 'check_logged'
+    })
+    try {
+        if (req.user)
+            res.status(200).send({id: req.user.id});
+        else {
+            loggerInfo.log({
+                level: 'info',
+                label: 'check_logged',
+                message: 'noPermission'
+            })
+            res.send({
+                err: "noPermission"
+            });
+        }
+    } catch (error) {
+        loggerError.log({
+            level: 'error',
+            label: 'check_logged',
+            message: error
+        })
+        res.send({
+            error: "systemErr"
+        })
+    }
+}
 
 //logout
 exports.logout = function (req, res, next) {

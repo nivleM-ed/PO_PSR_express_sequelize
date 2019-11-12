@@ -22,6 +22,19 @@ class user {
     });
   }
 
+  static check_logged() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(`${url}check_logged`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
   static logout() {
     return new Promise(async (resolve, reject) => {
       try {
