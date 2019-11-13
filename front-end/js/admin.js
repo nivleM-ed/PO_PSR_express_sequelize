@@ -34,6 +34,24 @@ class admin {
     });
   }
 
+  static new_user(username, password, firstname, lastname) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(
+          `${url}admin_add`,
+          {
+            username,
+            password
+          },
+          { withCredentials: true }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
   static get_user(id) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -67,6 +85,23 @@ class admin {
             t1,
             t2,
             t3
+          },
+          { withCredentials: true }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static reset_password(id, password) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(
+          `${url}${id}/reset_password`,
+          {
+            password
           },
           { withCredentials: true }
         );

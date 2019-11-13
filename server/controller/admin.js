@@ -187,3 +187,30 @@ exports.update_tier = function (req, res, next) {
         res.status(500).send(err);
     })
 }
+
+exports.reset_password = function (req, res, next) {
+    loggerInfo.log({
+        level: 'info',
+        label: 'Admin',
+        message: 'reset_password'
+    })
+
+    if(req.params.user_id == req.user.id || req.user.is_admin) {
+        return models.Users.update({
+            password: generateHash(req.body.password)
+        }, {
+            where: {
+                id: req.user.id
+            } 
+        }).then(user => {
+            res.status(200).send(user);
+        }).catch(err => {
+            loggerError.log({
+                level: 'error',
+                label: 'reset_password',
+                message: err
+            });
+            res.status(500).send(err);
+        });
+    }
+}

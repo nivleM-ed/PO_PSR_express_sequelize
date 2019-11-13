@@ -13,6 +13,6 @@ router.get('/get_all', isLoggedIn, auth_admin, admin.get_all_user);
 router.post('/new_user', isLoggedIn, auth_admin, admin.add_user); //add user
 router.delete('/:user_id/del_user', isLoggedIn, auth_admin, admin.del_user); //delete user
 router.post('/:user_id/upd_tier', isLoggedIn, auth_admin, admin.update_tier); //update tier of user
-
+router.post('/:user_id/reset_password', isLoggedIn, admin.reset_password); //update password of user
 
 module.exports = router;
