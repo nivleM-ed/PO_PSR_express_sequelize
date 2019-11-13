@@ -58,7 +58,7 @@ app.use('/api/leave', leave);
 app.use('/api/admin', admin);
 app.use(morgan('combined', { stream: winston.stream }));
 run_db();
-console.log("NODE_ENV: " + req.app.settings.env)
+console.log("NODE_ENV: " + process.env.NODE_ENV)
 //For production
 if (process.env.NODE_ENV === 'production') {
   //Static folder of vue.js dist
