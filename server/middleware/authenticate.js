@@ -1,15 +1,8 @@
-let loggerDebug = require('../logs/loggerDebug.js');
-let loggerInfo = require('../logs/loggerInfo.js');
-let loggerError = require('../logs/loggerError.js');
+var winston = require('../logs/winston');
 let createError = require('http-errors');
 
 exports.isLoggedIn = function (req, res, next) {
-    loggerDebug.log({
-        level: 'debug',
-        label: 'Login Session',
-        message: req.session
-    });
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Authenticate',
         message: 'LoggedIn'
@@ -19,7 +12,7 @@ exports.isLoggedIn = function (req, res, next) {
         if (req.user)
             next();
         else {
-            loggerInfo.log({
+            winston.info({
                 level: 'info',
                 label: 'Authenticate_logged_in',
                 message: 'notLoggedIn'
@@ -29,7 +22,7 @@ exports.isLoggedIn = function (req, res, next) {
             });
         }
     } catch (error) {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Authenticate_logged_in',
             message: error
@@ -41,7 +34,7 @@ exports.isLoggedIn = function (req, res, next) {
 }
 
 exports.auth_no_t1 = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Authenticate',
         message: 'auth_no_t1'
@@ -50,7 +43,7 @@ exports.auth_no_t1 = function (req, res, next) {
         if (req.user && req.user.t1 != true)
             next();
         else {
-            loggerInfo.log({
+            winston.info({
                 level: 'info',
                 label: 'Authenticate_auth_no_t1',
                 message: 'noPermission'
@@ -60,7 +53,7 @@ exports.auth_no_t1 = function (req, res, next) {
             });
         }
     } catch (error) {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Authenticate_auth_no_t1',
             message: error
@@ -72,7 +65,7 @@ exports.auth_no_t1 = function (req, res, next) {
 }
 
 exports.auth_no_t1_t2 = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Authenticate',
         message: 'auth_no_t1_t2'
@@ -81,7 +74,7 @@ exports.auth_no_t1_t2 = function (req, res, next) {
         if (req.user && req.user.t1 != true && req.user.t2 != true)
             next();
         else {
-            loggerInfo.log({
+            winston.info({
                 level: 'info',
                 label: 'Authenticate_auth_no_t1_t2',
                 message: 'noPermission'
@@ -91,7 +84,7 @@ exports.auth_no_t1_t2 = function (req, res, next) {
             });
         }
     } catch (error) {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Authenticate_auth_no_t1_t2',
             message: error
@@ -103,7 +96,7 @@ exports.auth_no_t1_t2 = function (req, res, next) {
 }
 
 exports.auth_admin = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Authenticate',
         message: 'admin'
@@ -112,7 +105,7 @@ exports.auth_admin = function (req, res, next) {
         if (req.user && req.user.is_admin == true)
             next();
         else {
-            loggerInfo.log({
+            winston.info({
                 level: 'error',
                 label: 'Authenticate_auth_admin',
                 message: 'noPermission'
@@ -122,7 +115,7 @@ exports.auth_admin = function (req, res, next) {
             });
         }
     } catch (error) {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Authenticate_auth_admin',
             message: error

@@ -1,8 +1,5 @@
 let models = require('../models');
 let bcrypt = require('bcrypt');
-let loggerDebug = require('../logs/loggerDebug.js');
-let loggerInfo = require('../logs/loggerInfo.js');
-let loggerError = require('../logs/loggerError.js');
 const passport = require('passport');
 const myPassport = require('../passport_setup')(passport);
 const {
@@ -14,6 +11,7 @@ const {
 const {
     dbJoin
 } = require('../dbJoin');
+var winston = require('../logs/winston');
 
 const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
@@ -21,7 +19,7 @@ const generateHash = function (password) {
 
 //get all the users for main page
 exports.get_all_user = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'get_all_user'
@@ -35,7 +33,7 @@ exports.get_all_user = function (req, res, next) {
             users: users
         });
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Admin_get_all_user',
             message: err
@@ -45,7 +43,7 @@ exports.get_all_user = function (req, res, next) {
 }
 
 exports.get_user = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'get_user'
@@ -59,7 +57,7 @@ exports.get_user = function (req, res, next) {
             users: users
         });
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Admin_get_user',
             message: err
@@ -72,7 +70,7 @@ exports.get_user = function (req, res, next) {
 //add new admin into database
 //default: admin, password
 exports.add_admin = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'add_admin'
@@ -90,7 +88,7 @@ exports.add_admin = function (req, res, next) {
             return newUser.save().then(result => {
                 res.status(200).send();
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'Admin_add_admin',
                     message: err
@@ -103,7 +101,7 @@ exports.add_admin = function (req, res, next) {
 
 //add new user into database
 exports.add_user = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'add_user'
@@ -125,7 +123,7 @@ exports.add_user = function (req, res, next) {
             return newUser.save().then(result => {
                 res.status(200).send();
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'Admin_add_user',
                     message: err
@@ -139,7 +137,7 @@ exports.add_user = function (req, res, next) {
 
 //delete user
 exports.del_user = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'del_user'
@@ -151,7 +149,7 @@ exports.del_user = function (req, res, next) {
     }).then(result => {
         res.status(200).send();
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Admin_del_user',
             message: err
@@ -163,7 +161,7 @@ exports.del_user = function (req, res, next) {
 
 //update the tier of user 
 exports.update_tier = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'update_tier'
@@ -179,7 +177,7 @@ exports.update_tier = function (req, res, next) {
     }).then(result => {
         res.status(200).send();
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'Admin_update_tier',
             message: err
@@ -189,7 +187,7 @@ exports.update_tier = function (req, res, next) {
 }
 
 exports.reset_password = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'Admin',
         message: 'reset_password'
@@ -205,7 +203,7 @@ exports.reset_password = function (req, res, next) {
         }).then(user => {
             res.status(200).send(user);
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'reset_password',
                 message: err

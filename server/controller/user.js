@@ -10,9 +10,7 @@ const {
 } = require('../validators/signup');
 var sequelize = require('sequelize');
 const op = sequelize.Op;
-let loggerDebug = require('../logs/loggerDebug.js');
-let loggerInfo = require('../logs/loggerInfo.js');
-let loggerError = require('../logs/loggerError.js');
+var winston = require('../logs/winston');
 
 const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
@@ -20,7 +18,7 @@ const generateHash = function (password) {
 
 //login
 exports.login = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'user',
         message: 'login'
@@ -34,13 +32,15 @@ exports.login = function (req, res, next) {
             res.send(info);
         } else {
             req.logIn(user, function (err) {
-                loggerDebug.log({
-                    level: 'debug',
-                    label: 'user_login',
-                    message: user.username
-                })
+                if (req.app.settings.env === 'development') {
+                    winston.debug({
+                        level: 'debug',
+                        label: 'user_login',
+                        message: user.username
+                    })
+                }
                 if (err) {
-                    loggerError.log({
+                    winston.error({
                         level: 'error',
                         label: 'user_login',
                         message: err
@@ -55,16 +55,18 @@ exports.login = function (req, res, next) {
 
 //check if logged in
 exports.check_logged = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'user',
         message: 'check_logged'
     })
     try {
         if (req.user)
-            res.status(200).send({id: req.user.id});
+            res.status(200).send({
+                id: req.user.id
+            });
         else {
-            loggerInfo.log({
+            winston.info({
                 level: 'info',
                 label: 'check_logged',
                 message: 'noPermission'
@@ -74,7 +76,7 @@ exports.check_logged = function (req, res, next) {
             });
         }
     } catch (error) {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'check_logged',
             message: error
@@ -87,7 +89,7 @@ exports.check_logged = function (req, res, next) {
 
 //logout
 exports.logout = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'user',
         message: 'logout'
@@ -103,7 +105,7 @@ exports.logout = function (req, res, next) {
 //get counts
 exports.getCounts = function (req, res, next) {
     const getNew_po = (req, res, next) => {
-        loggerInfo.log({
+        winston.info({
             level: 'info',
             label: 'user',
             message: 'get_new_po'
@@ -121,7 +123,7 @@ exports.getCounts = function (req, res, next) {
             }).then(countPending => {
                 resolve(countPending);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'user_new_po',
                     message: err
@@ -133,7 +135,7 @@ exports.getCounts = function (req, res, next) {
 
     const getPending_po = (req, res, next) => {
         return new Promise((resolve, reject) => {
-            loggerInfo.log({
+            winston.info({
                 level: 'info',
                 label: 'user',
                 message: 'get_pending_po'
@@ -150,7 +152,7 @@ exports.getCounts = function (req, res, next) {
             }).then(countPending => {
                 resolve(countPending);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'user_pending_po',
                     message: err
@@ -161,7 +163,7 @@ exports.getCounts = function (req, res, next) {
     }
 
     const getNew_psr = (req, res, next) => {
-        loggerInfo.log({
+        winston.info({
             level: 'info',
             label: 'user',
             message: 'get_new_psr'
@@ -179,7 +181,7 @@ exports.getCounts = function (req, res, next) {
             }).then(countPending => {
                 resolve(countPending);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'user_new_psr',
                     message: err
@@ -190,7 +192,7 @@ exports.getCounts = function (req, res, next) {
     }
 
     const getPending_psr = (req, res, next) => {
-        loggerInfo.log({
+        winston.info({
             level: 'info',
             label: 'user',
             message: 'get_pending_psr'
@@ -208,7 +210,7 @@ exports.getCounts = function (req, res, next) {
             }).then(countPending => {
                 resolve(countPending);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'user_pending_psr',
                     message: err
@@ -219,8 +221,8 @@ exports.getCounts = function (req, res, next) {
     }
 
     if (req.user.t1) {
-        if (process.env.NODE_ENV === 'production') {
-            loggerDebug.log({
+        if (req.app.settings.env === 'development') {
+            winston.debug({
                 level: 'debug',
                 label: 'user',
                 message: 'user_t1'
@@ -230,8 +232,8 @@ exports.getCounts = function (req, res, next) {
             status: "t1"
         });
     } else if (req.user.t2) {
-        if (process.env.NODE_ENV === 'production') {
-            loggerDebug.log({
+        if (req.app.settings.env === 'development') {
+            winston.debug({
                 level: 'debug',
                 label: 'user',
                 message: 'user_t2'
@@ -244,8 +246,8 @@ exports.getCounts = function (req, res, next) {
                     count
                 });
             }).catch(err => {
-                if (process.env.NODE_ENV === 'production') {
-                    loggerDebug.log({
+                if (req.app.settings.env === 'development') {
+                    winston.debug({
                         level: 'debug',
                         label: 'user_t2',
                         message: err
@@ -254,8 +256,8 @@ exports.getCounts = function (req, res, next) {
                 res.status(500).send(err);
             })
     } else if (req.user.t3) {
-        if (process.env.NODE_ENV === 'production') {
-            loggerDebug.log({
+        if (req.app.settings.env === 'development') {
+            winston.debug({
                 level: 'debug',
                 label: 'user',
                 message: 'user_t3'
@@ -268,8 +270,8 @@ exports.getCounts = function (req, res, next) {
                     count
                 });
             }).catch(err => {
-                if (process.env.NODE_ENV === 'production') {
-                    loggerDebug.log({
+                if (req.app.settings.env === 'development') {
+                    winston.debug({
                         level: 'debug',
                         label: 'user_t3',
                         message: err
@@ -278,8 +280,8 @@ exports.getCounts = function (req, res, next) {
                 res.status(500).send(err);
             })
     } else {
-        if (process.env.NODE_ENV === 'production') {
-            loggerDebug.log({
+        if (req.app.settings.env === 'development') {
+            winston.debug({
                 level: 'debug',
                 label: 'user_update_permission',
                 message: err
@@ -293,23 +295,23 @@ exports.getCounts = function (req, res, next) {
 
 //search
 exports.search = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'user',
         message: 'search'
     })
 
     return models.Users.findAll({
-        attributes: ['id','username','firstname','lastname'],
+        attributes: ['id', 'username', 'firstname', 'lastname'],
         where: {
             username: {
-                [op.like]: '%'+req.body.username.toLowerCase()+'%'
+                [op.like]: '%' + req.body.username.toLowerCase() + '%'
             }
         }
     }).then(users => {
         res.status(200).send(users);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'user_search',
             message: err

@@ -1,13 +1,11 @@
 let models = require('../models');
 var sequelize = require('sequelize');
-let loggerDebug = require('../logs/loggerDebug.js');
-let loggerInfo = require('../logs/loggerInfo.js');
-let loggerError = require('../logs/loggerError.js');
+var winston = require('../logs/winston');
 var CONST = require('../const');
 
 //show all leaves WITH pagination
 exports.show_leave_page = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'show_leave_page'
@@ -40,7 +38,7 @@ exports.show_leave_page = function (req, res, next) {
             }).then(leave => {
                 resolve(leave);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'leave_show_all_leave',
                     message: err
@@ -55,7 +53,7 @@ exports.show_leave_page = function (req, res, next) {
             return models.leave.count({}).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'leave_total_page',
                     message: err
@@ -69,7 +67,7 @@ exports.show_leave_page = function (req, res, next) {
         .then(result => {
             res.status(200).send(result);
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'leave_page_promise',
                 message: err
@@ -81,7 +79,7 @@ exports.show_leave_page = function (req, res, next) {
 
 
 exports.show_own_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'show_own_leave'
@@ -115,7 +113,7 @@ exports.show_own_leave = function (req, res, next) {
             }).then(leave => {
                 resolve(leave);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'leave_show_own_leave',
                     message: err
@@ -134,7 +132,7 @@ exports.show_own_leave = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'leave_total_page',
                     message: err
@@ -148,7 +146,7 @@ exports.show_own_leave = function (req, res, next) {
         .then(result => {
             res.status(200).send(result);
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'leave_page_promise',
                 message: err
@@ -158,7 +156,7 @@ exports.show_own_leave = function (req, res, next) {
 }
 
 exports.show_pending_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'show_pending_leave'
@@ -194,7 +192,7 @@ exports.show_pending_leave = function (req, res, next) {
             }).then(leave => {
                 resolve(leave);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'leave_show_pending_leave',
                     message: err
@@ -215,7 +213,7 @@ exports.show_pending_leave = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'leave_total_page',
                     message: err
@@ -229,7 +227,7 @@ exports.show_pending_leave = function (req, res, next) {
         .then(result => {
             res.status(200).send(result);
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'leave_pending_page_promise',
                 message: err
@@ -240,7 +238,7 @@ exports.show_pending_leave = function (req, res, next) {
 
 //show all leaves WITHOUT pagination
 exports.show_all_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'show_all_leave'
@@ -265,7 +263,7 @@ exports.show_all_leave = function (req, res, next) {
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_show_all_leave',
             message: err
@@ -275,7 +273,7 @@ exports.show_all_leave = function (req, res, next) {
 }
 
 exports.report = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'report'
@@ -303,7 +301,7 @@ exports.report = function (req, res, next) {
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_report',
             message: err
@@ -313,7 +311,7 @@ exports.report = function (req, res, next) {
 }
 
 exports.add_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'leave_add_leave'
@@ -326,7 +324,7 @@ exports.add_leave = function (req, res, next) {
     }).then(leave => {
         res.status(201).send(leave)
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_add_leave',
             message: err
@@ -336,7 +334,7 @@ exports.add_leave = function (req, res, next) {
 }
 
 exports.del_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'del_leave'
@@ -348,7 +346,7 @@ exports.del_leave = function (req, res, next) {
     }).then(deleted => {
         res.status(200).send("deleted");
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_del_leave',
             message: err
@@ -358,7 +356,7 @@ exports.del_leave = function (req, res, next) {
 }
 
 exports.del_req_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'del_req_leave'
@@ -374,7 +372,7 @@ exports.del_req_leave = function (req, res, next) {
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_del_leave',
             message: err
@@ -384,7 +382,7 @@ exports.del_req_leave = function (req, res, next) {
 }
 
 exports.approve_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'approve_leave'
@@ -400,7 +398,7 @@ exports.approve_leave = function (req, res, next) {
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_approve_leave',
             message: err
@@ -410,7 +408,7 @@ exports.approve_leave = function (req, res, next) {
 }
 
 exports.upd_leave = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'leave',
         message: 'upd_leave'
@@ -426,7 +424,7 @@ exports.upd_leave = function (req, res, next) {
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'leave_upd_leave',
             message: err
@@ -436,7 +434,7 @@ exports.upd_leave = function (req, res, next) {
 }
 
 // exports.search_user = function (req, res, next) {
-//     loggerInfo.log({
+//     winston.info({
 //         level: 'info',
 //         label: 'leave',
 //         message: 'search_user'
@@ -452,7 +450,7 @@ exports.upd_leave = function (req, res, next) {
 //     }).then(leave => {
 //         res.status(200).send(leave);
 //     }).catch(err => {
-//         loggerError.log({
+//         winston.error({
 //             level: 'error',
 //             label: 'leave_upd_leave',
 //             message: err

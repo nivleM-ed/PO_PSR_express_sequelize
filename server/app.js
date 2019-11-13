@@ -3,7 +3,7 @@ var express = require('express');
 // var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var morgan = require('morgan');
 
 let passport = require('passport');
 let session = require('express-session');
@@ -13,7 +13,7 @@ var purchase_order = require('./routes/purchase_order');
 var psr = require('./routes/psr');
 var leave = require('./routes/leave');
 var admin = require('./routes/admin');
-var winston = require('./logs/loggerDebug');
+var winston = require('./logs/winston');
 
 require('./passport_setup')(passport);
 let {run_db} = require('./dbJoin');
@@ -36,7 +36,7 @@ app.use(function(req, res, next) {
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -56,8 +56,9 @@ app.use('/api/po', purchase_order);
 app.use('/api/psr', psr);
 app.use('/api/leave', leave);
 app.use('/api/admin', admin);
-app.use(logger('combined', { stream: winston.stream.write }));
+app.use(morgan('combined', { stream: winston.stream }));
 run_db();
+console.log("NODE_ENV: " + req.app.settings.env)
 //For production
 if (process.env.NODE_ENV === 'production') {
   //Static folder of vue.js dist

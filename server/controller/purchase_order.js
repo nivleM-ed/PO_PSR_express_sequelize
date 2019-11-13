@@ -1,14 +1,12 @@
 let models = require('../models');
 var sequelize = require('sequelize');
-let loggerDebug = require('../logs/loggerDebug.js');
-let loggerInfo = require('../logs/loggerInfo.js');
-let loggerError = require('../logs/loggerError.js');
+var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op
 
 //working //not needed - just for testing purposes
 exports.show_po_all = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'show_po_all'
@@ -52,7 +50,7 @@ exports.show_po_all = function (req, res, next) {
     }).then(po => {
         res.send(po)
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_show_po_all',
             message: err
@@ -63,7 +61,7 @@ exports.show_po_all = function (req, res, next) {
 
 //WORKING
 exports.show_po_page = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'show_po_page'
@@ -113,7 +111,7 @@ exports.show_po_page = function (req, res, next) {
             }).then(po => {
                 resolve(po);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_show_po_page',
                     message: err
@@ -130,7 +128,7 @@ exports.show_po_page = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_show_po_page_total_page',
                     message: err
@@ -146,7 +144,7 @@ exports.show_po_page = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'po_show_po_page_promise',
                 message: err
@@ -157,7 +155,7 @@ exports.show_po_page = function (req, res, next) {
 
 //show all po WITHOUT pagination
 exports.show_all_po = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'show_all_po'
@@ -209,7 +207,7 @@ exports.show_all_po = function (req, res, next) {
 //WORKING
 //find po_no
 exports.find = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'find'
@@ -254,7 +252,7 @@ exports.find = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po)
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_find',
             message: err
@@ -266,7 +264,7 @@ exports.find = function (req, res, next) {
 
 //get po waiting to be accepted
 exports.get_submits = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'get_submits'
@@ -335,7 +333,7 @@ exports.get_submits = function (req, res, next) {
             }).then(po => {
                 resolve(po)
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_get_submits',
                     message: err
@@ -371,7 +369,7 @@ exports.get_submits = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_get_submits_total_page',
                     message: err
@@ -387,7 +385,7 @@ exports.get_submits = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'po_get_submits_promise',
                 message: err
@@ -400,7 +398,7 @@ exports.get_submits = function (req, res, next) {
 //WORKING
 //get po waiting to be approved
 exports.get_pending = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'get_pending'
@@ -455,7 +453,7 @@ exports.get_pending = function (req, res, next) {
             }).then(po => {
                 resolve(po)
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_get_pending',
                     message: err
@@ -477,7 +475,7 @@ exports.get_pending = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_get_pending_total_page',
                     message: err
@@ -493,7 +491,7 @@ exports.get_pending = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'po_get_pending_promise',
                 message: err
@@ -505,7 +503,7 @@ exports.get_pending = function (req, res, next) {
 //WORKING
 //get po waiting to be approved
 exports.get_del_req = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'get_del_req'
@@ -557,7 +555,7 @@ exports.get_del_req = function (req, res, next) {
             }).then(po => {
                 resolve(po)
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_get_delreq',
                     message: err
@@ -576,7 +574,7 @@ exports.get_del_req = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_get_delreq_total_page',
                     message: err
@@ -592,7 +590,7 @@ exports.get_del_req = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'po_get_delreq_promise',
                 message: err
@@ -605,7 +603,7 @@ exports.get_del_req = function (req, res, next) {
 //WORKING
 //add purchase order
 exports.po_add = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_add'
@@ -625,7 +623,7 @@ exports.po_add = function (req, res, next) {
     }).then(po => {
         res.status(201).send(po)
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_add',
             message: err
@@ -637,7 +635,7 @@ exports.po_add = function (req, res, next) {
 //WORKING
 //show specific purchase order and description
 exports.report = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'report'
@@ -682,7 +680,7 @@ exports.report = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_report',
             message: err
@@ -694,7 +692,7 @@ exports.report = function (req, res, next) {
 
 //request delete
 exports.po_req_del = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_del_req'
@@ -710,7 +708,7 @@ exports.po_req_del = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_del_req',
             message: err
@@ -722,7 +720,7 @@ exports.po_req_del = function (req, res, next) {
 //WORKING
 //approve delete po
 exports.po_del = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_del'
@@ -735,7 +733,7 @@ exports.po_del = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_del',
             message: err
@@ -746,7 +744,7 @@ exports.po_del = function (req, res, next) {
 
 //decline delete request
 exports.po_decline_del = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_del_decline'
@@ -761,7 +759,7 @@ exports.po_decline_del = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_del_decline',
             message: err
@@ -774,7 +772,7 @@ exports.po_decline_del = function (req, res, next) {
 //WORKING
 //update po
 exports.po_upd = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_upd'
@@ -801,7 +799,7 @@ exports.po_upd = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_upd',
             message: err
@@ -813,7 +811,7 @@ exports.po_upd = function (req, res, next) {
 //WORKING
 //update po status to pending
 exports.po_stat_1 = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_stat_1'
@@ -843,7 +841,7 @@ exports.po_stat_1 = function (req, res, next) {
                 }).then(po => {
                     res.status(200).send(po);
                 }).catch(err => {
-                    loggerError.log({
+                    winston.error({
                         level: 'error',
                         label: 'po_stat_1_1',
                         message: err
@@ -866,7 +864,7 @@ exports.po_stat_1 = function (req, res, next) {
             }).then(po => {
                 res.status(200).send(po);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'po_stat_1_2',
                     message: err
@@ -875,7 +873,7 @@ exports.po_stat_1 = function (req, res, next) {
             });
         }
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_stat_1_3',
             message: err
@@ -887,7 +885,7 @@ exports.po_stat_1 = function (req, res, next) {
 //WORKING
 //update po status to approve
 exports.po_stat_2 = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_stat_2'
@@ -903,7 +901,7 @@ exports.po_stat_2 = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_stat_2',
             message: err
@@ -914,7 +912,7 @@ exports.po_stat_2 = function (req, res, next) {
 
 //decline po
 exports.po_stat_decline = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'po',
         message: 'po_stat_decline'
@@ -931,7 +929,7 @@ exports.po_stat_decline = function (req, res, next) {
     }).then(po => {
         res.status(200).send(po);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'po_stat_decline',
             message: err

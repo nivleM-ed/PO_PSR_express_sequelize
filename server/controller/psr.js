@@ -1,14 +1,12 @@
 let models = require('../models');
 var sequelize = require('sequelize');
-let loggerDebug = require('../logs/loggerDebug.js');
-let loggerInfo = require('../logs/loggerInfo.js');
-let loggerError = require('../logs/loggerError.js');
+var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op
 
 //working //not needed - just for testing purporses
 // exports.show_psr_all = function (req, res, next) {
-//     loggerInfo.log({
+//     winston.info({
 //         level: 'info',
 //         label: 'psr',
 //         message: 'show_psr_all'
@@ -53,7 +51,7 @@ const op = sequelize.Op
 //     }).then(psr => {
 //         res.send(psr)
 //     }).catch(err => {
-//         loggerError.log({
+//         winston.error({
 //             level: 'error',
 //             label: 'psr_show_psr_all',
 //             message: err
@@ -64,7 +62,7 @@ const op = sequelize.Op
 
 //WORKING  //send with pagination and total page number
 exports.show_psr_page = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'show_psr_page'
@@ -114,7 +112,7 @@ exports.show_psr_page = function (req, res, next) {
             }).then(psr => {
                 resolve(psr);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_show_psr_page',
                     message: err
@@ -130,7 +128,7 @@ exports.show_psr_page = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_show_psr_page_total_page',
                     message: err
@@ -146,7 +144,7 @@ exports.show_psr_page = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'psr_show_psr_page_promise',
                 message: err
@@ -157,7 +155,7 @@ exports.show_psr_page = function (req, res, next) {
 
 //show all psr WITHOUT pagination
 exports.show_all_psr = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'show_all_psr'
@@ -209,7 +207,7 @@ exports.show_all_psr = function (req, res, next) {
 //WORKING
 //find psr_no
 exports.find = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'find'
@@ -254,7 +252,7 @@ exports.find = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr)
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_find',
             message: err
@@ -265,7 +263,7 @@ exports.find = function (req, res, next) {
 
 //get psr waiting to be accepted
 exports.get_submits = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'get_submits'
@@ -334,7 +332,7 @@ exports.get_submits = function (req, res, next) {
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_get_submits',
                     message: err
@@ -370,7 +368,7 @@ exports.get_submits = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_get_submits_total_page',
                     message: err
@@ -386,7 +384,7 @@ exports.get_submits = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'psr_get_submits_promise',
                 message: err
@@ -399,7 +397,7 @@ exports.get_submits = function (req, res, next) {
 //WORKING
 //get psr waiting to be approved
 exports.get_pending = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'get_pending'
@@ -454,7 +452,7 @@ exports.get_pending = function (req, res, next) {
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_get_pending',
                     message: err
@@ -476,7 +474,7 @@ exports.get_pending = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_get_pending_total_page',
                     message: err
@@ -492,7 +490,7 @@ exports.get_pending = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'psr_get_pending_promise',
                 message: err
@@ -505,7 +503,7 @@ exports.get_pending = function (req, res, next) {
 //WORKING
 //get psr waiting to be approved
 exports.get_del_req = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'get_del_req'
@@ -557,7 +555,7 @@ exports.get_del_req = function (req, res, next) {
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_get_delreq',
                     message: err
@@ -576,7 +574,7 @@ exports.get_del_req = function (req, res, next) {
             }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_get_delreq_total_page',
                     message: err
@@ -592,7 +590,7 @@ exports.get_del_req = function (req, res, next) {
                 result
             });
         }).catch(err => {
-            loggerError.log({
+            winston.error({
                 level: 'error',
                 label: 'psr_get_delreq_promise',
                 message: err
@@ -605,7 +603,7 @@ exports.get_del_req = function (req, res, next) {
 //WORKING
 //add purchase order
 exports.psr_add = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'add'
@@ -626,7 +624,7 @@ exports.psr_add = function (req, res, next) {
     }).then(psr => {
         res.status(201).send(psr)
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_add',
             message: err
@@ -638,7 +636,7 @@ exports.psr_add = function (req, res, next) {
 //WORKING
 //show specific purchase order and description
 exports.report = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'report'
@@ -683,7 +681,7 @@ exports.report = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_report',
             message: err
@@ -695,7 +693,7 @@ exports.report = function (req, res, next) {
 
 //request delete
 exports.psr_req_del = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_del_req'
@@ -711,7 +709,7 @@ exports.psr_req_del = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_del_req',
             message: err
@@ -723,7 +721,7 @@ exports.psr_req_del = function (req, res, next) {
 //WORKING
 //approve delete psr
 exports.psr_del = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_del'
@@ -736,7 +734,7 @@ exports.psr_del = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_del',
             message: err
@@ -747,7 +745,7 @@ exports.psr_del = function (req, res, next) {
 
 //decline delete request
 exports.psr_decline_del = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_del_decline'
@@ -762,7 +760,7 @@ exports.psr_decline_del = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_del_decline',
             message: err
@@ -775,7 +773,7 @@ exports.psr_decline_del = function (req, res, next) {
 //WORKING
 //update psr
 exports.psr_upd = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_upd'
@@ -804,7 +802,7 @@ exports.psr_upd = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_upd',
             message: err
@@ -816,7 +814,7 @@ exports.psr_upd = function (req, res, next) {
 //WORKING
 //update psr status to pending
 exports.psr_stat_1 = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_stat_1'
@@ -846,7 +844,7 @@ exports.psr_stat_1 = function (req, res, next) {
                 }).then(psr => {
                     res.status(200).send(psr);
                 }).catch(err => {
-                    loggerError.log({
+                    winston.error({
                         level: 'error',
                         label: 'psr_stat_1_1',
                         message: err
@@ -869,7 +867,7 @@ exports.psr_stat_1 = function (req, res, next) {
             }).then(psr => {
                 res.status(200).send(psr);
             }).catch(err => {
-                loggerError.log({
+                winston.error({
                     level: 'error',
                     label: 'psr_stat_1_2',
                     message: err
@@ -878,7 +876,7 @@ exports.psr_stat_1 = function (req, res, next) {
             });
         }
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_stat_1_3',
             message: err
@@ -890,7 +888,7 @@ exports.psr_stat_1 = function (req, res, next) {
 //WORKING
 //update psr status to approve
 exports.psr_stat_2 = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_stat_2'
@@ -906,7 +904,7 @@ exports.psr_stat_2 = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_stat_2',
             message: err
@@ -917,7 +915,7 @@ exports.psr_stat_2 = function (req, res, next) {
 
 //decline psr
 exports.psr_stat_decline = function (req, res, next) {
-    loggerInfo.log({
+    winston.info({
         level: 'info',
         label: 'psr',
         message: 'psr_stat_decline'
@@ -934,7 +932,7 @@ exports.psr_stat_decline = function (req, res, next) {
     }).then(psr => {
         res.status(200).send(psr);
     }).catch(err => {
-        loggerError.log({
+        winston.error({
             level: 'error',
             label: 'psr_stat_decline',
             message: err

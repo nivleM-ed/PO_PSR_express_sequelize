@@ -2,9 +2,7 @@
 let LocalStrategy = require('passport-local').Strategy;
 let bcrypt = require('bcrypt');
 let models = require('./models');
-let loggerDebug = require('./logs/loggerDebug.js');
-let loggerInfo = require('./logs/loggerInfo.js');
-let loggerError = require('./logs/loggerError.js');
+var winston = require('./logs/winston');
 
 const validPassword = function(user, password) {
 	return bcrypt.compareSync(password, user.password);
@@ -12,7 +10,7 @@ const validPassword = function(user, password) {
 
 module.exports = function(passport) {
 	passport.serializeUser(function(user, done) {
-		loggerInfo.log({
+		winston.debug({
 			level: 'info',
 			label: 'Passport',
 			message: 'Serialize User'
@@ -21,7 +19,7 @@ module.exports = function(passport) {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		loggerInfo.log({
+		winston.debug({
 			level: 'info',
 			label: 'Passport',
 			message: 'Deserialize User - Start'
@@ -32,14 +30,14 @@ module.exports = function(passport) {
 			}
 		}).then(user => {
 			if (user == null) {
-				loggerInfo.log({
+				winston.debug({
 					level: 'info',
 					label: 'Passport',
 					message: 'Deserialize User - Wrong UserId'
 				})
 				return done(new Error('Wrong user.id'))
 			}
-			loggerInfo.log({
+			winston.debug({
 				level: 'info',
 				label: 'Passport',
 				message: 'Deserialize User - Done'
@@ -54,7 +52,7 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		loggerInfo.log({
+		winston.info({
 			level: 'info',
 			label: 'Passport',
 			message: 'Find User'
@@ -76,7 +74,7 @@ module.exports = function(passport) {
 			}
 			return done(null, user);
 		}).catch(err => {
-			loggerError.log({
+			winston.error({
 				level: 'error',
 				label: 'Passport',
 				message: err
