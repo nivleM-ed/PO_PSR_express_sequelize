@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
     var purchase_order = sequelize.define('purchase_order', {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.STRING,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             autoIncrement: true
         },
-        // po_date: { //purchase order date
-        //     allowNull: true,
-        //     type: DataTypes.DATE //change to .DATE once moment.js work
-        // },
         po_ref: { //purchase order reference
             allowNull: true,
             type: DataTypes.STRING
@@ -32,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             type: DataTypes.STRING
         },
-        psr_no: { //purchase and service requisition
+        psr_id: { //purchase and service requisition
             allowNull: true,
             type: DataTypes.STRING
         },

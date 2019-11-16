@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
     var psr = sequelize.define('psr', {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.STRING,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             autoIncrement: true
         },
-        // psr_date: { //purchase order date
-        //     allowNull: true,
-        //     type: DataTypes.DATE  //cannot be Sequelize.DATE(timestamp)
-        // },
         purchase_class: { //purchase class
             allowNull: true,
             type: DataTypes.STRING

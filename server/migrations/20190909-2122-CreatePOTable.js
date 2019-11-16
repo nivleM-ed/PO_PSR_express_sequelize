@@ -15,7 +15,7 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.UUID,
+                type: Sequelize.STRING,
                 defaultValue: Sequelize.UUIDV4
             },
             createdAt: {
@@ -31,10 +31,6 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 autoIncrement: true
             },
-            // po_date: { //purchase order date
-            //     allowNull: true,
-            //     type: Sequelize.DATE //change to .DATE once moment.js work
-            // },
             po_ref: { //purchase order reference
                 allowNull: true,
                 type: Sequelize.STRING
@@ -51,7 +47,7 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            psr_no: { //purchase and service requisition
+            psr_id: { //purchase and service requisition
                 allowNull: true,
                 type: Sequelize.STRING
             },

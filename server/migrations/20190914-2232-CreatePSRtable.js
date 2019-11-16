@@ -16,7 +16,7 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.UUID,
+                type: Sequelize.STRING,
                 defaultValue: Sequelize.UUIDV4
             },
             createdAt: {
@@ -32,10 +32,6 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 autoIncrement: true
             },
-            // psr_date: { //purchase order date
-            //     allowNull: true,
-            //     type: Sequelize.DATE  //cannot be Sequelize.DATE(timestamp)
-            // },
             purchase_class: { //purchase class
                 allowNull: true,
                 type: Sequelize.STRING
