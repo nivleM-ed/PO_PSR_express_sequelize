@@ -4,10 +4,8 @@ let po = require('../controller/purchase_order');
 let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticate');
 
 // po module
-router.get('/', po.show_po_all); //for testing purpose
 router.get('/all/:page', isLoggedIn, po.show_po_page); //show all with pagination
 router.get('/search/:po_no',  isLoggedIn, po.find); //find for specific po_no
-router.get('/all_po', isLoggedIn, po.show_all_po); //show all WITHOUT pagination
 
 router.get('/submits/:page', isLoggedIn, auth_no_t1, po.get_submits); //show all po submitted for approval
 router.get('/pending/:page', isLoggedIn, auth_no_t1_t2, po.get_pending); //show all po that is pending for approval

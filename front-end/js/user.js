@@ -48,12 +48,18 @@ class user {
     });
   }
 
-  static notifications() {
+  static reset_password(id, ori_password, new_password, repeat_password) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}count`, {
-          withCredentials: true
-        });
+        const res = await axios.post(
+          `${url}${id}/reset_password`,
+          {
+            ori_password,
+            new_password,
+            repeat_password
+          },
+          { withCredentials: true }
+        );
         resolve(res.data);
       } catch (err) {
         reject(err);

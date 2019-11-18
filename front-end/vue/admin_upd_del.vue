@@ -11,6 +11,7 @@ export default {
             t1: '',
             t2: '',
             t3: '',
+            t4: '',
             error: ''
         };
     },
@@ -23,6 +24,7 @@ export default {
             this.t1 = user.t1;
             this.t2 = user.t2;
             this.t3 = user.t3;
+            this.t4 = user.t4;
         } catch (err) {
             this.error = err.message;
         }
@@ -37,6 +39,7 @@ export default {
                 this.t1 = user.t1;
                 this.t2 = user.t2;
                 this.t3 = user.t3;
+                this.t4 = user.t4
             } catch (err) {
                 this.error = err.message;
             }
@@ -45,6 +48,14 @@ export default {
             try {
                 const user = await admin.del_user();
                 console.log(user);
+            } catch (err) {
+                this.error = err.message;
+            }
+        },
+        async random_password() {
+            try {
+                const user = await admin.random_password(this.is);
+                console.log(user.new_pwd);
             } catch (err) {
                 this.error = err.message;
             }

@@ -16,11 +16,7 @@ module.exports = {
     },
     env_production: {
       NODE_ENV: 'production'
-    },
-    error_file: './logs/err_pm2.log',
-    out_file: './logs/out_pm2.log',
-    log_file: './logs/combined_pm2.log',
-    time: true
+    }
   }],
 
   deploy: {

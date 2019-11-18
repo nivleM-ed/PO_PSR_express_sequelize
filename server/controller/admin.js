@@ -17,6 +17,29 @@ const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
 
+function password_generator( len ) {
+    var length = (len)?(len):(10);
+    var string = "abcdefghijklmnopqrstuvwxyz"; //to upper 
+    var numeric = '0123456789';
+    var punctuation = '!@#$%^&*()_+~`|}{[]\:;?><,./-=';
+    var password = "";
+    var character = "";
+    var crunch = true;
+    while( password.length<length ) {
+        entity1 = Math.ceil(string.length * Math.random()*Math.random());
+        entity2 = Math.ceil(numeric.length * Math.random()*Math.random());
+        entity3 = Math.ceil(punctuation.length * Math.random()*Math.random());
+        hold = string.charAt( entity1 );
+        hold = (password.length%2==0)?(hold.toUpperCase()):(hold);
+        character += hold;
+        character += numeric.charAt( entity2 );
+        character += punctuation.charAt( entity3 );
+        password = character;
+    }
+    password=password.split('').sort(function(){return 0.5-Math.random()}).join('');
+    return password.substr(0,len);
+}
+
 //get all the users for main page
 exports.get_all_user = function (req, res, next) {
     winston.info({
@@ -118,7 +141,8 @@ exports.add_user = function (req, res, next) {
                 lastname: req.body.lastname,
                 t1: req.body.t1,
                 t2: req.body.t2,
-                t3: req.body.t3
+                t3: req.body.t3,
+                t4: req.body.t4
             });
             return newUser.save().then(result => {
                 res.status(200).send();
@@ -169,7 +193,8 @@ exports.update_tier = function (req, res, next) {
     return models.Users.update({
         t1: req.body.t1,
         t2: req.body.t2,
-        t3: req.body.t3
+        t3: req.body.t3,
+        t4: req.body.t4
     }, {
         where: {
             id: req.params.user_id
@@ -186,22 +211,23 @@ exports.update_tier = function (req, res, next) {
     })
 }
 
-exports.reset_password = function (req, res, next) {
+exports.random_password = function (req, res, next) {
     winston.info({
         level: 'info',
         label: 'Admin',
-        message: 'reset_password'
+        message: 'random_password'
     })
+    const rndpass = password_generator();
 
-    if(req.params.user_id == req.user.id || req.user.is_admin) {
+    if(req.user.is_admin) {
         return models.Users.update({
-            password: generateHash(req.body.password)
+            password: generateHash(rndpass)
         }, {
             where: {
-                id: req.user.id
+                id: req.params.user_id
             } 
         }).then(user => {
-            res.status(200).send(user);
+            res.status(200).send({new_pwd: rndpass});
         }).catch(err => {
             winston.error({
                 level: 'error',

@@ -4,62 +4,6 @@ var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op
 
-//working //not needed - just for testing purporses
-// exports.show_psr_all = function (req, res, next) {
-//     winston.info({
-//         level: 'info',
-//         label: 'psr',
-//         message: 'show_psr_all'
-//     })
-
-//     return models.psr.findAll({
-//         // attributes: [],
-//         include: [{
-//                 model: models.Users,
-//                 required: true,
-//                 as: 'create_user_psr',
-//                 attributes: ['username', 'firstname', 'lastname']
-//             },
-//             {
-//                 model: models.Users,
-//                 required: false,
-//                 as: 't2_user_psr',
-//                 attributes: ['username', 'firstname', 'lastname']
-//             },
-//             {
-//                 model: models.Users,
-//                 required: false,
-//                 as: 't2_user2_psr',
-//                 attributes: ['username', 'firstname', 'lastname']
-//             },
-//             {
-//                 model: models.Users,
-//                 required: false,
-//                 as: 'approver_psr',
-//                 attributes: ['username', 'firstname', 'lastname']
-//             },
-//             {
-//                 model: models.Users,
-//                 required: false,
-//                 as: 'del_req_user_psr',
-//                 attributes: ['username', 'firstname', 'lastname']
-//             }
-//         ],
-//         order: [
-//             ['createdAt', 'DESC']
-//         ]
-//     }).then(psr => {
-//         res.send(psr)
-//     }).catch(err => {
-//         winston.error({
-//             level: 'error',
-//             label: 'psr_show_psr_all',
-//             message: err
-//         })
-//         res.status(500).send(err);
-//     })
-// };
-
 //WORKING  //send with pagination and total page number
 exports.show_psr_page = function (req, res, next) {
     winston.info({
@@ -93,7 +37,7 @@ exports.show_psr_page = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_psr',
+                        as: 't3_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -153,57 +97,6 @@ exports.show_psr_page = function (req, res, next) {
         })
 }
 
-//show all psr WITHOUT pagination
-exports.show_all_psr = function (req, res, next) {
-    winston.info({
-        level: 'info',
-        label: 'psr',
-        message: 'show_all_psr'
-    })
-
-    return models.psr.findAll({
-        // attributes: [],
-        order: [
-            ['createdAt', 'DESC']
-        ],
-        include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user2_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            }
-        ],
-    }).then(psr => {
-        res.status(200).send(psr);
-    }).catch(err => {
-        res.status(500).send(err);
-    })
-}
-
 //WORKING
 //find psr_no
 exports.find = function (req, res, next) {
@@ -229,7 +122,7 @@ exports.find = function (req, res, next) {
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2_psr',
+                as: 't3_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
@@ -293,7 +186,7 @@ exports.get_submits = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_psr',
+                        as: 't3_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -325,6 +218,15 @@ exports.get_submits = function (req, res, next) {
                         }
                     }, {
                         t2_user_1: {
+                            [op.is]: null
+                        }
+                    }],
+                    [op.or]: [{
+                        t3_user: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t3_user: {
                             [op.is]: null
                         }
                     }]
@@ -361,6 +263,15 @@ exports.get_submits = function (req, res, next) {
                         }
                     }, {
                         t2_user_1: {
+                            [op.is]: null
+                        }
+                    }],
+                    [op.or]: [{
+                        t3_user: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t3_user: {
                             [op.is]: null
                         }
                     }]
@@ -433,7 +344,7 @@ exports.get_pending = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_psr',
+                        as: 't3_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -497,7 +408,6 @@ exports.get_pending = function (req, res, next) {
             })
             res.status(500).send(err);
         })
-
 }
 
 //WORKING
@@ -536,7 +446,7 @@ exports.get_del_req = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_psr',
+                        as: 't3_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -658,7 +568,7 @@ exports.report = function (req, res, next) {
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2_psr',
+                as: 't3_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
@@ -824,8 +734,8 @@ exports.psr_stat_1 = function (req, res, next) {
             id: req.params.psr_id
         }
     }).then(exist => {
-        if (exist.status_t1_1 == true) {
-            if (req.user.id == exist.t2_user_1) {
+        if (exist.status_t1_1) {
+            if (req.user.id == exist.t3_user) {
                 res.status(200).send({
                     err: "notAllowed"
                 });
@@ -833,7 +743,7 @@ exports.psr_stat_1 = function (req, res, next) {
                 return models.psr.update({
                     status_t1_2: true,
                     date_pending_2: new Date(),
-                    t2_user_2: req.user.id
+                    t3_user: req.user.id
                 }, {
                     where: {
                         id: req.params.psr_id,
@@ -853,10 +763,15 @@ exports.psr_stat_1 = function (req, res, next) {
                 });
             }
         } else {
+            if (req.user.id == exist.t2_user) {
+                res.status(200).send({
+                    err: "notAllowed"
+                });
+            } else {
             return models.psr.update({
                 status_t1_1: true,
                 date_pending_1: new Date(),
-                t2_user_1: req.user.id
+                t2_user: req.user.id
             }, {
                 where: {
                     id: req.params.psr_id,
@@ -874,6 +789,7 @@ exports.psr_stat_1 = function (req, res, next) {
                 })
                 res.status(500).send(err);
             });
+            }
         }
     }).catch(err => {
         winston.error({

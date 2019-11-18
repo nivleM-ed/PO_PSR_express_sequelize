@@ -4,61 +4,6 @@ var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op
 
-//working //not needed - just for testing purposes
-exports.show_po_all = function (req, res, next) {
-    winston.info({
-        level: 'info',
-        label: 'po',
-        message: 'show_po_all'
-    })
-
-    return models.purchase_order.findAll({
-        include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user2_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            }
-        ],
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    }).then(po => {
-        res.send(po)
-    }).catch(err => {
-        winston.error({
-            level: 'error',
-            label: 'po_show_po_all',
-            message: err
-        })
-        res.status(500).send(err);
-    })
-};
-
 //WORKING
 exports.show_po_page = function (req, res, next) {
     winston.info({
@@ -92,7 +37,7 @@ exports.show_po_page = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_po',
+                        as: 't3_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -153,57 +98,6 @@ exports.show_po_page = function (req, res, next) {
         })
 }
 
-//show all po WITHOUT pagination
-exports.show_all_po = function (req, res, next) {
-    winston.info({
-        level: 'info',
-        label: 'po',
-        message: 'show_all_po'
-    })
-    // dbJoin_po();
-    return models.purchase_order.findAll({
-        order: [
-            ['createdAt', 'DESC']
-        ],
-        include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user2_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            }
-        ]
-    }).then(po => {
-        res.status(200).send(po);
-    }).catch(err => {
-        res.status(500).send(err);
-    })
-}
-
-
 //WORKING
 //find po_no
 exports.find = function (req, res, next) {
@@ -229,7 +123,7 @@ exports.find = function (req, res, next) {
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2_po',
+                as: 't3_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
@@ -294,7 +188,7 @@ exports.get_submits = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_po',
+                        as: 't3_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -321,11 +215,20 @@ exports.get_submits = function (req, res, next) {
                     ],
                     status_t2: false,
                     [op.or]: [{
-                        t2_user_1: {
+                        t2_user: {
                             [op.not]: req.user.id
                         }
                     }, {
-                        t2_user_1: {
+                        t2_user: {
+                            [op.is]: null
+                        }
+                    }],
+                    [op.or]: [{
+                        t3_user: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t3_user: {
                             [op.is]: null
                         }
                     }]
@@ -362,6 +265,15 @@ exports.get_submits = function (req, res, next) {
                         }
                     }, {
                         t2_user_1: {
+                            [op.is]: null
+                        }
+                    }],
+                    [op.or]: [{
+                        t3_user: {
+                            [op.not]: req.user.id
+                        }
+                    }, {
+                        t3_user: {
                             [op.is]: null
                         }
                     }]
@@ -434,7 +346,7 @@ exports.get_pending = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_po',
+                        as: 't3_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -465,7 +377,7 @@ exports.get_pending = function (req, res, next) {
 
     const getPendingTotal = (req, res, next) => {
         return new Promise((resolve, reject) => {
-            return models.purchase_order.findAll({
+            return models.purchase_order.count({
                 where: {
                     delete_req: false,
                     status_t1_1: true,
@@ -536,7 +448,7 @@ exports.get_del_req = function (req, res, next) {
                     {
                         model: models.Users,
                         required: false,
-                        as: 't2_user2_po',
+                        as: 't3_user_po',
                         attributes: ['username', 'firstname', 'lastname']
                     },
                     {
@@ -657,7 +569,7 @@ exports.report = function (req, res, next) {
             {
                 model: models.Users,
                 required: false,
-                as: 't2_user2_po',
+                as: 't3_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             },
             {
@@ -821,8 +733,8 @@ exports.po_stat_1 = function (req, res, next) {
             id: req.params.po_id
         }
     }).then(exist => {
-        if (exist.status_t1_1 == true) {
-            if (req.user.id == exist.t2_user_1) {
+        if (exist.status_t1_1) {
+            if (req.user.id == exist.t3_user) {
                 res.status(200).send({
                     err: "notAllowed"
                 });
@@ -830,7 +742,7 @@ exports.po_stat_1 = function (req, res, next) {
                 return models.purchase_order.update({
                     status_t1_2: true,
                     date_pending_2: new Date(),
-                    t2_user_2: req.user.id
+                    t3_user: req.user.id
                 }, {
                     where: {
                         id: req.params.po_id,
@@ -850,27 +762,33 @@ exports.po_stat_1 = function (req, res, next) {
                 });
             }
         } else {
-            return models.purchase_order.update({
-                status_t1_1: true,
-                date_pending_1: new Date(),
-                t2_user_1: req.user.id
-            }, {
-                where: {
-                    id: req.params.po_id,
-                    delete_req: {
-                        [op.not]: true
+            if (req.user.id == exist.t2_user) {
+                res.status(200).send({
+                    err: "notAllowed"
+                });
+            } else {
+                return models.purchase_order.update({
+                    status_t1_1: true,
+                    date_pending_1: new Date(),
+                    t2_user: req.user.id
+                }, {
+                    where: {
+                        id: req.params.po_id,
+                        delete_req: {
+                            [op.not]: true
+                        }
                     }
-                }
-            }).then(po => {
-                res.status(200).send(po);
-            }).catch(err => {
-                winston.error({
-                    level: 'error',
-                    label: 'po_stat_1_2',
-                    message: err
-                })
-                res.status(500).send(err);
-            });
+                }).then(po => {
+                    res.status(200).send(po);
+                }).catch(err => {
+                    winston.error({
+                        level: 'error',
+                        label: 'po_stat_1_2',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                });
+            }
         }
     }).catch(err => {
         winston.error({

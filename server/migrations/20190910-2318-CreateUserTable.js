@@ -51,6 +51,11 @@ module.exports = {
                 defaultValue: false,
                 allowNull: false
             },
+            t4: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
             is_admin: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,

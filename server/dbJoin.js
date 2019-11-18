@@ -50,25 +50,25 @@ exports.run_db = function() {
         targetKey: 'id'
     });
 
-    //t2_user_1 for psr  (required:false -left join)
+    //t2_user for psr  (required:false -left join)
     models.Users.hasMany(models.psr, {
         as: 'psr2',
-        foreignKey: 't2_user_1'
+        foreignKey: 't2_user'
     });
     models.psr.belongsTo(models.Users, {
         as: 't2_user_psr',
-        foreignKey: 't2_user_1',
+        foreignKey: 't2_user',
         targetKey: 'id'
     });
 
-    //t2_user_2 for psr  (required:false -left join)
+    //t2_user for psr  (required:false -left join)
     models.Users.hasMany(models.psr, {
         as: 'psr3',
-        foreignKey: 't2_user_2'
+        foreignKey: 't3_user'
     });
     models.psr.belongsTo(models.Users, {
-        as: 't2_user2_psr',
-        foreignKey: 't2_user_2',
+        as: 't3_user_psr',
+        foreignKey: 't3_user',
         targetKey: 'id'
     });
 
@@ -107,25 +107,25 @@ exports.run_db = function() {
         targetKey: 'id'
     });
 
-    //t2_user_1 for po   (required:false -left join)
+    //t2_user for po   (required:false -left join)
     models.Users.hasMany(models.purchase_order, {
         as: 'po2',
-        foreignKey: 't2_user_1'
+        foreignKey: 't2_user'
     });
     models.purchase_order.belongsTo(models.Users, {
         as: 't2_user_po',
-        foreignKey: 't2_user_1',
+        foreignKey: 't2_user',
         targetKey: 'id'
     });
 
-    //t2_user_2 for po   (required:false -left join)
+    //t2_user for po   (required:false -left join)
     models.Users.hasMany(models.purchase_order, {
         as: 'po3',
-        foreignKey: 't2_user_2'
+        foreignKey: 't2_user'
     });
     models.purchase_order.belongsTo(models.Users, {
-        as: 't2_user2_po',
-        foreignKey: 't2_user_2',
+        as: 't3_user_po',
+        foreignKey: 't3_user',
         targetKey: 'id'
     });
 

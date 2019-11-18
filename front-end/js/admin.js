@@ -14,7 +14,7 @@ class admin {
     });
   }
 
-  static new_user(username, password, firstname, lastname) {
+  static new_user(username, password, firstname, lastname, t1, t2, t3, t4) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
@@ -23,7 +23,11 @@ class admin {
             username,
             password,
             firstname,
-            lastname
+            lastname,
+            t1,
+            t2,
+            t3,
+            t4
           },
           { withCredentials: true }
         );
@@ -34,7 +38,7 @@ class admin {
     });
   }
 
-  static new_user(username, password, firstname, lastname) {
+  static new_admin(username, password, firstname, lastname) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
@@ -76,7 +80,7 @@ class admin {
     });
   }
 
-  static upd_tier(t1, t2, t3, id) {
+  static upd_tier(t1, t2, t3, t4, id) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
@@ -84,7 +88,8 @@ class admin {
           {
             t1,
             t2,
-            t3
+            t3,
+            t4
           },
           { withCredentials: true }
         );
@@ -95,14 +100,11 @@ class admin {
     });
   }
 
-  static reset_password(id, password) {
+  static random_password(id) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${id}/reset_password`,
-          {
-            password
-          },
+          `${url}${id}/rndpass`,
           { withCredentials: true }
         );
         resolve(res.data);
