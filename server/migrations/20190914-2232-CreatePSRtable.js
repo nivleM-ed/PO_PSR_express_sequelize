@@ -109,7 +109,7 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            t2_user: { //user_id of 1st t2 user
+            t3_user: { //user_id of 1st t2 user
                 allowNull: true,
                 type: Sequelize.STRING
             },
