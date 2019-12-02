@@ -68,8 +68,7 @@ exports.show_psr_page = function (req, res, next) {
 
     const total_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
-            return models.psr.count({
-            }).then(total => {
+            return models.psr.count({}).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
                 winston.error({
@@ -138,9 +137,8 @@ exports.find = function (req, res, next) {
                 attributes: ['username', 'firstname', 'lastname']
             }
         ],
-    }, {
         where: {
-            psr_no: req.params.psr_no
+            psr_no: parseInt(req.params.psr_no)
         }
     }).then(psr => {
         res.status(200).send(psr)
@@ -768,27 +766,27 @@ exports.psr_stat_1 = function (req, res, next) {
                     err: "notAllowed"
                 });
             } else {
-            return models.psr.update({
-                status_t1_1: true,
-                date_pending_1: new Date(),
-                t2_user: req.user.id
-            }, {
-                where: {
-                    id: req.params.psr_id,
-                    delete_req: {
-                        [op.not]: true
+                return models.psr.update({
+                    status_t1_1: true,
+                    date_pending_1: new Date(),
+                    t2_user: req.user.id
+                }, {
+                    where: {
+                        id: req.params.psr_id,
+                        delete_req: {
+                            [op.not]: true
+                        }
                     }
-                }
-            }).then(psr => {
-                res.status(200).send(psr);
-            }).catch(err => {
-                winston.error({
-                    level: 'error',
-                    label: 'psr_stat_1_2',
-                    message: err
-                })
-                res.status(500).send(err);
-            });
+                }).then(psr => {
+                    res.status(200).send(psr);
+                }).catch(err => {
+                    winston.error({
+                        level: 'error',
+                        label: 'psr_stat_1_2',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                });
             }
         }
     }).catch(err => {
