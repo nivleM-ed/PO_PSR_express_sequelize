@@ -2,6 +2,7 @@ let models = require('../models');
 var sequelize = require('sequelize');
 var winston = require('../logs/winston');
 var CONST = require('../const');
+const op = sequelize.Op
 
 //show all leaves WITH pagination
 exports.show_leave_page = function (req, res, next) {
@@ -142,7 +143,7 @@ exports.show_own_leave = function (req, res, next) {
         })
     }
 
-    Promise.all([leave_page(req), totalLeave()])
+    Promise.all([leave_page(req), totalLeave(req)])
         .then(result => {
             res.status(200).send(result);
         }).catch(err => {
@@ -223,7 +224,7 @@ exports.show_pending_leave = function (req, res, next) {
         })
     }
 
-    Promise.all([leave_page(req), totalLeave()])
+    Promise.all([leave_page(req), totalLeave(req)])
         .then(result => {
             res.status(200).send(result);
         }).catch(err => {

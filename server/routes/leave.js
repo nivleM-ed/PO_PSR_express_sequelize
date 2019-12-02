@@ -5,9 +5,9 @@ var leave = require('../controller/leave');
 let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticate');
 
 //for t2 & t3 ONLY
-router.get('/all/:page', leave.show_leave_page); //WITH pagination
+router.get('/all/:page', isLoggedIn, leave.show_leave_page); //WITH pagination
 router.get('/all_leave', isLoggedIn, auth_no_t1, leave.show_all_leave); //WITHOUT pagination
-router.get('/pending_leave', isLoggedIn, auth_no_t1, leave.show_pending_leave); //get pending leaves WITHOUT pagination
+router.get('/pending_leave/:page', isLoggedIn, auth_no_t1, leave.show_pending_leave); //get pending leaves WITH pagination
 
 
 //own leaves
