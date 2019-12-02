@@ -138,8 +138,7 @@ exports.find = function (req, res, next) {
                 as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
             }
-        ]
-    }, {
+        ],
         where: {
             po_no: req.params.po_no
         }
