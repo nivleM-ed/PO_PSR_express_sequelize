@@ -56,6 +56,32 @@ class psr {
     });
   }
 
+  static approved_np() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(`${url}approved_np`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static get_approved(page) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(`${url}approved/${page}`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
   static get_submits(page) {
     return new Promise(async (resolve, reject) => {
       try {

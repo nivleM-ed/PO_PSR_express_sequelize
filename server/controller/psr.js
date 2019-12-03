@@ -152,6 +152,170 @@ exports.find = function (req, res, next) {
     })
 }
 
+exports.approved_nopage = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'psr',
+        message: 'approved_np'
+    })
+
+    return models.psr.findAll({
+        include: [{
+                model: models.Users,
+                required: true,
+                as: 'create_user_psr',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't2_user_psr',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 't3_user_psr',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver_psr',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'del_req_user_psr',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ],
+        where: {
+            delete_req: false,
+            status_t1_1: true,
+            status_t1_2: true,
+            status_t2: true,
+            status_decline: false
+        }
+    }).then(psr => {
+        res.status(200).send(psr)
+    }).catch(err => {
+        winston.error({
+            level: 'error',
+            label: 'psr_approved_np',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+//get psr waiting to be accepted
+exports.get_approved = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'psr',
+        message: 'get_approved'
+    })
+    const limit = CONST.CONST_page_limit; //can be changed
+
+    const getApproved = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.findAll({
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                include: [{
+                        model: models.Users,
+                        required: true,
+                        as: 'create_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't3_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user_psr',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ],
+                where: {
+                    delete_req: false,
+                    status_t1_1: true,
+                    status_t1_2: true,
+                    status_t2: true,
+                    status_decline: false
+                } 
+            }).then(psr => {
+                resolve(psr)
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'psr_get_approved',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const getApprovedTotal = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.count({
+                where: {
+                    delete_req: false,
+                    status_t1_1: true,
+                    status_t1_2: true,
+                    status_t2: true,
+                    status_decline: false
+                }
+            }).then(total => {
+                resolve(Math.ceil(total / limit));
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'psr_get_approved_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([getApproved(req), getApprovedTotal(req)])
+        .then(result => {
+            res.status(200).send({
+                result
+            });
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'psr_get_approved_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+}
+
 //get psr waiting to be accepted
 exports.get_submits = function (req, res, next) {
     winston.info({
