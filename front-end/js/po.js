@@ -3,11 +3,24 @@ import { CONST } from './const';
 const url = CONST.CONST_URL.concat('po/');
 
 class po {
-  static show_po_all() {
-    //only for dev purposes
+  // static show_po_all() {
+  //   //only for dev purposes
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const res = await axios.get(`${url}`, {
+  //         withCredentials: true
+  //       });
+  //       resolve(res.data);
+  //     } catch (err) {
+  //       reject(err);
+  //     }
+  //   });
+  // }
+
+  static show_po_page(page) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}`, {
+        const res = await axios.get(`${url}all/${page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -17,10 +30,10 @@ class po {
     });
   }
 
-  static show_po_page(page) {
+  static show_own_po_page(page) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}all/${page}`, {
+        const res = await axios.get(`${url}own/${page}`, {
           withCredentials: true
         });
         resolve(res.data);

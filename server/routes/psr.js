@@ -5,10 +5,11 @@ let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticat
 
 // psr module
 router.get('/all/:page', isLoggedIn, psr.show_psr_page); //show all with pagination
+router.get('/own/:page', isLoggedIn, psr.show_own_psr_page); //show own psr with pagination
 router.get('/search/:psr_no', isLoggedIn, psr.find); //find for specific psr_no
 
 router.get('/approved_np', isLoggedIn, psr.approved_nopage); //find for psr WITHOUT pagination
-router.get('/approved/:page', isLoggedIn, psr.get_approved); //show all approved psr WITH PAGINATION
+router.get('/approved_psr/:page', isLoggedIn, psr.get_approved); //show all approved psr WITH PAGINATION
 router.get('/submits/:page', isLoggedIn, auth_no_t1, psr.get_submits); //show all psr submitted for approval
 router.get('/pending/:page', isLoggedIn, auth_no_t1_t2, psr.get_pending); //show all psr that is pending for approval
 router.get('/del_req/:page', isLoggedIn, auth_no_t1, psr.get_del_req); //show all psr that is requested for deletion

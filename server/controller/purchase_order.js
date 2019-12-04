@@ -98,6 +98,104 @@ exports.show_po_page = function (req, res, next) {
         })
 }
 
+exports.show_own_po_page = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'po',
+        message: 'show_own_po_page'
+    })
+    const limit = CONST.CONST_page_limit; //can be changed
+
+    const po_own_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.psr.findAll({
+                // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
+                limit: limit,
+                offset: (req.params.page - 1) * limit,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                include: [{
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                }
+            ],
+                where: {
+                    create_user: req.user.id
+                }
+            }).then(psr => {
+                resolve(psr);
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'po_show_own_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    const total_own_page = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return models.purchase_order.count({
+                where: {
+                    create_user: req.user.id
+                }
+            }).then(total => {
+                resolve(Math.ceil(total / limit));
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'po_show_own_page_total_page',
+                    message: err
+                })
+                reject(err);
+            })
+        })
+    }
+
+    Promise.all([po_own_page(req), total_own_page(req)])
+        .then(result => {
+            res.status(200).send({
+                result
+            });
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'po_show_own_page_promise',
+                message: err
+            })
+            res.status(500).send(err);
+        })
+}
+
 //WORKING
 //find po_no
 exports.find = function (req, res, next) {

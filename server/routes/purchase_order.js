@@ -5,6 +5,7 @@ let {isLoggedIn, auth_no_t1, auth_no_t1_t2} = require('../middleware/authenticat
 
 // po module
 router.get('/all/:page', isLoggedIn, po.show_po_page); //show all with pagination
+router.get('/own/:page', isLoggedIn, psr.show_own_po_page); //show own po with pagination
 router.get('/search/:po_no',  isLoggedIn, po.find); //find for specific po_no
 
 router.get('/submits/:page', isLoggedIn, auth_no_t1, po.get_submits); //show all po submitted for approval
