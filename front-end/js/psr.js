@@ -33,7 +33,7 @@ class psr {
   static show_own_psr_page(page) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}own/${page}`, {
+        const res = await axios.get(`${url}own_psr/${page}`, {
           withCredentials: true
         });
         resolve(res.data);

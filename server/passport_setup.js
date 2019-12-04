@@ -10,46 +10,46 @@ const validPassword = function (user, password) {
 
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
-		if (req.app.settings.env === 'development') {
-			winston.debug({
-				level: 'info',
-				label: 'Passport',
-				message: 'Serialize User'
-			})
-		}
+		// if (req.app.settings.env === 'development') {
+		// 	winston.debug({
+		// 		level: 'info',
+		// 		label: 'Passport',
+		// 		message: 'Serialize User'
+		// 	})
+		// }
 		return done(null, user.id)
 	});
 
 	passport.deserializeUser(function (id, done) {
-		if (req.app.settings.env === 'development') {
-			winston.debug({
-				level: 'info',
-				label: 'Passport',
-				message: 'Deserialize User - Start'
-			})
-		}
+		// if (req.app.settings.env === 'development') {
+		// 	winston.debug({
+		// 		level: 'info',
+		// 		label: 'Passport',
+		// 		message: 'Deserialize User - Start'
+		// 	})
+		// }
 		models.Users.findOne({
 			where: {
 				'id': id
 			}
 		}).then(user => {
 			if (user == null) {
-				if (req.app.settings.env === 'development') {
-					winston.debug({
-						level: 'info',
-						label: 'Passport',
-						message: 'Deserialize User - Wrong UserId'
-					})
-				}
+				// if (req.app.settings.env === 'development') {
+				// 	winston.debug({
+				// 		level: 'info',
+				// 		label: 'Passport',
+				// 		message: 'Deserialize User - Wrong UserId'
+				// 	})
+				// }
 				return done(new Error('Wrong user.id'))
 			}
-			if (req.app.settings.env === 'development') {
-				winston.debug({
-					level: 'info',
-					label: 'Passport',
-					message: 'Deserialize User - Done'
-				})
-			}
+			// if (req.app.settings.env === 'development') {
+			// 	winston.debug({
+			// 		level: 'info',
+			// 		label: 'Passport',
+			// 		message: 'Deserialize User - Done'
+			// 	})
+			// }
 			return done(null, user);
 		})
 	});

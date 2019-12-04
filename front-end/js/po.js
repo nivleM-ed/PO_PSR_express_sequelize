@@ -33,7 +33,7 @@ class po {
   static show_own_po_page(page) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}own/${page}`, {
+        const res = await axios.get(`${url}own_po/${page}`, {
           withCredentials: true
         });
         resolve(res.data);
