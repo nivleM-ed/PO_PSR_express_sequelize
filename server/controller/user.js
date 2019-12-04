@@ -69,10 +69,10 @@ exports.check_logged = function (req, res, next) {
             winston.info({
                 level: 'info',
                 label: 'check_logged',
-                message: 'noPermission'
+                message: 'noCookie'
             })
             res.send({
-                err: "noPermission"
+                err: "noCookie"
             });
         }
     } catch (error) {

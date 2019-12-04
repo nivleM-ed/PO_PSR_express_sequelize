@@ -18,7 +18,7 @@ exports.isLoggedIn = function (req, res, next) {
                 message: 'notLoggedIn'
             })
             res.send({
-                error: "notLoggedIn"
+                err: "notLoggedIn"
             });
         }
     } catch (error) {
@@ -28,7 +28,7 @@ exports.isLoggedIn = function (req, res, next) {
             message: error
         })
         res.send({
-            error: "systemErr"
+            err: "systemErr"
         })
     }
 }
@@ -49,7 +49,7 @@ exports.auth_no_t1 = function (req, res, next) {
                 message: 'noPermission'
             })
             res.send({
-                error: "noPermission"
+                err: "noPermission"
             });
         }
     } catch (error) {
@@ -59,7 +59,7 @@ exports.auth_no_t1 = function (req, res, next) {
             message: error
         })
         res.send({
-            error: "systemErr"
+            err: "systemErr"
         })
     }
 }
@@ -80,7 +80,7 @@ exports.auth_no_t1_t2 = function (req, res, next) {
                 message: 'noPermission'
             })
             res.send({
-                error: "noPermission"
+                err: "noPermission"
             });
         }
     } catch (error) {
@@ -90,7 +90,7 @@ exports.auth_no_t1_t2 = function (req, res, next) {
             message: error
         })
         res.send({
-            error: "systemErr"
+            err: "systemErr"
         })
     }
 }
@@ -111,7 +111,7 @@ exports.auth_admin = function (req, res, next) {
                 message: 'noPermission'
             })
             res.send({
-                error: "noPermission"
+                err: "noPermission"
             });
         }
     } catch (error) {
@@ -121,7 +121,7 @@ exports.auth_admin = function (req, res, next) {
             message: error
         })
         res.send({
-            error: "systemErr"
+            err: "systemErr"
         })
     }
 

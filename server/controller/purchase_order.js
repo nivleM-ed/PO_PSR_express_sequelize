@@ -108,7 +108,7 @@ exports.show_own_po_page = function (req, res, next) {
 
     const po_own_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
-            return models.psr.findAll({
+            return models.purchase_order.findAll({
                 // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,

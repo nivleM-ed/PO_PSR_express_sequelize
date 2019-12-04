@@ -73,7 +73,7 @@ exports.show_psr_page = function (req, res, next) {
             }).catch(err => {
                 winston.error({
                     level: 'error',
-                    label: 'psr_show_psr_page_total_page',
+                    label: 'psr_show_page_total_page',
                     message: err
                 })
                 reject(err);
@@ -89,7 +89,7 @@ exports.show_psr_page = function (req, res, next) {
         }).catch(err => {
             winston.error({
                 level: 'error',
-                label: 'psr_show_psr_page_promise',
+                label: 'psr_show_page_promise',
                 message: err
             })
             res.status(500).send(err);
@@ -152,7 +152,7 @@ exports.show_own_psr_page = function (req, res, next) {
             }).catch(err => {
                 winston.error({
                     level: 'error',
-                    label: 'psr_show_own_psr_page',
+                    label: 'psr_show_own_page',
                     message: err
                 })
                 reject(err);
@@ -171,7 +171,7 @@ exports.show_own_psr_page = function (req, res, next) {
             }).catch(err => {
                 winston.error({
                     level: 'error',
-                    label: 'psr_show_own_psr_page_total_page',
+                    label: 'psr_show_own_page_total_page',
                     message: err
                 })
                 reject(err);
@@ -187,7 +187,7 @@ exports.show_own_psr_page = function (req, res, next) {
         }).catch(err => {
             winston.error({
                 level: 'error',
-                label: 'psr_show_own_psr_page_promise',
+                label: 'psr_show_own_page_promise',
                 message: err
             })
             res.status(500).send(err);
