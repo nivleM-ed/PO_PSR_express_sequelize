@@ -96,20 +96,20 @@ exports.show_own_leave = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                    model: models.Users,
-                    required: true,
-                    as: 'user_leave',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: false,
-                    as: 'approver_leave',
-                    attributes: ['username', 'firstname', 'lastname']
-                }]
-            }, {
+                        model: models.Users,
+                        required: true,
+                        as: 'user_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ],
                 where: {
-                    user_id: req.user.id,
+                    user_id: req.user.id
                 }
             }).then(leave => {
                 resolve(leave);
@@ -173,17 +173,18 @@ exports.show_pending_leave = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                    model: models.Users,
-                    required: true,
-                    as: 'user_leave',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: false,
-                    as: 'approver_leave',
-                    attributes: ['username', 'firstname', 'lastname']
-                }]
+                        model: models.Users,
+                        required: true,
+                        as: 'user_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ]
             }, {
                 where: {
                     user_id: {
@@ -250,17 +251,18 @@ exports.show_all_leave = function (req, res, next) {
             ['createdAt', 'DESC']
         ],
         include: [{
-            model: models.Users,
-            required: true,
-            as: 'user_leave',
-            attributes: ['username', 'firstname', 'lastname']
-        },
-        {
-            model: models.Users,
-            required: false,
-            as: 'approver_leave',
-            attributes: ['username', 'firstname', 'lastname']
-        }]
+                model: models.Users,
+                required: true,
+                as: 'user_leave',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver_leave',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ]
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
@@ -283,17 +285,18 @@ exports.report = function (req, res, next) {
 
     return models.leave.findOne({
         include: [{
-            model: models.Users,
-            required: true,
-            as: 'user_leave',
-            attributes: ['username', 'firstname', 'lastname']
-        },
-        {
-            model: models.Users,
-            required: false,
-            as: 'approver_leave',
-            attributes: ['username', 'firstname', 'lastname']
-        }]
+                model: models.Users,
+                required: true,
+                as: 'user_leave',
+                attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'approver_leave',
+                attributes: ['username', 'firstname', 'lastname']
+            }
+        ]
     }, {
         where: {
             user_id: req.user.id,
