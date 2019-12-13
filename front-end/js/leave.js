@@ -148,6 +148,19 @@ class leave {
       }
     });
   }
+
+  static decline_leave(leave_id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(`${url}${leave_id}/decline`, {
+          withCredentials: true
+        });
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
 
 export default leave;

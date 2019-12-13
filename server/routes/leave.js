@@ -17,11 +17,11 @@ router.get('/own/:page', isLoggedIn, leave.show_own_leave);
 
 //single CRUD 
 router.get('/:leave_id', isLoggedIn, leave.report);
-router.post('/add_leave', isLoggedIn, leave.add_leave);
-router.post('/:leave_id/upd_leave', isLoggedIn, leave.upd_leave);
+router.post('/add_leave', isLoggedIn, leave.checkDuplicateDate, leave.add_leave);
+router.post('/:leave_id/upd_leave', isLoggedIn, leave.checkDuplicateDate, leave.upd_leave);
 router.post('/:leave_id/delreq_leave', isLoggedIn, leave.del_req_leave); //request to delete leave
 router.delete('/:leave_id/del_leave', isLoggedIn, leave.del_leave);
 router.post('/:leave_id/approve', isLoggedIn, leave.approve_leave);
-
+router.post('/:leave_id/decline', isLoggedIn, leave.decline_leave);
 
 module.exports = router;

@@ -35,7 +35,14 @@ exports.show_leave_page = function (req, res, next) {
                         as: 'approver_leave',
                         attributes: ['username', 'firstname', 'lastname']
                     }
-                ]
+                ],
+                where: {
+                    user_id: {
+                        [op.not] : req.user.id
+                    },
+                    status: false,
+                    decline_status: false
+                }
             }).then(leave => {
                 resolve(leave);
             }).catch(err => {
@@ -51,7 +58,15 @@ exports.show_leave_page = function (req, res, next) {
 
     const totalLeave = (req, res, next) => {
         return new Promise((resolve, reject) => {
-            return models.leave.count({}).then(total => {
+            return models.leave.count({
+                where: {
+                    user_id: {
+                        [op.not] : req.user.id
+                    },
+                    status: false,
+                    decline_status: false
+                }
+            }).then(total => {
                 resolve(Math.ceil(total / limit));
             }).catch(err => {
                 winston.error({
@@ -262,7 +277,14 @@ exports.show_all_leave = function (req, res, next) {
                 as: 'approver_leave',
                 attributes: ['username', 'firstname', 'lastname']
             }
-        ]
+        ],
+        where: {
+            user_id: {
+                [op.not] : req.user.id
+            },
+            status: false,
+            decline_status: false
+        }
     }).then(leave => {
         res.status(200).send(leave);
     }).catch(err => {
@@ -411,6 +433,32 @@ exports.approve_leave = function (req, res, next) {
     })
 }
 
+exports.decline_leave = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'leave',
+        message: 'decline_leave'
+    })
+    return models.leave.update({
+        decline_status: true,
+        decline_id: req.user.id,
+        date_decline: new Date()
+    }, {
+        where: {
+            id: req.params.leave_id
+        }
+    }).then(leave => {
+        res.status(200).send(leave);
+    }).catch(err => {
+        winston.error({
+            level: 'error',
+            label: 'leave_decline_leave',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
 exports.upd_leave = function (req, res, next) {
     winston.info({
         level: 'info',
@@ -431,6 +479,35 @@ exports.upd_leave = function (req, res, next) {
         winston.error({
             level: 'error',
             label: 'leave_upd_leave',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+exports.checkDuplicateDate = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'leave',
+        message: 'duplicatedate_leave'
+    })
+    return models.leave.count({
+        where: {
+            user_id: req.params.leave_id,
+            [op.or]: [{
+                date_from: req.body.date_from,
+                date_to: req.body.date_to
+            }]
+        }
+    }).then(count => {
+        if(count > 0) {
+            res.status(200).send({err: "dateExist"});
+        }
+        next();
+    }).catch(err => {
+        winston.error({
+            level: 'error',
+            label: 'duplicatedate_leave',
             message: err
         })
         res.status(500).send(err);

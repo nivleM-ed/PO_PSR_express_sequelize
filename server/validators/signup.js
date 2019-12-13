@@ -19,7 +19,7 @@ exports.validateUser = function(errors, req) {
 			}
 		}).then(u => {
 			if (u !== null) {
-				errors["username"] = "Username is already in use.";
+				errors["err"] = "usernameInUsed";
 			}
 			resolve(errors);
 		})

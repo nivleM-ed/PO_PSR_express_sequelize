@@ -31,12 +31,25 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             type: DataTypes.STRING
         },
+        decline_id: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
         status: { 
             allowNull: false,
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        decline_status: { 
+            allowNull: false,
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         date_approve: {
+            allowNull: true,
+            type: DataTypes.DATEONLY
+        },
+        date_decline: {
             allowNull: true,
             type: DataTypes.DATEONLY
         }

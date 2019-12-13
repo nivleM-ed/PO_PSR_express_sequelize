@@ -44,12 +44,25 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
+            decline_id: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
             status: {
                 allowNull: false,
                 type: Sequelize.BOOLEAN,
                 defaultValue: false
             },
+            decline_status: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+                defaultValue: false
+            },
             date_approve: {
+                allowNull: true,
+                type: Sequelize.DATEONLY
+            },
+            date_decline: {
                 allowNull: true,
                 type: Sequelize.DATEONLY
             }
