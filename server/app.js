@@ -14,6 +14,9 @@ var psr = require('./routes/psr');
 var leave = require('./routes/leave');
 var admin = require('./routes/admin');
 var winston = require('./logs/winston');
+const pgSession = require('connect-pg-simple')(session);
+const sessionPool = require('pg').Pool;
+var CONST = require('./const');
 
 require('./passport_setup')(passport);
 let {run_db} = require('./dbJoin');
@@ -36,6 +39,7 @@ app.use(function(req, res, next) {
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'pug');
 
+const sessionDBaccess = new sessionPool(CONST.dbPool);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,6 +47,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
+  store: new pgSession({
+    pool: sessionDBaccess,
+    tableName: 'session'
+  }),
   secret:"apassword",
   saveUninitialized:false,
   resave:false,
