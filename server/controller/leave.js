@@ -491,25 +491,39 @@ exports.checkDuplicateDate = function (req, res, next) {
         label: 'leave',
         message: 'duplicatedate_leave'
     })
-    return models.leave.count({
-        where: {
-            user_id: req.params.leave_id,
-            [op.or]: [{
-                date_from: req.body.date_from,
-                date_to: req.body.date_to
-            }]
-        }
-    }).then(count => {
-        if(count > 0) {
-            res.status(200).send({err: "dateExist"});
-        }
-        next();
-    }).catch(err => {
-        winston.error({
-            level: 'error',
-            label: 'duplicatedate_leave',
-            message: err
+
+    let checkDup = new Promise((resolve, reject) => {
+            return models.leave.count({
+                where: {
+                    user_id: req.user.id,
+                    [op.or]: [{
+                        date_from: req.body.date_from,
+                        date_to: req.body.date_to,
+                    },
+                    {
+                        date_from: req.body.date_to,
+                        date_to: req.body.date_from
+                    }]
+                }
+            }).then(total => {
+                resolve(Math.ceil(total));
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'duplicatedate_leave',
+                    message: err
+                })
+                reject(err);
+            })
         })
+    
+    checkDup.then(count => {
+        if(count > 0) {
+            res.send({err: "dataExist"});
+        } else {
+            next();
+        }
+    }).catch(err => {
         res.status(500).send(err);
     })
 }

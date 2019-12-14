@@ -51,16 +51,15 @@ exports.get_all_user = function (req, res, next) {
         order: [
             ['createdAt', 'DESC']
         ]
-    }).then(users => {
-        res.status(200).send({
-            users: users
-        });
+    }).then(user => {
+        res.status(200).send(user)
     }).catch(err => {
         winston.error({
             level: 'error',
             label: 'Admin_get_all_user',
             message: err
         })
+
         res.status(500).send(err);
     })
 }
@@ -76,9 +75,7 @@ exports.get_user = function (req, res, next) {
             id: req.params.user_id
         }
     }).then(users => {
-        res.status(200).send({
-            users: users
-        });
+        res.status(200).send(users)
     }).catch(err => {
         winston.error({
             level: 'error',
