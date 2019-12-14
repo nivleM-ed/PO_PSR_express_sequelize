@@ -48,7 +48,7 @@ exports.get_all_user = function (req, res, next) {
         message: 'get_all_user'
     })
     return models.Users.findAll({
-        attributes: ['username', 'firstname', 'lastname'],
+        // attributes: ['username', 'firstname', 'lastname'],
         order: [
             ['createdAt', 'DESC']
         ]

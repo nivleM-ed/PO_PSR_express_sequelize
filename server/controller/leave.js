@@ -318,8 +318,7 @@ exports.report = function (req, res, next) {
                 as: 'approver_leave',
                 attributes: ['username', 'firstname', 'lastname']
             }
-        ]
-    }, {
+        ],
         where: {
             user_id: req.user.id,
             id: req.params.leave_id

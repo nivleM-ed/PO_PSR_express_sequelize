@@ -143,7 +143,8 @@ class psr {
     p_title,
     vessel_cd,
     delv,
-    desc
+    desc,
+    cost_typ
   ) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -157,7 +158,8 @@ class psr {
             p_title,
             vessel_cd,
             delv,
-            desc
+            desc,
+            cost_typ
           }, {
             withCredentials: true
           }

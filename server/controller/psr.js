@@ -790,7 +790,8 @@ exports.psr_add = function (req, res, next) {
         vessel_code: req.body.vessel_cd,
         delv: req.body.delv,
         psr_desc: req.body.desc,
-        create_user: req.user.id
+        create_user: req.user.id,
+        cost_typ: req.user.cost_typ
     }).then(psr => {
         res.status(201).send(psr)
     }).catch(err => {
