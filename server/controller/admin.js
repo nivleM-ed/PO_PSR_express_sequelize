@@ -48,6 +48,7 @@ exports.get_all_user = function (req, res, next) {
         message: 'get_all_user'
     })
     return models.Users.findAll({
+        attributes: ['username', 'firstname', 'lastname'],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -59,7 +60,6 @@ exports.get_all_user = function (req, res, next) {
             label: 'Admin_get_all_user',
             message: err
         })
-
         res.status(500).send(err);
     })
 }

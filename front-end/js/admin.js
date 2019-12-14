@@ -59,7 +59,7 @@ class admin {
   static get_user(id) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}${id}`, { withCredentials: true });
+        const res = await axios.post(`${url}${id}/get`, { withCredentials: true });
         resolve(res.data);
       } catch (err) {
         reject(err);
