@@ -235,6 +235,12 @@ exports.find = function (req, res, next) {
                 required: false,
                 as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.psr,
+                required: false,
+                as: 'psr',
+                attributes: ['psr_no']
             }
         ],
         where: {
@@ -623,7 +629,7 @@ exports.po_add = function (req, res, next) {
         po_ref: req.body.po_ref,
         delv_due: req.body.due,
         ship_mode: req.body.ship,
-        psr_no: req.body.psr,
+        psr_id: req.body.psr,
         cca_no: req.body.cca,
         pay_mode: req.body.pay,
         address: req.body.address,
