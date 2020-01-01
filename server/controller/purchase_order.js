@@ -958,3 +958,26 @@ exports.po_stat_decline = function (req, res, next) {
         res.status(500).send(err);
     })
 }
+
+exports.search_po = function (req, res, next) {
+
+    return db.sequelize
+        .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h)', 
+            {
+                replacements: { 
+                    a: req.body.in_str, 
+                    b: req.bosy.in_company,
+                    c: req.body.in_date,
+                    d: parseInt(req.body.in_month),
+                    e: parseInt(req.body.in_year),
+                    f: req.body.in_approve,
+                    g: parseInt(req.body.in_page) - 1,
+                    h: parseInt(CONST.CONST_page_limit)
+                }
+            })
+        .then( data => { 
+            res.send(data[0]);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+}

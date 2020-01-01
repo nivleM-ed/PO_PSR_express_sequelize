@@ -23,6 +23,9 @@ router.post('/:po_id/pending', isLoggedIn, auth_no_t1, po.po_stat_1); //po statu
 router.post('/:po_id/approve', isLoggedIn, auth_no_t1_t2, po.po_stat_2); //po status to approved  
 router.post('/:po_id/decline', isLoggedIn, auth_no_t1, po.po_stat_decline); //po status to declined  
 
+//search 
+router.post('/search', isLoggedIn, po.search_po);
+
 //router.get('/user/:user_id/:page', isLoggedIn, auth_no_t1, po.search_user);
 
 

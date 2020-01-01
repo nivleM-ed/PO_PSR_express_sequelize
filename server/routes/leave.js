@@ -24,4 +24,7 @@ router.delete('/:leave_id/del_leave', isLoggedIn, leave.del_leave);
 router.post('/:leave_id/approve', isLoggedIn, leave.approve_leave);
 router.post('/:leave_id/decline', isLoggedIn, leave.decline_leave);
 
+//search 
+router.post('/search', isLoggedIn, leave.search_leave);
+
 module.exports = router;

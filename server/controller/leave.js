@@ -1,5 +1,7 @@
 let models = require('../models');
 var sequelize = require('sequelize');
+// var mydb = new sequelize('database', 'username', 'password');
+const db = require('../models/index');
 var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op
@@ -552,3 +554,29 @@ exports.checkDuplicateDate = function (req, res, next) {
 //         res.status(500).send(err);
 //     })
 // }
+
+exports.search_leave = function (req, res, next) {
+    // var inp_str;
+    // var inp_date;
+
+    // if (req.body.inp_str == '') inp_str = null;
+    // else inp_str = req.body.inp_str;
+
+    // if (req.body.inp_date == '') inp_date = null;
+    // else inp_date = req.body.inp_date;
+    return db.sequelize
+        .query('SELECT * from F_SEARCH_LEAVE(:a, :b, :c, :d)', 
+            {
+                replacements: { 
+                    a: req.body.in_str, 
+                    b: req.body.in_date,
+                    c: parseInt(req.body.in_page) - 1,
+                    d: 10
+                }
+            })
+        .then( data => { 
+            res.send(data[0]);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+}

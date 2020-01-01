@@ -25,6 +25,9 @@ router.post('/:psr_id/pending', isLoggedIn, auth_no_t1, psr.psr_stat_1); //psr s
 router.post('/:psr_id/approve', isLoggedIn, auth_no_t1_t2, psr.psr_stat_2); //psr status to approved  
 router.post('/:psr_id/decline', isLoggedIn, auth_no_t1, psr.psr_stat_decline); //psr status to declined  
 
+//search 
+router.post('/search', isLoggedIn, psr.search_psr);
+
 //router.get('/user/:user_id/:page', isLoggedIn, auth_no_t1, psr.search_user);
 
 

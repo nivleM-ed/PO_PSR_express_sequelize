@@ -303,6 +303,35 @@ class psr {
       }
     });
   }
+
+  static psr_search(
+    in_str,
+    in_date,
+    in_month,
+    in_year,
+    in_approve,
+    in_page
+  ) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(
+          `${url}/search`, {
+            in_str,
+            in_date,
+            in_month,
+            in_year,
+            in_approve,
+            in_page
+          }, {
+            withCredentials: true
+          }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
 
 export default psr;

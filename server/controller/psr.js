@@ -1117,3 +1117,25 @@ exports.psr_stat_decline = function (req, res, next) {
         res.status(500).send(err);
     })
 }
+
+exports.search_psr = function (req, res, next) {
+
+    return db.sequelize
+        .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g)', 
+            {
+                replacements: { 
+                    a: req.body.in_str, 
+                    b: req.body.in_date,
+                    c: parseInt(req.body.in_month),
+                    d: parseInt(req.body.in_year),
+                    e: req.body.in_approve,
+                    f: parseInt(req.body.in_page) - 1,
+                    g: parseInt(CONST.CONST_page_limit)
+                }
+            })
+        .then( data => { 
+            res.send(data[0]);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+}
