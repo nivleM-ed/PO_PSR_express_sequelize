@@ -59,7 +59,19 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            address: { //address of buyer
+            address_1: { //address of buyer
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            address_2: { //address of buyer
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            address_3: { //address of buyer
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            address_4: { //address of buyer
                 allowNull: true,
                 type: Sequelize.STRING
             },

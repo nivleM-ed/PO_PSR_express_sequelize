@@ -40,7 +40,19 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             type: DataTypes.STRING
         },
-        address: { //address of buyer
+        address_1: { //address of buyer
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        address_2: { //address of buyer
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        address_3: { //address of buyer
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        address_4: { //address of buyer
             allowNull: true,
             type: DataTypes.STRING
         },

@@ -3,24 +3,11 @@ import { CONST } from './const';
 const url = CONST.CONST_URL.concat('po/');
 
 class po {
-  // static show_po_all() {
-  //   //only for dev purposes
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       const res = await axios.get(`${url}`, {
-  //         withCredentials: true
-  //       });
-  //       resolve(res.data);
-  //     } catch (err) {
-  //       reject(err);
-  //     }
-  //   });
-  // }
 
-  static show_po_page(page) {
+  static show_po_page(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}all/${page}`, {
+        const res = await axios.get(`${url}all/${poObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -30,10 +17,10 @@ class po {
     });
   }
 
-  static show_own_po_page(page) {
+  static show_own_po_page(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}own_po/${page}`, {
+        const res = await axios.get(`${url}own_po/${poObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -56,10 +43,10 @@ class po {
     });
   }
 
-  static find(po_no) {
+  static find(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}search/${po_no}`, {
+        const res = await axios.get(`${url}search/${poObj._po_no}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -69,10 +56,10 @@ class po {
     });
   }
 
-  static get_submits(page) {
+  static get_submits(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}submits/${page}`, {
+        const res = await axios.get(`${url}submits/${poObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -82,10 +69,10 @@ class po {
     });
   }
 
-  static get_pending(page) {
+  static get_pending(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}pending/${page}`, {
+        const res = await axios.get(`${url}pending/${poObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -95,10 +82,10 @@ class po {
     });
   }
 
-  static get_del_req(po_id) {
+  static get_del_req(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}req_del_po/${po_id}`, {
+        const res = await axios.get(`${url}req_del_po/${poObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -108,28 +95,12 @@ class po {
     });
   }
 
-  static po_add(
-    po_ref,
-    due,
-    ship,
-    psr,
-    cca,
-    pay,
-    address,
-    desc
-  ) {
+  static po_add(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}add_po`, {
-            po_ref,
-            due,
-            ship,
-            psr,
-            cca,
-            pay,
-            address,
-            desc
+            poObj
           }, {
             withCredentials: true
           }
@@ -141,10 +112,10 @@ class po {
     });
   }
 
-  static po_del_req(po_id) {
+  static po_del_req(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}req_del_po/${po_id}`, {
+        const res = await axios.post(`${url}req_del_po/${poObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -154,10 +125,10 @@ class po {
     });
   }
 
-  static po_del(po_id) {
+  static po_del(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.delete(`${url}app_del/${po_id}`, {
+        const res = await axios.delete(`${url}app_del/${poObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -167,10 +138,10 @@ class po {
     });
   }
 
-  static po_decline_del(po_id) {
+  static po_decline_del(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}dec_del/${po_id}`, {
+        const res = await axios.post(`${url}dec_del/${poObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -180,10 +151,10 @@ class po {
     });
   }
 
-  static report(po_id) {
+  static report(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}${po_id}`, {
+        const res = await axios.get(`${url}${poObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -193,29 +164,12 @@ class po {
     });
   }
 
-  static po_upd(
-    po_id,
-    po_ref,
-    due,
-    ship,
-    psr,
-    cca,
-    pay,
-    address,
-    desc
-  ) {
+  static po_upd(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${po_id}/upd_po`, {
-            po_ref,
-            due,
-            ship,
-            psr,
-            cca,
-            pay,
-            address,
-            desc
+          `${url}${poObj._id}/upd_po`, {
+            poObj
           }, {
             withCredentials: true
           }
@@ -227,11 +181,11 @@ class po {
     });
   }
 
-  static po_stat_1(po_id) {
+  static po_stat_1(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${po_id}/pending`, {
+          `${url}${poObj._id}/pending`, {
             withCredentials: true
           }
         );
@@ -242,11 +196,11 @@ class po {
     });
   }
 
-  static po_stat_2(po_id) {
+  static po_stat_2(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${po_id}/approve`, {
+          `${url}${poObj._id}/approve`, {
             withCredentials: true
           }
         );
@@ -257,11 +211,11 @@ class po {
     });
   }
 
-  static po_decline(po_id) {
+  static po_decline(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${po_id}/decline`, {
+          `${url}${poObj._id}/decline`, {
             withCredentials: true
           }
         );
@@ -272,26 +226,17 @@ class po {
     });
   }
 
-  static po_search(
-    in_str,
-    in_company
-    in_date,
-    in_month,
-    in_year,
-    in_approve,
-    in_page
-  ) {
+  //in_param_1 = in_str 
+  //in_param_2 = in_date 
+  //in_param_3 = in_month
+  //in_param_4 = in_year
+  //in_param_5 = in_approve
+  static po_search(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}/search`, {
-            in_str,
-            in_company,
-            in_date,
-            in_month,
-            in_year,
-            in_approve,
-            in_page
+            poObj
           }, {
             withCredentials: true
           }

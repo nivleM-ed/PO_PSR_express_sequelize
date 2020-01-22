@@ -101,8 +101,8 @@ exports.add_admin = function (req, res, next) {
             res.send(errors);
         } else {
             newUser = models.Users.build({
-                username: req.body.username,
-                password: generateHash(req.body.password),
+                username: req.body.userObj._username,
+                password: generateHash(req.body.userObj._password),
                 is_admin: true,
             });
             return newUser.save().then(result => {
@@ -132,14 +132,22 @@ exports.add_user = function (req, res, next) {
             res.send(errors);
         } else {
             newUser = models.Users.build({
-                username: req.body.username,
-                password: generateHash(req.body.password),
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                t1: req.body.t1,
-                t2: req.body.t2,
-                t3: req.body.t3,
-                t4: req.body.t4
+                username: req.body.userObj._username,
+                password: generateHash(req.body.userObj._password),
+                firstname: req.body.userObj._firstname,
+                lastname: req.body.userObj._lastname,
+                email: req.body.userObj._email,
+                department: req.body.userObj._department,
+                contact_no: req.body.userObj._contact_no,
+                address_1: req.body.userObj._address_1,
+                address_2: req.body.userObj._address_2,
+                address_3: req.body.userObj._address_3,
+                address_4: req.body.userObj._address_4,
+                t1: req.body.userObj._t1,
+                t2: req.body.userObj._t2,
+                t3: req.body.userObj._t3,
+                t4: req.body.userObj._t4,
+                acct_t: req.body.userObj._acct_t
             });
             return newUser.save().then(result => {
                 res.status(200).send();
@@ -188,10 +196,11 @@ exports.update_tier = function (req, res, next) {
         message: 'update_tier'
     })
     return models.Users.update({
-        t1: req.body.t1,
-        t2: req.body.t2,
-        t3: req.body.t3,
-        t4: req.body.t4
+        t1: req.body.userObj._t1,
+        t2: req.body.userObj._t2,
+        t3: req.body.userObj._t3,
+        t4: req.body.userObj._t4,
+        acct_t: req.body.userObj._acct_t
     }, {
         where: {
             id: req.params.user_id

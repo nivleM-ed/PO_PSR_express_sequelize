@@ -624,16 +624,20 @@ exports.po_add = function (req, res, next) {
         message: 'po_add'
     })
     return models.purchase_order.create({
-        //po_no: req.body.po_no,
-        // po_date: req.body.date,
-        po_ref: req.body.po_ref,
-        delv_due: req.body.due,
-        ship_mode: req.body.ship,
-        psr_id: req.body.psr,
-        cca_no: req.body.cca,
-        pay_mode: req.body.pay,
-        address: req.body.address,
-        po_desc: req.body.desc,
+        po_ref: req.body.poObj._po_ref,
+        quotation: req.body.poObj._quotation,
+        delv_due: req.body.poObj._delv_due,
+        ship_mode: req.body.poObj._ship_mode,
+        psr_id: req.body.poObj._psr_id,
+        cca_no: req.body.poObj._cca_no,
+        pay_mode: req.body.poObj._pay_mode,
+        address_1: req.body.poObj._address_1,
+        address_2: req.body.poObj._address_2,
+        address_3: req.body.poObj._address_3,
+        address_4: req.body.poObj._address_4,
+        po_desc: req.body.poObj._po_desc,
+        cl_name: req.body.poObj._cl_name,
+        cl_company: req.body.poObj._cl_company,
         create_user: req.user.id
     }).then(po => {
         res.status(201).send(po)
@@ -793,20 +797,20 @@ exports.po_upd = function (req, res, next) {
         message: 'po_upd'
     })
     return models.purchase_order.update({
-        //po_no: req.body.po_no,
-        po_date: req.body.date,
-        po_ref: req.body.po_ref,
-        delv_due: req.body.due,
-        ship_mode: req.body.ship,
-        psr_no: req.body.psr,
-        cca_no: req.body.cca,
-        pay_mode: req.body.pay,
-        address: req.body.address,
-        po_desc: req.body.desc,
-        status_decline: false,
-        date_decline: null,
-        decline_user: null,
-        decline_reason: null
+        po_ref: req.body.poObj._po_ref,
+        quotation: req.body.poObj._quotation,
+        delv_due: req.body.poObj._delv_due,
+        ship_mode: req.body.poObj._ship_mode,
+        psr_id: req.body.poObj._psr_id,
+        cca_no: req.body.poObj._cca_no,
+        pay_mode: req.body.poObj._pay_mode,
+        address_1: req.body.poObj._address_1,
+        address_2: req.body.poObj._address_2,
+        address_3: req.body.poObj._address_3,
+        address_4: req.body.poObj._address_4,
+        po_desc: req.body.poObj._po_desc,
+        cl_name: req.body.poObj._cl_name,
+        cl_company: req.body.poObj._cl_company
     }, {
         where: {
             id: req.params.po_id
@@ -942,7 +946,7 @@ exports.po_stat_decline = function (req, res, next) {
         status_decline: true,
         date_decline: new Date(),
         decline_user: req.user.id,
-        decline_reason: req.body.decline_reason
+        decline_reason: req.body.poObj._decline_reason
     }, {
         where: {
             id: req.params.po_id
@@ -965,12 +969,12 @@ exports.search_po = function (req, res, next) {
         .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h)', 
             {
                 replacements: { 
-                    a: req.body.in_str, 
-                    b: req.bosy.in_company,
-                    c: req.body.in_date,
-                    d: parseInt(req.body.in_month),
-                    e: parseInt(req.body.in_year),
-                    f: req.body.in_approve,
+                    a: req.body.poObj._in_param_1,  //in_str 
+                    b: req.body.poObj._in_param_2,  //in_company,
+                    c: req.body.poObj._in_param_3,  //in_date,
+                    d: parseInt(req.body.poObj._in_param_4), //in_month
+                    e: parseInt(req.body.poObj._in_param_5), //in_year
+                    f: req.body.poObj._in_param_1,  //in_approve
                     g: parseInt(req.body.in_page) - 1,
                     h: parseInt(CONST.CONST_page_limit)
                 }

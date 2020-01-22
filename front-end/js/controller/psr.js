@@ -1,26 +1,15 @@
 import axios from "axios";
-import { CONST } from './const';
+import {
+  CONST
+} from './const';
 const url = CONST.CONST_URL.concat('psr/');
 
 class psr {
-  // static show_psr_all() {
-  //   //only for dev purposes
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       const res = await axios.get(`${url}`, {
-  //         withCredentials: true
-  //       });
-  //       resolve(res.data);
-  //     } catch (err) {
-  //       reject(err);
-  //     }
-  //   });
-  // }
 
-  static show_psr_page(page) {
+  static show_psr_page(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}all/${page}`, {
+        const res = await axios.get(`${url}all/${psrObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -30,10 +19,10 @@ class psr {
     });
   }
 
-  static show_own_psr_page(page) {
+  static show_own_psr_page(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}own_psr/${page}`, {
+        const res = await axios.get(`${url}own_psr/${psrObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -56,10 +45,10 @@ class psr {
     });
   }
 
-  static find(psr_no) {
+  static find(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}search/${psr_no}`, {
+        const res = await axios.get(`${url}search/${psrObj._psr_no}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -82,10 +71,10 @@ class psr {
     });
   }
 
-  static get_approved(page) {
+  static get_approved(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}approved/${page}`, {
+        const res = await axios.get(`${url}approved/${psrObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -95,10 +84,10 @@ class psr {
     });
   }
 
-  static get_submits(page) {
+  static get_submits(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}submits/${page}`, {
+        const res = await axios.get(`${url}submits/${psrObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -108,10 +97,10 @@ class psr {
     });
   }
 
-  static get_pending(page) {
+  static get_pending(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}pending/${page}`, {
+        const res = await axios.get(`${url}pending/${psrObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -121,45 +110,25 @@ class psr {
     });
   }
 
-  static get_del_req(psr_id) {
+  static get_del_req(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}req_del_psr/${psr_id}`, {
+        const res = await axios.get(`${url}req_del_psr/${psrObj._id}`, {
           withCredentials: true
-                  });
-                          resolve(res.data);
+        });
+        resolve(res.data);
       } catch (err) {
         reject(err);
       }
     });
   }
 
-  static psr_add(
-    psr_data,
-    pur_class,
-    pur_typ,
-    pur_just,
-    date_req,
-    p_title,
-    vessel_cd,
-    delv,
-    desc,
-    cost_typ
-  ) {
+  static psr_add(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}add_psr`, {
-            psr_data,
-            pur_class,
-            pur_typ,
-            pur_just,
-            date_req,
-            p_title,
-            vessel_cd,
-            delv,
-            desc,
-            cost_typ
+            psrObj
           }, {
             withCredentials: true
           }
@@ -171,10 +140,10 @@ class psr {
     });
   }
 
-  static psr_del_req(psr_id) {
+  static psr_del_req(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}req_del_psr/${psr_id}`, {
+        const res = await axios.post(`${url}req_del_psr/${psrObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -184,10 +153,10 @@ class psr {
     });
   }
 
-  static psr_del(psr_id) {
+  static psr_del(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.delete(`${url}app_del/${psr_id}`, {
+        const res = await axios.delete(`${url}app_del/${psrObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -197,10 +166,10 @@ class psr {
     });
   }
 
-  static psr_decline_del(psr_id) {
+  static psr_decline_del(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}dec_del/${psr_id}`, {
+        const res = await axios.post(`${url}dec_del/${psrObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -210,10 +179,10 @@ class psr {
     });
   }
 
-  static report(psr_id) {
+  static report(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}${psr_id}`, {
+        const res = await axios.get(`${url}${psrObj._id}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -223,31 +192,12 @@ class psr {
     });
   }
 
-  static psr_upd(
-    psr_id,
-    psr_data,
-    pur_class,
-    pur_typ,
-    pur_just,
-    date_req,
-    p_title,
-    vessel_cd,
-    delv,
-    desc
-  ) {
+  static psr_upd(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/upd_psr`, {
-            psr_data,
-            pur_class,
-            pur_typ,
-            pur_just,
-            date_req,
-            p_title,
-            vessel_cd,
-            delv,
-            desc
+          `${url}${psrObj._id}/upd_psr`, {
+            psrObj
           }, {
             withCredentials: true
           }
@@ -259,11 +209,11 @@ class psr {
     });
   }
 
-  static psr_stat_1(psr_id) {
+  static psr_stat_1(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/pending`, {
+          `${url}${psrObj._id}/pending`, {
             withCredentials: true
           }
         );
@@ -274,11 +224,11 @@ class psr {
     });
   }
 
-  static psr_stat_2(psr_id) {
+  static psr_stat_2(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/approve`, {
+          `${url}${psrObj._id}/approve`, {
             withCredentials: true
           }
         );
@@ -289,11 +239,11 @@ class psr {
     });
   }
 
-  static psr_decline(psr_id) {
+  static psr_decline(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psr_id}/decline`, {
+          `${url}${psrObj._id}/decline`, {
             withCredentials: true
           }
         );
@@ -304,24 +254,17 @@ class psr {
     });
   }
 
-  static psr_search(
-    in_str,
-    in_date,
-    in_month,
-    in_year,
-    in_approve,
-    in_page
-  ) {
+  //in_param_1 = in_str 
+  //in_param_2 = in_date 
+  //in_param_3 = in_month
+  //in_param_4 = in_year
+  //in_param_5 = in_approve
+  static psr_search(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}/search`, {
-            in_str,
-            in_date,
-            in_month,
-            in_year,
-            in_approve,
-            in_page
+            psrObj
           }, {
             withCredentials: true
           }

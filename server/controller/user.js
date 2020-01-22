@@ -141,10 +141,10 @@ exports.reset_password = function (req, res, next) {
                 id: req.user.id
             }
         }).then(user2 => {
-            if(bcrypt.compareSync(req.body.ori_password, user2.password)) {
-                if (req.body.new_password == req.body.repeat_password) {
+            if(bcrypt.compareSync(req.body.userObj._in_param_1, user2.password)) {
+                if (req.body.userObj._in_param_2 == req.body.userObj._in_param_3) {
                     return models.Users.update({
-                        password: generateHash(req.body.new_password)
+                        password: generateHash(req.body.userObj._in_param_2)
                     }, {
                         where: {
                             id: req.user.id

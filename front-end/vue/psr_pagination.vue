@@ -1,5 +1,6 @@
 <script>
 import psr from '../../src/assets/scripts/psr'; //directory to psr.js
+import psrClass from '../js/class/psr_class'; //change to appropriate directory
 
 export default {
     data(){
@@ -8,14 +9,16 @@ export default {
             page: 1,
             error: '',
             total_page : '',
+            psrObj: new psrClass()
         };
     },
     async created() {
         try {
-        const data = await psr.show_psr_page(this.page);
+        const data = await psr.show_psr_page(this.psrObj.toJSON());
         
         const psrs1 = data.result[0]
             this.total_page = data.result[1]
+            this.psrObj.total_page = data.result[1]
             this.psrs = psrs1.map(psrs => ({
                 ...psrs
             }))
@@ -27,8 +30,7 @@ export default {
     methods: {
         async get_pending() {
             try {
-            const data = await psr.get_pending(this.page);
-            const limit = 8;
+            const data = await psr.get_pending(this.psrObj.toJSON());
             
             const psrs1 = data.result[0]
             this.total_page = data.result[1]
@@ -42,10 +44,8 @@ export default {
         },
         async get_submits() {
             try {
-            const data = await psr.get_submits(this.page);
-            const limit = 8;
+            const data = await psr.get_submits(this.psrObj.toJSON());
             
-            const psrs1 = data.result[0]
             const psrs1 = data.result[0]
             this.total_page = data.result[1]
             this.psrs = psrs1.map(psrs => ({
@@ -58,10 +58,9 @@ export default {
         },
         async find() {
             try {
-                const data = await psr.find(this.psr_no);
+                const data = await psr.find(this.psrObj.toJSON());
                 this.psrs = data.map(psrs => ({
-                    ...psrs,
-                    createdAt: new Date(psrs.createdAt)
+                    ...psrs
             })) 
             } catch (err) {
                 this.error = err.message;
@@ -71,16 +70,10 @@ export default {
         // if page == 1, hide previous button, show next button
         // if page == total_page, show previous button, show next button
         nextPage() {
-            page += 1;
-            if(page > total_page) {
-                page = total_page;
-            }
+            page = this.psrObj.nextPage();
         },
         previousPage() {
-            page -+ 1;
-            if(page <= 0) {
-                page = 1;
-            }
+            page = this.psrObj.prevPage();
         }
     }
     

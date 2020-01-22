@@ -16,10 +16,10 @@ class leave {
     });
   }
 
-  static show_leave_page(page) {
+  static show_leave_page(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}all/${page}`, {
+        const res = await axios.get(`${url}all/${leaveObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -29,10 +29,10 @@ class leave {
     });
   }
 
-  static show_pending_page(page) {
+  static show_pending_page(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}pending_leave/${page}`, {
+        const res = await axios.get(`${url}pending_leave/${leaveObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -42,10 +42,10 @@ class leave {
     });
   }
 
-  static show_own_leave(page) {
+  static show_own_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}own/${page}`, {
+        const res = await axios.get(`${url}own/${leaveObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -55,11 +55,11 @@ class leave {
     });
   }
 
-  static report(id) {
+  static report(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.get(
-          `${url}${id}`, {
+          `${url}${leaveObj._id}`, {
             withCredentials: true
           }
         );
@@ -70,14 +70,12 @@ class leave {
     });
   }
 
-  static add_leave(date_from, date_to, reason) {
+  static add_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}add_leave`, {
-            date_from,
-            date_to,
-            reason
+            leaveObj
           }, {
             withCredentials: true
           }
@@ -89,14 +87,12 @@ class leave {
     });
   }
 
-  static upd_leave(leave_id, date_to, date_from, reason) {
+  static upd_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${leave_id}/upd_leave`, {
-            date_from,
-            date_to,
-            reason
+          `${url}${leaveObj._id}/upd_leave`, {
+            leaveObj
           }, {
             withCredentials: true
           }
@@ -108,11 +104,11 @@ class leave {
     });
   }
 
-  static del_req_leave(leave_id, del_reason) {
+  static del_req_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}${leave_id}/delreq_leave`,{
-          del_reason
+        const res = await axios.post(`${url}${leaveObj._id}/delreq_leave`,{
+          leaveObj
         }, {
           withCredentials: true
         });
@@ -123,10 +119,10 @@ class leave {
     });
   }
 
-  static del_leave(leave_id) {
+  static del_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.delete(`${url}${leave_id}/del_leave`, {
+        const res = await axios.delete(`${url}${leaveObj._id}/del_leave`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -136,10 +132,10 @@ class leave {
     });
   }
 
-  static approve_leave(leave_id) {
+  static approve_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}${leave_id}/approve`, {
+        const res = await axios.post(`${url}${leaveObj._id}/approve`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -149,10 +145,10 @@ class leave {
     });
   }
 
-  static decline_leave(leave_id) {
+  static decline_leave(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}${leave_id}/decline`, {
+        const res = await axios.post(`${url}${leaveObj._id}/decline`, {
           withCredentials: true
         });
         resolve(res.data);
@@ -162,18 +158,14 @@ class leave {
     });
   }
 
-  static leave_search(
-    in_str,
-    in_date,
-    in_page
-  ) {
+  //in_param_1 = in_str
+  //in_param_2 = in_date
+  static leave_search(leaveObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}/search`, {
-            in_str,
-            in_date,
-            in_page
+            leaveObj
           }, {
             withCredentials: true
           }

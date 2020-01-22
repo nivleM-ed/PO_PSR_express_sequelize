@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             type: DataTypes.STRING(1000)
         },
+        emergency_contact: { 
+            allowNull: true,
+            type: DataTypes.INTEGER
+        },
+        replace_id: { 
+            allowNull: true,
+            type: DataTypes.STRING(1000)
+        },
         approver_id: {
             allowNull: true,
             type: DataTypes.STRING

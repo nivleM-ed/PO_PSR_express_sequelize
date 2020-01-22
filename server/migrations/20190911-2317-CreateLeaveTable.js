@@ -40,6 +40,14 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING(1000)
             },
+            emergency_contact: { 
+                allowNull: true,
+                type: Sequelize.INTEGER
+            },
+            replace_id: { 
+                allowNull: true,
+                type: Sequelize.STRING(1000)
+            },
             approver_id: {
                 allowNull: true,
                 type: Sequelize.STRING

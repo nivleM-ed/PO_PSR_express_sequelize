@@ -29,6 +29,35 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             unique: true
         },
+        department: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        contact_no: {
+            allowNull: true,
+            type: DataTypes.INTEGER
+        },
+        address_1: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        address_2: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        address_3: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        address_4: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        acct_t: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
         t1: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,

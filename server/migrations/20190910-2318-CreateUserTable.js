@@ -36,6 +36,35 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
+            department: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            contact_no: {
+                allowNull: true,
+                type: Sequelize.INTEGER
+            },
+            address_1: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            address_2: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            address_3: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            address_4: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            acct_t: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
+            },
             t1: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,

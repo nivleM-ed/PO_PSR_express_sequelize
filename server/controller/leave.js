@@ -345,9 +345,9 @@ exports.add_leave = function (req, res, next) {
     })
     return models.leave.create({
         user_id: req.user.id,
-        date_from: req.body.date_from,
-        date_to: req.body.date_to,
-        reason: req.body.reason
+        date_from: req.body.leaveObj._date_from,
+        date_to: req.body.leaveObj._date_to,
+        reason: req.body.leaveObj._reason
     }).then(leave => {
         res.status(201).send(leave)
     }).catch(err => {
@@ -390,7 +390,7 @@ exports.del_req_leave = function (req, res, next) {
     })
     return models.leave.update({
         del_req: true,
-        del_reason: req.body.del_reason
+        del_reason: req.body.leaveObj._del_reason
     }, {
         where: {
             id: req.params.leave_id,
@@ -467,9 +467,9 @@ exports.upd_leave = function (req, res, next) {
         message: 'upd_leave'
     })
     return models.leave.update({
-        date_from: req.body.date_from,
-        date_to: req.body.date_to,
-        reason: req.body.reason
+        date_from: req.body.leaveObj._date_from,
+        date_to: req.body.leaveObj._date_to,
+        reason: req.body.leaveObj._reason,
     }, {
         where: {
             id: req.params.leave_id
@@ -498,12 +498,12 @@ exports.checkDuplicateDate = function (req, res, next) {
                 where: {
                     user_id: req.user.id,
                     [op.or]: [{
-                        date_from: req.body.date_from,
-                        date_to: req.body.date_to,
+                        date_from: req.body.leaveObj._date_from,
+                        date_to: req.body.leaveObj._date_to,
                     },
                     {
-                        date_from: req.body.date_to,
-                        date_to: req.body.date_from
+                        date_from: req.body.leaveObj._date_to,
+                        date_to: req.body.leaveObj._date_from
                     }]
                 }
             }).then(total => {
@@ -556,22 +556,14 @@ exports.checkDuplicateDate = function (req, res, next) {
 // }
 
 exports.search_leave = function (req, res, next) {
-    // var inp_str;
-    // var inp_date;
-
-    // if (req.body.inp_str == '') inp_str = null;
-    // else inp_str = req.body.inp_str;
-
-    // if (req.body.inp_date == '') inp_date = null;
-    // else inp_date = req.body.inp_date;
     return db.sequelize
         .query('SELECT * from F_SEARCH_LEAVE(:a, :b, :c, :d)', 
             {
                 replacements: { 
-                    a: req.body.in_str, 
-                    b: req.body.in_date,
-                    c: parseInt(req.body.in_page) - 1,
-                    d: 10
+                    a: req.body.leaveObj._in_param_1,   //in_str 
+                    b: req.body.leaveObj._in_param_2,   //in_date,
+                    c: parseInt(req.body.leaveObj._in_page) - 1,
+                    d: CONST.CONST_page_limit
                 }
             })
         .then( data => { 

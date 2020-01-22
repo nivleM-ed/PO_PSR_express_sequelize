@@ -779,19 +779,16 @@ exports.psr_add = function (req, res, next) {
         message: 'add'
     })
     return models.psr.create({
-        // psr_no: req.body.psr_no,
-        // psr_date: req.body.date,
-        psr_data: req.body.psr_data,
-        purchase_class: req.body.pur_class,
-        purchase_typ: req.body.pur_typ,
-        purchase_just: req.body.pur_just,
-        date_req: req.body.date_req,
-        project_title: req.body.p_title,
-        vessel_code: req.body.vessel_cd,
-        delv: req.body.delv,
-        psr_desc: req.body.desc,
-        create_user: req.user.id,
-        cost_typ: req.user.cost_typ
+        purchase_class: req.body.psrObj._purchase_class,
+        purchase_typ: req.body.psrObj._purchase_typ,
+        purchase_just: req.body.psrObj._purchase_just,
+        cost_typ: req.body.psrObj._cost_typ,
+        date_req: req.body.psrObj._date_req,
+        project_title: req.body.psrObj._project_title,
+        vessel_code: req.body.psrObj._vessel_code,
+        delv: req.body.psrObj._delv,
+        psr_desc: req.body.psrObj._psr_desc,
+        create_user: req.user.id
     }).then(psr => {
         res.status(201).send(psr)
     }).catch(err => {
@@ -950,21 +947,15 @@ exports.psr_upd = function (req, res, next) {
         message: 'psr_upd'
     })
     return models.psr.update({
-        // psr_no: req.body.psr_no,
-        psr_date: req.body.date,
-        psr_data: req.body.psr_data,
-        purchase_class: req.body.pur_class,
-        purchase_typ: req.body.pur_typ,
-        purchase_just: req.body.pur_just,
-        date_req: req.body.date_req,
-        project_title: req.body.p_title,
-        vessel_code: req.body.vessel_cd,
-        delv: req.body.delv,
-        psr_desc: req.body.desc,
-        status_decline: false,
-        date_decline: null,
-        decline_user: null,
-        decline_reason: null
+        purchase_class: req.body.psrObj._purchase_class,
+        purchase_typ: req.body.psrObj._purchase_typ,
+        purchase_just: req.body.psrObj._purchase_just,
+        cost_typ: req.body.psrObj._cost_typ,
+        date_req: req.body.psrObj._date_req,
+        project_title: req.body.psrObj._project_title,
+        vessel_code: req.body.psrObj._vessel_code,
+        delv: req.body.psrObj._delv,
+        psr_desc: req.body.psrObj._psr_desc
     }, {
         where: {
             id: req.params.psr_id
@@ -1101,7 +1092,7 @@ exports.psr_stat_decline = function (req, res, next) {
         status_decline: true,
         date_decline: new Date(),
         decline_user: req.user.id,
-        decline_reason: req.body.decline_reason
+        decline_reason: req.body.psrObj._decline_reason
     }, {
         where: {
             id: req.params.psr_id
@@ -1124,12 +1115,12 @@ exports.search_psr = function (req, res, next) {
         .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g)', 
             {
                 replacements: { 
-                    a: req.body.in_str, 
-                    b: req.body.in_date,
-                    c: parseInt(req.body.in_month),
-                    d: parseInt(req.body.in_year),
-                    e: req.body.in_approve,
-                    f: parseInt(req.body.in_page) - 1,
+                    a: req.body.psrObj._in_param_1,  //in_str 
+                    b: req.body.psrObj._in_param_2,  //in_date
+                    c: parseInt(req.body.psrObj._in_param_3),   //in_month
+                    d: parseInt(req.body.psrObj._in_param_4),   //in_year
+                    e: req.body.psrObj._in_param_5,  //in_approve
+                    f: parseInt(req.body.poObj._in_page) - 1,
                     g: parseInt(CONST.CONST_page_limit)
                 }
             })
