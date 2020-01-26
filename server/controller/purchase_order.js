@@ -149,8 +149,8 @@ exports.show_own_po_page = function (req, res, next) {
                 where: {
                     create_user: req.user.id
                 }
-            }).then(psr => {
-                resolve(psr);
+            }).then(po => {
+                resolve(po);
             }).catch(err => {
                 winston.error({
                     level: 'error',

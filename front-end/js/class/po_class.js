@@ -1,4 +1,4 @@
-export default class poObj {
+export default class poClass {
     constructor() {
         var id = null;
         var po_no = null;

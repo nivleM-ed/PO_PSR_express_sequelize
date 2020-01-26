@@ -1,4 +1,4 @@
-export default class leaveObj {
+export default class leaveClass {
     constructor() {
         var id = null;
         var date_from = null;

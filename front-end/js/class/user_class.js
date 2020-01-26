@@ -1,4 +1,4 @@
-export default class userObj {
+export default class userClass {
     constructor() {
         var id = null;
         var username = null;
