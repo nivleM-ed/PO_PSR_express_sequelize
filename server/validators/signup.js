@@ -22,6 +22,8 @@ exports.validateUser = function(errors, req) {
 				errors["err"] = "usernameInUsed";
 			}
 			resolve(errors);
+		}).catch(err => {
+			res.send(err)
 		})
 	})
 }

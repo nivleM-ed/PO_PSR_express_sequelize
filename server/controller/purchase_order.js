@@ -974,7 +974,7 @@ exports.search_po = function (req, res, next) {
                     c: req.body.poObj._in_param_3,  //in_date,
                     d: parseInt(req.body.poObj._in_param_4), //in_month
                     e: parseInt(req.body.poObj._in_param_5), //in_year
-                    f: req.body.poObj._in_param_1,  //in_approve
+                    f: req.body.poObj._in_param_6,  //in_approve
                     g: parseInt(req.body.in_page) - 1,
                     h: parseInt(CONST.CONST_page_limit)
                 }

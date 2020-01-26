@@ -20,9 +20,9 @@ router.get('/:leave_id', isLoggedIn, leave.report);
 router.post('/add_leave', isLoggedIn, leave.checkDuplicateDate, leave.add_leave);
 router.post('/:leave_id/upd_leave', isLoggedIn, leave.checkDuplicateDate, leave.upd_leave);
 router.post('/:leave_id/delreq_leave', isLoggedIn, leave.del_req_leave); //request to delete leave
-router.delete('/:leave_id/del_leave', isLoggedIn, leave.del_leave);
-router.post('/:leave_id/approve', isLoggedIn, leave.approve_leave);
-router.post('/:leave_id/decline', isLoggedIn, leave.decline_leave);
+router.delete('/:leave_id/del_leave', isLoggedIn, auth_no_t1, leave.del_leave);
+router.post('/:leave_id/approve', isLoggedIn, auth_no_t1, leave.approve_leave);
+router.post('/:leave_id/decline', isLoggedIn, auth_no_t1, leave.decline_leave);
 
 //search 
 router.post('/search', isLoggedIn, leave.search_leave);

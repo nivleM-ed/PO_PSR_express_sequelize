@@ -24,6 +24,7 @@ export default class poClass {
         var in_param_3 = null;
         var in_param_4 = null;
         var in_param_5 = null;
+        var in_param_6 = null;
     }
     get id() {
         return this._id;
@@ -193,6 +194,12 @@ export default class poClass {
         this._in_param_5 = in_in_param_5;
     }
 
+    get in_param_6() {
+        return this._in_param_6;
+    }
+    set in_param_6(in_in_param_6) {
+        this._in_param_6 = in_in_param_6;
+    }
 
     //methods
     toJson() {
