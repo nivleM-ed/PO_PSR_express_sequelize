@@ -1121,7 +1121,7 @@ exports.search_psr = function (req, res, next) {
                     c: parseInt(req.body.psrObj._in_param_3),   //in_month
                     d: parseInt(req.body.psrObj._in_param_4),   //in_year
                     e: req.body.psrObj._in_param_5,  //in_approve
-                    f: parseInt(req.body.poObj._in_page) - 1,
+                    f: parseInt(req.body.psrObj._in_page) - 1,
                     g: parseInt(CONST.CONST_page_limit)
                 }
             })
