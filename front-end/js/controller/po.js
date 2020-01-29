@@ -30,18 +30,18 @@ class po {
     });
   }
 
-  static show_all_po() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const res = await axios.get(`${url}all_po`, {
-          withCredentials: true
-        });
-        resolve(res.data);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
+  // static show_all_po() {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const res = await axios.get(`${url}all_po`, {
+  //         withCredentials: true
+  //       });
+  //       resolve(res.data);
+  //     } catch (err) {
+  //       reject(err);
+  //     }
+  //   });
+  // }
 
   static find(poObj) {
     return new Promise(async (resolve, reject) => {

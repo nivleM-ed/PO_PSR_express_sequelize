@@ -32,18 +32,18 @@ class psr {
     });
   }
 
-  static show_all_psr() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const res = await axios.get(`${url}all_psr`, {
-          withCredentials: true
-        });
-        resolve(res.data);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
+  // static show_all_psr() {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const res = await axios.get(`${url}all_psr`, {
+  //         withCredentials: true
+  //       });
+  //       resolve(res.data);
+  //     } catch (err) {
+  //       reject(err);
+  //     }
+  //   });
+  // }
 
   static find(psrObj) {
     return new Promise(async (resolve, reject) => {
@@ -74,7 +74,7 @@ class psr {
   static get_approved(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(`${url}approved/${psrObj._in_page}`, {
+        const res = await axios.get(`${url}approved_psr/${psrObj._in_page}`, {
           withCredentials: true
         });
         resolve(res.data);

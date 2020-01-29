@@ -2,7 +2,8 @@ let models = require('../models');
 var sequelize = require('sequelize');
 var winston = require('../logs/winston');
 var CONST = require('../const');
-const op = sequelize.Op
+const op = sequelize.Op;
+const db = require('../models/index');
 
 //WORKING
 exports.show_po_page = function (req, res, next) {

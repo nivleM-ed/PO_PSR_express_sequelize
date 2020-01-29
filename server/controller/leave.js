@@ -4,7 +4,7 @@ var sequelize = require('sequelize');
 const db = require('../models/index');
 var winston = require('../logs/winston');
 var CONST = require('../const');
-const op = sequelize.Op
+const op = sequelize.Op;
 
 //show all leaves WITH pagination
 exports.show_leave_page = function (req, res, next) {
