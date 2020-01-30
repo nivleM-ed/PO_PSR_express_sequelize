@@ -560,8 +560,8 @@ exports.search_leave = function (req, res, next) {
         .query('SELECT * from F_SEARCH_LEAVE(:a, :b, :c, :d)', 
             {
                 replacements: { 
-                    a: req.body.leaveObj._in_param_1,   //in_str 
-                    b: req.body.leaveObj._in_param_2,   //in_date,
+                    a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1),   //in_str 
+                    b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2),   //in_date,
                     c: parseInt(req.body.leaveObj._in_page) - 1,
                     d: CONST.CONST_page_limit
                 }

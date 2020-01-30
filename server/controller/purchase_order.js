@@ -970,12 +970,12 @@ exports.search_po = function (req, res, next) {
         .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h)', 
             {
                 replacements: { 
-                    a: req.body.poObj._in_param_1,  //in_str 
-                    b: req.body.poObj._in_param_2,  //in_company,
-                    c: req.body.poObj._in_param_3,  //in_date,
-                    d: parseInt(req.body.poObj._in_param_4), //in_month
-                    e: parseInt(req.body.poObj._in_param_5), //in_year
-                    f: req.body.poObj._in_param_6,  //in_approve
+                    a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1),  //in_str 
+                    b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2),  //in_company,
+                    c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3),  //in_date,
+                    d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month
+                    e: (req.body.poObj._in_param_5 == null ? null : parseInt(req.body.poObj._in_param_5)), //in_year
+                    f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6),  //in_approve
                     g: parseInt(req.body.poObj._in_page) - 1,
                     h: parseInt(CONST.CONST_page_limit)
                 }

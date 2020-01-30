@@ -1116,11 +1116,11 @@ exports.search_psr = function (req, res, next) {
         .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g)', 
             {
                 replacements: { 
-                    a: req.body.psrObj._in_param_1,  //in_str 
-                    b: req.body.psrObj._in_param_2,  //in_date
-                    c: parseInt(req.body.psrObj._in_param_3),   //in_month
-                    d: parseInt(req.body.psrObj._in_param_4),   //in_year
-                    e: req.body.psrObj._in_param_5,  //in_approve
+                    a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1),  //in_str 
+                    b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2),  //in_date
+                    c: (req.body.poObj._in_param_3 == null ? null : parseInt(req.body.poObj._in_param_3)),   //in_month
+                    d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)),   //in_year
+                    e: (req.body.poObj._in_param_5 == null ? null : req.body.poObj._in_param_5),  //in_approve
                     f: parseInt(req.body.psrObj._in_page) - 1,
                     g: parseInt(CONST.CONST_page_limit)
                 }
