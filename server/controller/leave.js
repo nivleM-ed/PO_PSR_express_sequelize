@@ -40,7 +40,7 @@ exports.show_leave_page = function (req, res, next) {
                 ],
                 where: {
                     user_id: {
-                        [op.not] : req.user.id
+                        [op.not]: req.user.id
                     },
                     status: false,
                     decline_status: false
@@ -63,7 +63,7 @@ exports.show_leave_page = function (req, res, next) {
             return models.leave.count({
                 where: {
                     user_id: {
-                        [op.not] : req.user.id
+                        [op.not]: req.user.id
                     },
                     status: false,
                     decline_status: false
@@ -282,7 +282,7 @@ exports.show_all_leave = function (req, res, next) {
         ],
         where: {
             user_id: {
-                [op.not] : req.user.id
+                [op.not]: req.user.id
             },
             status: false,
             decline_status: false
@@ -494,33 +494,36 @@ exports.checkDuplicateDate = function (req, res, next) {
     })
 
     let checkDup = new Promise((resolve, reject) => {
-            return models.leave.count({
-                where: {
-                    user_id: req.user.id,
-                    [op.or]: [{
+        return models.leave.count({
+            where: {
+                user_id: req.user.id,
+                [op.or]: [{
                         date_from: req.body.leaveObj._date_from,
                         date_to: req.body.leaveObj._date_to,
                     },
                     {
                         date_from: req.body.leaveObj._date_to,
                         date_to: req.body.leaveObj._date_from
-                    }]
-                }
-            }).then(total => {
-                resolve(Math.ceil(total));
-            }).catch(err => {
-                winston.error({
-                    level: 'error',
-                    label: 'duplicatedate_leave',
-                    message: err
-                })
-                reject(err);
+                    }
+                ]
+            }
+        }).then(total => {
+            resolve(Math.ceil(total));
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'duplicatedate_leave',
+                message: err
             })
+            reject(err);
         })
-    
+    })
+
     checkDup.then(count => {
-        if(count > 0) {
-            res.send({err: "dataExist"});
+        if (count > 0) {
+            res.send({
+                err: "dataExist"
+            });
         } else {
             next();
         }
@@ -556,19 +559,33 @@ exports.checkDuplicateDate = function (req, res, next) {
 // }
 
 exports.search_leave = function (req, res, next) {
-    return db.sequelize
-        .query('SELECT * from F_SEARCH_LEAVE(:a, :b, :c, :d)', 
-            {
-                replacements: { 
-                    a: (req.body.leaveObj._in_param_1 == null ? null : req.body.leaveObj._in_param_1),   //in_str 
-                    b: (req.body.leaveObj._in_param_2 == null ? null : req.body.leaveObj._in_param_2),   //in_date,
-                    c: parseInt(req.body.leaveObj._in_page) - 1,
-                    d: CONST.CONST_page_limit
-                }
-            })
-        .then( data => { 
-            res.send(data[0]);
-        }).catch(err => {
-            res.status(500).send(err);
+    const runSP = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return db.sequelize
+                .query('SELECT * from F_SEARCH_LEAVE(:a, :b, :c, :d)', {
+                    replacements: {
+                        a: (req.body.leaveObj._in_param_1 == null ? null : req.body.leaveObj._in_param_1), //in_str 
+                        b: (req.body.leaveObj._in_param_2 == null ? null : req.body.leaveObj._in_param_2), //in_date,
+                        c: parseInt(req.body.leaveObj._in_page) - 1,
+                        d: CONST.CONST_page_limit
+                    }
+                })
+                .then(data => {
+                    resolve(data[0]);
+                }).catch(err => {
+                    reject(err);
+                });
+        })
+    }
+
+    return runSP(req, res, next).then(data => {
+        let totalpage = (data[0].totalrecords == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
+        let result = [data, totalpage];
+        res.send({
+            result
         });
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+
 }

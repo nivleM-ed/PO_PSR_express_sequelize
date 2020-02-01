@@ -1112,22 +1112,35 @@ exports.psr_stat_decline = function (req, res, next) {
 
 exports.search_psr = function (req, res, next) {
 
-    return db.sequelize
-        .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g)', 
-            {
-                replacements: { 
-                    a: (req.body.psrObj._in_param_1 == null ? null : req.body.psrObj._in_param_1),  //in_str 
-                    b: (req.body.psrObj._in_param_2 == null ? null : req.body.psrObj._in_param_2),  //in_date
-                    c: (req.body.psrObj._in_param_3 == null ? null : parseInt(req.body.psrObj._in_param_3)),   //in_month
-                    d: (req.body.psrObj._in_param_4 == null ? null : parseInt(req.body.psrObj._in_param_4)),   //in_year
-                    e: (req.body.psrObj._in_param_5 == null ? null : req.body.psrObj._in_param_5),  //in_approve
-                    f: parseInt(req.body.psrObj._in_page) - 1,
-                    g: parseInt(CONST.CONST_page_limit)
-                }
-            })
-        .then( data => { 
-            res.send(data[0]);
-        }).catch(err => {
-            res.status(500).send(err);
-        });
+    const runSP = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return db.sequelize
+            .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g)', 
+                {
+                    replacements: { 
+                        a: (req.body.psrObj._in_param_1 == null ? null : req.body.psrObj._in_param_1),  //in_str 
+                        b: (req.body.psrObj._in_param_2 == null ? null : req.body.psrObj._in_param_2),  //in_date
+                        c: (req.body.psrObj._in_param_3 == null ? null : parseInt(req.body.psrObj._in_param_3)),   //in_month
+                        d: (req.body.psrObj._in_param_4 == null ? null : parseInt(req.body.psrObj._in_param_4)),   //in_year
+                        e: (req.body.psrObj._in_param_5 == null ? null : req.body.psrObj._in_param_5),  //in_approve
+                        f: parseInt(req.body.psrObj._in_page) - 1,
+                        g: parseInt(CONST.CONST_page_limit)
+                    }
+                })
+            .then( data => { 
+                resolve(data[0]);
+            }).catch(err => {
+                reject(err);
+            });
+        })
+    }
+
+    return runSP(req, res, next).then(data => {
+        let totalpage = (data[0].totalrecords == null ? parseInt(1): Math.ceil(parseInt(data[0].totalrecords)/CONST.CONST_page_limit));
+        let result = [data, totalpage];
+        res.send({result});
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+    
 }
