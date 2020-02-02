@@ -1138,10 +1138,10 @@ exports.search_psr = function (req, res, next) {
     return runSP(req, res, next).then(data => {
         winston.info({
             level: 'info',
-            label: 'leave',
+            label: 'psr',
             message: 'psr_search'
         })
-        let totalpage = (data[0].totalrecords == null ? parseInt(1): Math.ceil(parseInt(data[0].totalrecords)/CONST.CONST_page_limit));
+        let totalpage = (data[0] == null ? parseInt(1): Math.ceil(parseInt(data[0].totalrecords)/CONST.CONST_page_limit));
         let result = [data, totalpage];
         res.send({result});
     }).catch(err => {

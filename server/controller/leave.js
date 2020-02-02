@@ -584,7 +584,7 @@ exports.search_leave = function (req, res, next) {
             label: 'leave',
             message: 'leave_search'
         })
-        let totalpage = (data[0].totalrecords == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
+        let totalpage = (data[0] == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
         let result = [data, totalpage];
         res.send({
             result
