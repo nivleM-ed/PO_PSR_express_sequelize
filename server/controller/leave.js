@@ -579,12 +579,22 @@ exports.search_leave = function (req, res, next) {
     }
 
     return runSP(req, res, next).then(data => {
+        winston.info({
+            level: 'info',
+            label: 'leave',
+            message: 'leave_search'
+        })
         let totalpage = (data[0].totalrecords == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
         let result = [data, totalpage];
         res.send({
             result
         });
     }).catch(err => {
+        winston.error({
+            level: 'error',
+            label: 'leave_search',
+            message: err
+        })
         res.status(500).send(err);
     })
 
