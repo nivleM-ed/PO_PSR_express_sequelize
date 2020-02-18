@@ -363,7 +363,7 @@ exports.get_approved = function (req, res, next) {
                     status_t1_2: true,
                     status_t2: true,
                     status_decline: false
-                } 
+                }
             }).then(psr => {
                 resolve(psr)
             }).catch(err => {
@@ -772,34 +772,39 @@ exports.get_del_req = function (req, res, next) {
 }
 
 //WORKING
-//add purchase order
+//change to SP. Update Date: 18/2/2020
 exports.psr_add = function (req, res, next) {
     winston.info({
         level: 'info',
         label: 'psr',
         message: 'add'
     })
-    return models.psr.create({
-        purchase_class: req.body.psrObj._purchase_class,
-        purchase_typ: req.body.psrObj._purchase_typ,
-        purchase_just: req.body.psrObj._purchase_just,
-        cost_typ: req.body.psrObj._cost_typ,
-        date_req: req.body.psrObj._date_req,
-        project_title: req.body.psrObj._project_title,
-        vessel_code: req.body.psrObj._vessel_code,
-        delv: req.body.psrObj._delv,
-        psr_desc: req.body.psrObj._psr_desc,
-        create_user: req.user.id
-    }).then(psr => {
-        res.status(201).send(psr)
-    }).catch(err => {
-        winston.error({
-            level: 'error',
-            label: 'psr_add',
-            message: err
+    return db.sequelize
+        .query('SELECT * FROM F_ADD_PSR(:purchase_class, :purchase_typ, :purchase_just, :cost_typ, :date_req, :project_title, :vessel_code, :delv, :psr_desc, :department, :branch, :create_user)', {
+            replacements: {
+                purchase_class: (req.body.psrObj._purchase_class == null ? null : req.body.psrObj._purchase_class),
+                purchase_typ: (req.body.psrObj._purchase_typ == null ? null : req.body.psrObj._purchase_typ),
+                purchase_just: (req.body.psrObj._purchase_just == null ? null : req.body.psrObj._purchase_just),
+                cost_typ: (req.body.psrObj._cost_typ == null ? null : req.body.psrObj._cost_typ),
+                date_req: (req.body.psrObj._date_req == null ? null : req.body.psrObj._date_req),
+                project_title: (req.body.psrObj._project_title == null ? null : req.body.psrObj._project_title),
+                vessel_code: (req.body.psrObj._vessel_code == null ? null : req.body.psrObj._vessel_code),
+                delv: (req.body.psrObj._delv == null ? null : req.body.psrObj._delv),
+                psr_desc: (req.body.psrObj._psr_desc == null ? null : JSON.stringify(req.body.psrObj._psr_desc)),
+                department: (req.body.psrObj._department == null ? null : req.body.psrObj._department),
+                branch: (req.body.psrObj._branch == null ? null : req.body.psrObj._branch),
+                create_user: req.user.id
+            }
+        }).then(psr => {
+            res.status(201).send(psr[0][0])
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'psr_add',
+                message: err
+            })
+            res.status(500).send(err);
         })
-        res.status(500).send(err);
-    })
 };
 
 //WORKING
@@ -1115,23 +1120,24 @@ exports.search_psr = function (req, res, next) {
     const runSP = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return db.sequelize
-            .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g)', 
-                {
-                    replacements: { 
-                        a: (req.body.psrObj._in_param_1 == null ? null : req.body.psrObj._in_param_1),  //in_str 
-                        b: (req.body.psrObj._in_param_2 == null ? null : req.body.psrObj._in_param_2),  //in_date
-                        c: (req.body.psrObj._in_param_3 == null ? null : parseInt(req.body.psrObj._in_param_3)),   //in_month
-                        d: (req.body.psrObj._in_param_4 == null ? null : parseInt(req.body.psrObj._in_param_4)),   //in_year
-                        e: (req.body.psrObj._in_param_5 == null ? null : req.body.psrObj._in_param_5),  //in_approve
-                        f: parseInt(req.body.psrObj._in_page) - 1,
-                        g: parseInt(CONST.CONST_page_limit)
+                .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g, :h, :i)', {
+                    replacements: {
+                        a: (req.body.psrObj._in_param_1 == null ? null : req.body.psrObj._in_param_1), //in_str 
+                        b: (req.body.psrObj._in_param_2 == null ? null : req.body.psrObj._in_param_2), //in_date
+                        c: (req.body.psrObj._in_param_3 == null ? null : parseInt(req.body.psrObj._in_param_3)), //in_month
+                        d: (req.body.psrObj._in_param_4 == null ? null : parseInt(req.body.psrObj._in_param_4)), //in_year
+                        e: (req.body.psrObj._in_param_5 == null ? null : req.body.psrObj._in_param_5), //in_approve
+                        f: (req.body.psrObj._in_param_6 == null ? null : req.body.psrObj._in_param_6), //in_department
+                        g: (req.body.psrObj._in_param_7 == null ? null : req.body.psrObj._in_param_7), //in_branch
+                        h: parseInt(req.body.psrObj._in_page) - 1,
+                        i: parseInt(CONST.CONST_page_limit)
                     }
                 })
-            .then( data => { 
-                resolve(data[0]);
-            }).catch(err => {
-                reject(err);
-            });
+                .then(data => {
+                    resolve(data[0]);
+                }).catch(err => {
+                    reject(err);
+                });
         })
     }
 
@@ -1141,9 +1147,11 @@ exports.search_psr = function (req, res, next) {
             label: 'psr',
             message: 'psr_search'
         })
-        let totalpage = (data[0] == null ? parseInt(1): Math.ceil(parseInt(data[0].totalrecords)/CONST.CONST_page_limit));
+        let totalpage = (data[0] == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
         let result = [data, totalpage];
-        res.send({result});
+        res.send({
+            result
+        });
     }).catch(err => {
         winston.error({
             level: 'error',
@@ -1152,5 +1160,5 @@ exports.search_psr = function (req, res, next) {
         })
         res.status(500).send(err);
     })
-    
+
 }

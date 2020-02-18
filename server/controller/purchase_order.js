@@ -117,36 +117,36 @@ exports.show_own_po_page = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                    model: models.Users,
-                    required: true,
-                    as: 'create_user_po',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: false,
-                    as: 't2_user_po',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: false,
-                    as: 't3_user_po',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: false,
-                    as: 'approver_po',
-                    attributes: ['username', 'firstname', 'lastname']
-                },
-                {
-                    model: models.Users,
-                    required: false,
-                    as: 'del_req_user_po',
-                    attributes: ['username', 'firstname', 'lastname']
-                }
-            ],
+                        model: models.Users,
+                        required: true,
+                        as: 'create_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't2_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 't3_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'approver_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'del_req_user_po',
+                        attributes: ['username', 'firstname', 'lastname']
+                    }
+                ],
                 where: {
                     create_user: req.user.id
                 }
@@ -617,39 +617,44 @@ exports.get_del_req = function (req, res, next) {
 }
 
 //WORKING
-//add purchase order
+//change to SP. Update Date: 18/2/2020
 exports.po_add = function (req, res, next) {
     winston.info({
         level: 'info',
         label: 'po',
         message: 'po_add'
     })
-    return models.purchase_order.create({
-        po_ref: req.body.poObj._po_ref,
-        quotation: req.body.poObj._quotation,
-        delv_due: req.body.poObj._delv_due,
-        ship_mode: req.body.poObj._ship_mode,
-        psr_id: req.body.poObj._psr_id,
-        cca_no: req.body.poObj._cca_no,
-        pay_mode: req.body.poObj._pay_mode,
-        address_1: req.body.poObj._address_1,
-        address_2: req.body.poObj._address_2,
-        address_3: req.body.poObj._address_3,
-        address_4: req.body.poObj._address_4,
-        po_desc: req.body.poObj._po_desc,
-        cl_name: req.body.poObj._cl_name,
-        cl_company: req.body.poObj._cl_company,
-        create_user: req.user.id
-    }).then(po => {
-        res.status(201).send(po)
-    }).catch(err => {
-        winston.error({
-            level: 'error',
-            label: 'po_add',
-            message: err
+    return db.sequelize
+        .query('SELECT * FROM F_ADD_PO(:po_ref, :quotation, :delv_due, :ship_mode, :psr_id, :cca_no, :pay_mode, :address_1, :address_2, :address_3, :address_4, :po_desc, :cl_name, :cl_company, :department, :branch, :create_user)', {
+            replacements: {
+                po_ref: (req.body.poObj._po_ref == null ? null : req.body.poObj._po_ref),
+                quotation: (req.body.poObj._quotation == null ? null : req.body.poObj._quotation),
+                delv_due: (req.body.poObj._delv_due == null ? null : req.body.poObj._delv_due),
+                ship_mode: (req.body.poObj._ship_mode == null ? null : req.body.poObj._ship_mode),
+                psr_id: (req.body.poObj._psr_id == null ? null : req.body.poObj._psr_id),
+                cca_no: (req.body.poObj._cca_no == null ? null : req.body.poObj._cca_no),
+                pay_mode: (req.body.poObj._pay_mode == null ? null : req.body.poObj._pay_mode),
+                address_1: (req.body.poObj._address_1 == null ? null : req.body.poObj._address_1),
+                address_2: (req.body.poObj._address_2 == null ? null : req.body.poObj._address_2),
+                address_3: (req.body.poObj._address_3 == null ? null : req.body.poObj._address_3),
+                address_4: (req.body.poObj._address_4 == null ? null : req.body.poObj._address_4),
+                po_desc: (req.body.poObj._po_desc == null ? null : JSON.stringify(req.body.poObj._po_desc)),
+                cl_name: (req.body.poObj._cl_name == null ? null : req.body.poObj._cl_name),
+                cl_company: (req.body.poObj._cl_company == null ? null : req.body.poObj._cl_company),
+                department: (req.body.poObj._department == null ? null : req.body.poObj._department),
+                branch: (req.body.poObj._branch == null ? null : req.body.poObj._branch),
+                create_user: req.user.id
+            }
+        }).then(po => {
+            res.status(201).send(po[0][0])
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'po_add',
+                message: err
+            })
+            res.status(500).send(err);
         })
-        res.status(500).send(err);
-    })
 };
 
 //WORKING
@@ -969,26 +974,27 @@ exports.search_po = function (req, res, next) {
     const runSP = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return db.sequelize
-            .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h)', 
-                {
-                    replacements: { 
-                        a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1),  //in_str 
-                        b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2),  //in_company,
-                        c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3),  //in_date,
+                .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h, :i, :j)', {
+                    replacements: {
+                        a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1), //in_str 
+                        b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2), //in_company,
+                        c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3), //in_date,
                         d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month
                         e: (req.body.poObj._in_param_5 == null ? null : parseInt(req.body.poObj._in_param_5)), //in_year
-                        f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6),  //in_approve
-                        g: parseInt(req.body.poObj._in_page) - 1,
-                        h: parseInt(CONST.CONST_page_limit)
+                        f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6), //in_approve
+                        g: (req.body.psrObj._in_param_7 == null ? null : req.body.psrObj._in_param_7), //in_department
+                        h: (req.body.psrObj._in_param_8 == null ? null : req.body.psrObj._in_param_8), //in_branch
+                        i: parseInt(req.body.poObj._in_page) - 1,
+                        j: parseInt(CONST.CONST_page_limit)
                     }
                 })
-            .then( data => { 
-                resolve(data[0]);
-            }).catch(err => {
-                reject(err);
-            });
+                .then(data => {
+                    resolve(data[0]);
+                }).catch(err => {
+                    reject(err);
+                });
         })
-    }   
+    }
 
     return runSP(req, res, next).then(data => {
         winston.info({
@@ -996,9 +1002,11 @@ exports.search_po = function (req, res, next) {
             label: 'po',
             message: 'po_search'
         })
-        let totalpage = (data[0] == null ? parseInt(1): Math.ceil(parseInt(data[0].totalrecords)/CONST.CONST_page_limit));
+        let totalpage = (data[0] == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
         let result = [data, totalpage];
-        res.send({result});
+        res.send({
+            result
+        });
     }).catch(err => {
         winston.error({
             level: 'error',

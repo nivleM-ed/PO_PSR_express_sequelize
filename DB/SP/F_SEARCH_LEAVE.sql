@@ -1,4 +1,4 @@
-DROP FUNCTION f_search_leave(character varying,character varying,integer,integer);
+--DROP FUNCTION f_search_leave(character varying,character varying,integer,integer);
 -- find user based on name or date
 CREATE OR REPLACE FUNCTION public.F_SEARCH_LEAVE(
 	IN in_str VARCHAR,

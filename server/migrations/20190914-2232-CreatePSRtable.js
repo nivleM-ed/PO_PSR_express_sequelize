@@ -29,8 +29,7 @@ module.exports = {
             },
             psr_no: { //purchase order number
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                autoIncrement: true
+                type: Sequelize.INTEGER
             },
             purchase_class: { //purchase class
                 allowNull: true,
@@ -67,6 +66,14 @@ module.exports = {
             psr_desc: {
                 type: Sequelize.JSON,   //json file
                 allowNull: true        // expected format {desc:desc,qty:qty,unit:unit,cost_code:cost_code,remarks:"remarks"}
+            },
+            department_id: {  //department
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            branch_id: {  //branch
+                allowNull: true,
+                type: Sequelize.STRING
             },
             decline_reason: {
                 allowNull: true,

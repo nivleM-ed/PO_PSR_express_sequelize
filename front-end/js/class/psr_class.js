@@ -11,6 +11,8 @@ export default class psrClass {
         var vessel_code = null;
         var delv = null;
         var psr_desc = null;
+        var department = null;
+        var branch = null;
         var decline_reason = null;
         var total_page = 0;
         var in_page = 0;
@@ -20,6 +22,10 @@ export default class psrClass {
         var in_param_4 = null;
         var in_param_5 = null;
         var in_param_6 = null;
+        var in_param_7 = null;
+        var in_param_8 = null;
+        var in_param_9 = null;
+        var in_param_10 = null;
     }
     get id() {
         return this._id;
@@ -98,6 +104,20 @@ export default class psrClass {
         this._psr_desc = in_psr_desc;
     }
 
+    get department() {
+        return this._department;
+    }
+    set department(in_department) {
+        this._department = in_department;
+    }
+
+    get branch() {
+        return this._branch;
+    }
+    set branch(in_branch) {
+        this._branch = in_branch;
+    }
+
     get decline_reason() {
         return this._decline_reason;
     }
@@ -159,6 +179,34 @@ export default class psrClass {
     }
     set in_param_6(in_in_param_6) {
         this._in_param_6 = in_in_param_6;
+    }
+
+    get in_param_7() {
+        return this._in_param_7;
+    }
+    set in_param_7(in_in_param_7) {
+        this._in_param_7 = in_in_param_7;
+    }
+
+    get in_param_8() {
+        return this._in_param_8;
+    }
+    set in_param_8(in_in_param_8) {
+        this._in_param_8 = in_in_param_8;
+    }
+
+    get in_param_9() {
+        return this._in_param_9;
+    }
+    set in_param_9(in_in_param_9) {
+        this._in_param_9 = in_in_param_9;
+    }
+
+    get in_param_10() {
+        return this._in_param_10;
+    }
+    set in_param_10(in_in_param_10) {
+        this._in_param_10 = in_in_param_10;
     }
 
 

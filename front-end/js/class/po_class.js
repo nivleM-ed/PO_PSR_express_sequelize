@@ -13,6 +13,8 @@ export default class poClass {
         var address_2 = null;
         var address_3 = null;
         var address_4 = null;
+        var department = null;
+        var branch = null;
         var po_desc = null;
         var cl_name = null;
         var cl_company = null;
@@ -25,6 +27,10 @@ export default class poClass {
         var in_param_4 = null;
         var in_param_5 = null;
         var in_param_6 = null;
+        var in_param_7 = null;
+        var in_param_8 = null;
+        var in_param_9 = null;
+        var in_param_10 = null;
     }
     get id() {
         return this._id;
@@ -117,6 +123,20 @@ export default class poClass {
         this._address_4 = in_address_4;
     }
 
+    get department() {
+        return this._department;
+    }
+    set department(in_department) {
+        this._department = in_department;
+    }
+
+    get branch() {
+        return this._branch;
+    }
+    set branch(in_branch) {
+        this._branch = in_branch;
+    }
+
     get po_desc() {
         return this._po_desc;
     }
@@ -199,6 +219,34 @@ export default class poClass {
     }
     set in_param_6(in_in_param_6) {
         this._in_param_6 = in_in_param_6;
+    }
+
+    get in_param_7() {
+        return this._in_param_7;
+    }
+    set in_param_7(in_in_param_7) {
+        this._in_param_7 = in_in_param_7;
+    }
+
+    get in_param_8() {
+        return this._in_param_8;
+    }
+    set in_param_8(in_in_param_8) {
+        this._in_param_8 = in_in_param_8;
+    }
+
+    get in_param_9() {
+        return this._in_param_9;
+    }
+    set in_param_9(in_in_param_9) {
+        this._in_param_9 = in_in_param_9;
+    }
+
+    get in_param_10() {
+        return this._in_param_10;
+    }
+    set in_param_10(in_in_param_10) {
+        this._in_param_10 = in_in_param_10;
     }
 
     //methods

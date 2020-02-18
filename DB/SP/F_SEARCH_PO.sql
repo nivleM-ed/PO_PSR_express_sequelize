@@ -1,4 +1,4 @@
-DROP FUNCTION f_search_po(integer,character varying,character varying,integer,integer,character varying,integer,integer);
+--DROP FUNCTION f_search_po(integer,character varying,character varying,integer,integer,character varying,integer,integer);
 -- find user based on name or date
 CREATE OR REPLACE FUNCTION public.F_SEARCH_PO(
 	IN in_str INTEGER, -- input po_no
@@ -7,13 +7,15 @@ CREATE OR REPLACE FUNCTION public.F_SEARCH_PO(
 	IN in_month INTEGER,
 	IN in_year INTEGER,
 	IN in_approve VARCHAR,
+	IN in_department VARCHAR,
+	IN in_branch VARCHAR,
 	IN in_page INTEGER,
 	IN in_limit INTEGER
 )
     RETURNS TABLE(
 	totalrecords INTEGER,
 	id varchar, 
-	po_no INTEGER, 
+	po_no varchar, 
 	created_at date, 
 	create_user varchar, 
 	approve_user varchar,
@@ -50,17 +52,23 @@ BEGIN
 						row_number() OVER (ORDER BY po."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						po.id,
-						po.po_no,
+						CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(po.po_no AS VARCHAR) AS VARCHAR) AS po_no,
 						po."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
 					FROM public."purchase_order" AS po
 					INNER JOIN public."Users" AS myuser 
 					ON po.create_user = myuser.id
+					INNER JOIN public."department" AS dep
+					ON dep.id = po.department_id	
+					INNER JOIN public."branch" AS branch
+					ON branch.id = po.branch_id	
 					LEFT JOIN public."Users" AS myuser2
 					ON po.approver_user = myuser2.id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
+					AND branch.cd = in_branch
+					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -94,7 +102,7 @@ BEGIN
 						row_number() OVER (ORDER BY po."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						po.id,
-						po.po_no,
+						CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(po.po_no AS VARCHAR) AS VARCHAR) AS po_no,
 						po."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -103,12 +111,18 @@ BEGIN
 					ON po.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON po.approver_user = myuser2.id
+					INNER JOIN public."department" AS dep
+					ON dep.id = po.department_id	
+					INNER JOIN public."branch" AS branch
+					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
 					AND
 					EXTRACT (MONTH FROM po."createdAt") = in_month
 					AND
 					EXTRACT (YEAR FROM po."createdAt") = in_year
+					AND branch.cd = in_branch
+					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -142,7 +156,7 @@ BEGIN
 						row_number() OVER (ORDER BY po."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						po.id,
-						po.po_no,
+						CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(po.po_no AS VARCHAR) AS VARCHAR) AS po_no,
 						po."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -151,9 +165,15 @@ BEGIN
 					ON po.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON po.approver_user = myuser2.id
+					INNER JOIN public."department" AS dep
+					ON dep.id = po.department_id	
+					INNER JOIN public."branch" AS branch
+					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
 					AND to_date(in_date, 'YYYY-MM-DD') = po."createdAt"
+					AND branch.cd = in_branch
+					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -189,7 +209,7 @@ BEGIN
 						row_number() OVER (ORDER BY po."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						po.id,
-						po.po_no,
+						CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(po.po_no AS VARCHAR) AS VARCHAR) AS po_no,
 						po."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -198,11 +218,17 @@ BEGIN
 					ON po.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON po.approver_user = myuser2.id
+					INNER JOIN public."department" AS dep
+					ON dep.id = po.department_id	
+					INNER JOIN public."branch" AS branch
+					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
 					AND po.status_t1_1 = true
 					AND po.status_t1_2 = true
 					AND po.status_2 = true
+					AND branch.cd = in_branch
+					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -227,7 +253,7 @@ BEGIN
 					inn.rn,
 					inn.totalrecords,
 					inn.id,
-					inn.po_no,
+					CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(po.po_no AS VARCHAR) AS VARCHAR) AS po_no,
 					inn.created_at,
 					inn.create_user,
 					inn.approve_user
@@ -245,6 +271,10 @@ BEGIN
 					ON po.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON po.approver_user = myuser2.id
+					INNER JOIN public."department" AS dep
+					ON dep.id = po.department_id	
+					INNER JOIN public."branch" AS branch
+					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
 					AND
@@ -254,6 +284,8 @@ BEGIN
 					AND po.status_t1_1 = true
 					AND po.status_t1_2 = true
 					AND po.status_2 = true
+					AND branch.cd = in_branch
+					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -287,7 +319,7 @@ BEGIN
 						row_number() OVER (ORDER BY po."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						po.id,
-						po.po_no,
+						CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(po.po_no AS VARCHAR) AS VARCHAR) AS po_no,
 						po."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -296,12 +328,18 @@ BEGIN
 					ON po.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON po.approver_user = myuser2.id
+					INNER JOIN public."department" AS dep
+					ON dep.id = po.department_id	
+					INNER JOIN public."branch" AS branch
+					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
 					AND to_date(in_date, 'YYYY-MM-DD') = po."createdAt"
 					AND po.status_t1_1 = true
 					AND po.status_t1_2 = true
 					AND po.status_2 = true
+					AND branch.cd = in_branch
+					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit

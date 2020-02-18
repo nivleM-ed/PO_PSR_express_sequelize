@@ -29,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             unique: true
         },
-        department: {
+        department_id: {
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        branch_id: {
             allowNull: true,
             type: DataTypes.STRING
         },

@@ -36,7 +36,11 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            department: {
+            department_id: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            branch_id: {
                 allowNull: true,
                 type: Sequelize.STRING
             },

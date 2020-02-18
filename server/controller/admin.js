@@ -12,32 +12,35 @@ const {
     dbJoin
 } = require('../dbJoin');
 var winston = require('../logs/winston');
+const db = require('../models/index');
 
 const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
 
-function password_generator( len ) {
-    var length = (len)?(len):(10);
+function password_generator(len) {
+    var length = (len) ? (len) : (10);
     var string = "abcdefghijklmnopqrstuvwxyz"; //to upper 
     var numeric = '0123456789';
     var punctuation = '!@#$%^&*()_+~`|}{[]\:;?><,./-=';
     var password = "";
     var character = "";
     var crunch = true;
-    while( password.length<length ) {
-        entity1 = Math.ceil(string.length * Math.random()*Math.random());
-        entity2 = Math.ceil(numeric.length * Math.random()*Math.random());
-        entity3 = Math.ceil(punctuation.length * Math.random()*Math.random());
-        hold = string.charAt( entity1 );
-        hold = (password.length%2==0)?(hold.toUpperCase()):(hold);
+    while (password.length < length) {
+        entity1 = Math.ceil(string.length * Math.random() * Math.random());
+        entity2 = Math.ceil(numeric.length * Math.random() * Math.random());
+        entity3 = Math.ceil(punctuation.length * Math.random() * Math.random());
+        hold = string.charAt(entity1);
+        hold = (password.length % 2 == 0) ? (hold.toUpperCase()) : (hold);
         character += hold;
-        character += numeric.charAt( entity2 );
-        character += punctuation.charAt( entity3 );
+        character += numeric.charAt(entity2);
+        character += punctuation.charAt(entity3);
         password = character;
     }
-    password=password.split('').sort(function(){return 0.5-Math.random()}).join('');
-    return password.substr(0,len);
+    password = password.split('').sort(function () {
+        return 0.5 - Math.random()
+    }).join('');
+    return password.substr(0, len);
 }
 
 //get all the users for main page
@@ -130,35 +133,40 @@ exports.add_user = function (req, res, next) {
     return validateUser(errors, req).then(errors => {
         if (!isEmpty(errors)) {
             res.send(errors);
-        } else {
-            newUser = models.Users.build({
-                username: req.body.userObj._username,
-                password: generateHash(req.body.userObj._password),
-                firstname: req.body.userObj._firstname,
-                lastname: req.body.userObj._lastname,
-                email: req.body.userObj._email,
-                department: req.body.userObj._department,
-                contact_no: req.body.userObj._contact_no,
-                address_1: req.body.userObj._address_1,
-                address_2: req.body.userObj._address_2,
-                address_3: req.body.userObj._address_3,
-                address_4: req.body.userObj._address_4,
-                t1: req.body.userObj._t1,
-                t2: req.body.userObj._t2,
-                t3: req.body.userObj._t3,
-                t4: req.body.userObj._t4,
-                acct_t: req.body.userObj._acct_t
-            });
-            return newUser.save().then(result => {
-                res.status(200).send();
-            }).catch(err => {
-                winston.error({
-                    level: 'error',
-                    label: 'Admin_add_user',
-                    message: err
+        } else { //change to SP. Update Date: 18/2/2020
+            return db.sequelize
+                .query('SELECT * FROM F_ADD_USR(:username, :password, :firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :t1, :t2, :t3, :t4, :acct_t, :is_admin)', {
+                    replacements: {
+                        username: (req.body.userObj._username == null ? null : req.body.userObj._username),
+                        password: (req.body.userObj._password == null ? null : generateHash(req.body.userObj._password)),
+                        firstname: (req.body.userObj._firstname == null ? null : req.body.userObj._firstname),
+                        lastname: (req.body.userObj._lastname == null ? null : req.body.userObj._lastname),
+                        email: (req.body.userObj._email == null ? null : req.body.userObj._email),
+                        department: (req.body.userObj._department == null ? null : req.body.userObj._department),
+                        branch: (req.body.userObj._branch == null ? null : req.body.userObj._branch),
+                        contact_no: (req.body.userObj._contact_no == null ? null : req.body.userObj._contact_no),
+                        address_1: (req.body.userObj._address_1 == null ? null : req.body.userObj._address_1),
+                        address_2: (req.body.userObj._address_2 == null ? null : req.body.userObj._address_2),
+                        address_3: (req.body.userObj._address_3 == null ? null : req.body.userObj._address_3),
+                        address_4: (req.body.userObj._address_4 == null ? null : req.body.userObj._address_4),
+                        t1: (req.body.userObj._t1 == null ? false : req.body.userObj._t1),
+                        t2: (req.body.userObj._t1 == null ? false : req.body.userObj._t2),
+                        t3: (req.body.userObj._t1 == null ? false : req.body.userObj._t3),
+                        t4: (req.body.userObj._t1 == null ? false : req.body.userObj._t4),
+                        acct_t: (req.body.userObj._t1 == null ? false : req.body.userObj._acct_t),
+                        is_admin: (req.body.userObj._t1 == null ? false : req.body.userObj._is_admin)
+                    }
                 })
-                res.status(500).send(err);
-            })
+                .then(result => {
+                    res.status(200).send(result[0][0]);
+                }).catch(err => {
+                    winston.error({
+                        level: 'error',
+                        label: 'Admin_add_user',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                })
         }
     })
 }
@@ -225,15 +233,17 @@ exports.random_password = function (req, res, next) {
     })
     const rndpass = password_generator();
 
-    if(req.user.is_admin) {
+    if (req.user.is_admin) {
         return models.Users.update({
             password: generateHash(rndpass)
         }, {
             where: {
                 id: req.params.user_id
-            } 
+            }
         }).then(user => {
-            res.status(200).send({new_pwd: rndpass});
+            res.status(200).send({
+                new_pwd: rndpass
+            });
         }).catch(err => {
             winston.error({
                 level: 'error',

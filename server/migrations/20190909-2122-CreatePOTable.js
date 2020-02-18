@@ -28,8 +28,7 @@ module.exports = {
             }, //needed
             po_no: { //purchase order number
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                autoIncrement: true
+                type: Sequelize.INTEGER
             },
             po_ref: { //purchase order reference
                 allowNull: true,
@@ -84,6 +83,14 @@ module.exports = {
                 type: Sequelize.STRING
             },
             cl_company: { //client's company
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            department_id: {  //department
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            branch_id: {  //branch
                 allowNull: true,
                 type: Sequelize.STRING
             },

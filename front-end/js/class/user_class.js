@@ -7,6 +7,7 @@ export default class userClass {
         var password = null;
         var email = null;
         var department = null;
+        var branch = null;
         var contact_no = null;
         var address_1 = null;
         var address_2 = null;
@@ -73,6 +74,13 @@ export default class userClass {
     }
     set department(in_department) {
         this._department = in_department;
+    }
+
+    get branch() {
+        return this._branch;
+    }
+    set branch(in_branch) {
+        this._branch = in_branch;
     }
 
     get contact_no() {

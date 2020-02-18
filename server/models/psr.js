@@ -13,8 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         psr_no: { //purchase order number
             allowNull: false,
-            type: DataTypes.INTEGER,
-            autoIncrement: true
+            type: DataTypes.INTEGER
         },
         purchase_class: { //purchase class
             allowNull: true,
@@ -51,6 +50,14 @@ module.exports = (sequelize, DataTypes) => {
         psr_desc: {
             type: DataTypes.JSON,
             allowNull: true
+        },
+        department_id: {  //department
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        branch_id: {  //branch
+            allowNull: true,
+            type: DataTypes.STRING
         },
         decline_reason: {
                 allowNull: true,

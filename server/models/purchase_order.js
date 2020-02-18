@@ -13,8 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         po_no: { //purchase order number
             allowNull: false,
-            type: DataTypes.INTEGER,
-            autoIncrement: true
+            type: DataTypes.INTEGER
         },
         po_ref: { //purchase order reference
             allowNull: true,
@@ -65,6 +64,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         cl_company: { //client's company
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        department_id: {  //department
+            allowNull: true,
+            type: DataTypes.STRING
+        },
+        branch_id: {  //branch
             allowNull: true,
             type: DataTypes.STRING
         },

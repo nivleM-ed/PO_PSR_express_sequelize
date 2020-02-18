@@ -1,4 +1,4 @@
---DROP FUNCTION f_search_psr(integer,character varying,integer,integer,character varying,integer,integer);
+DROP FUNCTION f_search_psr(integer,character varying,integer,integer,character varying,integer,integer);
 -- find user based on name or date
 CREATE OR REPLACE FUNCTION public.F_SEARCH_PSR(
 	IN in_str INTEGER, -- input psr_no
@@ -6,15 +6,13 @@ CREATE OR REPLACE FUNCTION public.F_SEARCH_PSR(
 	IN in_month INTEGER,
 	IN in_year INTEGER,
 	IN in_approve VARCHAR,
-	IN in_department VARCHAR,
-	IN in_branch VARCHAR,
 	IN in_page INTEGER,
 	IN in_limit INTEGER
 )
     RETURNS TABLE(
 	totalrecords INTEGER,
 	id varchar, 
-	psr_no varchar, 
+	psr_no INTEGER, 
 	created_at date, 
 	create_user varchar, 
 	approve_user varchar,
@@ -51,7 +49,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						psr.psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -60,13 +58,7 @@ BEGIN
 					ON psr.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON psr.approver_user = myuser2.id
-					INNER JOIN public."department" AS dep
-					ON dep.id = psr.department_id	
-					INNER JOIN public."branch" AS branch
-					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -100,7 +92,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						psr.psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -109,17 +101,11 @@ BEGIN
 					ON psr.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON psr.approver_user = myuser2.id
-					INNER JOIN public."department" AS dep
-					ON dep.id = psr.department_id	
-					INNER JOIN public."branch" AS branch
-					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND
 					EXTRACT (MONTH FROM psr."createdAt") = in_month
 					AND
 					EXTRACT (YEAR FROM psr."createdAt") = in_year
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -153,7 +139,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						psr.psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -162,15 +148,9 @@ BEGIN
 					ON psr.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON psr.approver_user = myuser2.id
-					INNER JOIN public."department" AS dep
-					ON dep.id = psr.department_id	
-					INNER JOIN public."branch" AS branch
-					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND
 					to_date(in_date, 'YYYY-MM-DD') = psr."createdAt"
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -207,7 +187,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						psr.psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -216,16 +196,10 @@ BEGIN
 					ON psr.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON psr.approver_user = myuser2.id
-					INNER JOIN public."department" AS dep
-					ON dep.id = psr.department_id	
-					INNER JOIN public."branch" AS branch
-					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
 					AND psr.status_2 = true
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
 					ORDER BY psr."createdAt" 
 				) inn
 				ORDER BY inn.created_at DESC
@@ -260,7 +234,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						psr.psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -269,10 +243,6 @@ BEGIN
 					ON psr.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON psr.approver_user = myuser2.id
-					INNER JOIN public."department" AS dep
-					ON dep.id = psr.department_id	
-					INNER JOIN public."branch" AS branch
-					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND
 					EXTRACT (MONTH FROM psr."createdAt") = in_month
@@ -281,8 +251,6 @@ BEGIN
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
 					AND psr.status_2 = true
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
 					ORDER BY psr."createdAt" 
 				) inn
 				ORDER BY inn.created_at DESC
@@ -316,7 +284,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						psr.psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -325,17 +293,11 @@ BEGIN
 					ON psr.create_user = myuser.id
 					LEFT JOIN public."Users" AS myuser2
 					ON psr.approver_user = myuser2.id
-					INNER JOIN public."department" AS dep
-					ON dep.id = psr.department_id	
-					INNER JOIN public."branch" AS branch
-					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND to_date(in_date, 'YYYY-MM-DD') = psr."createdAt"
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
 					AND psr.status_2 = true
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
 					ORDER BY psr."createdAt" 
 				) inn
 				ORDER BY inn.created_at DESC
