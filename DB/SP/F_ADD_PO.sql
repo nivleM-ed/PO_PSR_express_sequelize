@@ -89,7 +89,7 @@ BEGIN
 	RETURN QUERY
 		SELECT 
 			inn.id,
-			CAST(dep.cd||'/'||branch.cd||'/PO/'||CAST(inn.po_no AS VARCHAR) AS VARCHAR) AS po_no
+			CAST(branch.cd||'/'||dep.cd||'/PO/'||CAST(inn.po_no AS VARCHAR) AS VARCHAR) AS po_no
 		FROM (
 			SELECT 
 				po.id,

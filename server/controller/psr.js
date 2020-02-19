@@ -4,6 +4,7 @@ var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op;
 const db = require('../models/index');
+let users = require('./user');
 
 //WORKING  //send with pagination and total page number
 exports.show_psr_page = function (req, res, next) {
@@ -17,7 +18,7 @@ exports.show_psr_page = function (req, res, next) {
     const psr_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
-                // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status']],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -52,6 +53,18 @@ exports.show_psr_page = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                        attributes: []
                     }
                 ]
             }).then(psr => {
@@ -108,7 +121,7 @@ exports.show_own_psr_page = function (req, res, next) {
     const psr_own_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
-                // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status']],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -143,6 +156,18 @@ exports.show_own_psr_page = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                        attributes: []
                     }
                 ],
                 where: {
@@ -205,6 +230,7 @@ exports.find = function (req, res, next) {
     })
 
     return models.psr.findOne({
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status']],
         include: [{
                 model: models.Users,
                 required: true,
@@ -234,6 +260,18 @@ exports.find = function (req, res, next) {
                 required: false,
                 as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.department,
+                required: true,
+                as: 'department1',
+                attributes: []
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch1',
+                attributes: []
             }
         ],
         where: {
@@ -423,10 +461,12 @@ exports.get_submits = function (req, res, next) {
         message: 'get_submits'
     })
     const limit = CONST.CONST_page_limit; //can be changed
+    let departmentBranch, userBranch, userDep;
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status']],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -461,6 +501,18 @@ exports.get_submits = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                        attributes: []
                     }
                 ],
                 where: {
@@ -490,7 +542,9 @@ exports.get_submits = function (req, res, next) {
                         t3_user: {
                             [op.is]: null
                         }
-                    }]
+                    }],
+                    '$branch1.cd$': userBranch,
+                    '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(psr => {
                 resolve(psr)
@@ -508,6 +562,19 @@ exports.get_submits = function (req, res, next) {
     const getSubmitsTotal = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.count({
+                include: [{
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                        attributes: []
+                    }
+                ],
                 where: {
                     delete_req: false,
                     [op.or]: [{
@@ -535,7 +602,9 @@ exports.get_submits = function (req, res, next) {
                         t3_user: {
                             [op.is]: null
                         }
-                    }]
+                    }],
+                    '$branch1.cd$': userBranch,
+                    '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(total => {
                 resolve(Math.ceil(total / limit));
@@ -550,19 +619,24 @@ exports.get_submits = function (req, res, next) {
         })
     }
 
-    Promise.all([getSubmits(req), getSubmitsTotal(req)])
-        .then(result => {
-            res.status(200).send({
-                result
-            });
-        }).catch(err => {
-            winston.error({
-                level: 'error',
-                label: 'psr_get_submits_promise',
-                message: err
+    departmentBranch = users.getDepartmentBranch(req, res, next).then(data => {
+        userBranch = data.branch.cd
+        userDep = data.department.cd
+    }).then(doPromise => {
+        Promise.all([getSubmits(req), getSubmitsTotal(req)])
+            .then(result => {
+                res.status(200).send({
+                    result
+                });
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'psr_get_submits_promise',
+                    message: err
+                })
+                res.status(500).send(err);
             })
-            res.status(500).send(err);
-        })
+    });
 }
 
 
@@ -579,6 +653,7 @@ exports.get_pending = function (req, res, next) {
     const getPending = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status']],
                 where: {
                     delete_req: false,
                     status_t1_1: true,
@@ -619,7 +694,18 @@ exports.get_pending = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
-                    }
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                    }  
                 ],
             }).then(psr => {
                 resolve(psr)
@@ -684,6 +770,7 @@ exports.get_del_req = function (req, res, next) {
     const getDel = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psrr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status']],
                 where: {
                     delete_req: true
                 },
@@ -721,6 +808,18 @@ exports.get_del_req = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                        attributes: []
                     }
                 ],
             }).then(psr => {
@@ -791,8 +890,8 @@ exports.psr_add = function (req, res, next) {
                 vessel_code: (req.body.psrObj._vessel_code == null ? null : req.body.psrObj._vessel_code),
                 delv: (req.body.psrObj._delv == null ? null : req.body.psrObj._delv),
                 psr_desc: (req.body.psrObj._psr_desc == null ? null : JSON.stringify(req.body.psrObj._psr_desc)),
-                department: (req.body.psrObj._department == null ? null : req.body.psrObj._department),
-                branch: (req.body.psrObj._branch == null ? null : req.body.psrObj._branch),
+                department: (req.body.psrObj._department == null ? null : req.body.psrObj._department.toUpperCase()),
+                branch: (req.body.psrObj._branch == null ? null : req.body.psrObj._branch.toUpperCase()),
                 create_user: req.user.id
             }
         }).then(psr => {
@@ -817,6 +916,7 @@ exports.report = function (req, res, next) {
     })
 
     return models.psr.findOne({
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', 'purchase_class', 'purchase_typ', 'purchase_just', 'cost_typ', 'date_req', 'project_title', 'vessel_code', 'delv', 'psr_desc', ['status_t2', 'status']],
         include: [{
                 model: models.Users,
                 required: true,
@@ -846,6 +946,18 @@ exports.report = function (req, res, next) {
                 required: false,
                 as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.department,
+                required: true,
+                as: 'department1',
+                attributes: []
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch1',
+                attributes: []
             }
         ],
     }, {
@@ -1127,8 +1239,8 @@ exports.search_psr = function (req, res, next) {
                         c: (req.body.psrObj._in_param_3 == null ? null : parseInt(req.body.psrObj._in_param_3)), //in_month
                         d: (req.body.psrObj._in_param_4 == null ? null : parseInt(req.body.psrObj._in_param_4)), //in_year
                         e: (req.body.psrObj._in_param_5 == null ? null : req.body.psrObj._in_param_5), //in_approve
-                        f: (req.body.psrObj._in_param_6 == null ? null : req.body.psrObj._in_param_6), //in_department
-                        g: (req.body.psrObj._in_param_7 == null ? null : req.body.psrObj._in_param_7), //in_branch
+                        f: (req.body.psrObj._in_param_6 == null ? null : req.body.psrObj._in_param_6.toUpperCase()), //in_department
+                        g: (req.body.psrObj._in_param_7 == null ? null : req.body.psrObj._in_param_7.toUpperCase()), //in_branch
                         h: parseInt(req.body.psrObj._in_page) - 1,
                         i: parseInt(CONST.CONST_page_limit)
                     }

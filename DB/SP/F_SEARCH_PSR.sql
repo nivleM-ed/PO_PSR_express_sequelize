@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION public.F_SEARCH_PSR(
 	IN in_date VARCHAR,
 	IN in_month INTEGER,
 	IN in_year INTEGER,
-	IN in_approve VARCHAR,
+	IN in_approve BOOLEAN,
 	IN in_department VARCHAR,
 	IN in_branch VARCHAR,
 	IN in_page INTEGER,
@@ -23,7 +23,7 @@ CREATE OR REPLACE FUNCTION public.F_SEARCH_PSR(
     LANGUAGE 'plpgsql'
 AS $$
 BEGIN
-	IF in_approve IS null THEN
+	IF in_approve IS false THEN
 		IF in_date IS null and in_month IS null THEN
 			RETURN QUERY
 			SELECT
@@ -51,7 +51,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -65,8 +65,8 @@ BEGIN
 					INNER JOIN public."branch" AS branch
 					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
+					AND ( branch.cd = in_branch OR in_branch IS null )
+					AND ( dep.cd = in_department OR in_department IS null )
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -100,7 +100,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -118,8 +118,8 @@ BEGIN
 					EXTRACT (MONTH FROM psr."createdAt") = in_month
 					AND
 					EXTRACT (YEAR FROM psr."createdAt") = in_year
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
+					AND ( branch.cd = in_branch OR in_branch IS null )
+					AND ( dep.cd = in_department OR in_department IS null )
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -153,7 +153,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -169,8 +169,8 @@ BEGIN
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND
 					to_date(in_date, 'YYYY-MM-DD') = psr."createdAt"
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
+					AND ( branch.cd = in_branch OR in_branch IS null )
+					AND ( dep.cd = in_department OR in_department IS null )
 				) inn
 				ORDER BY inn.created_at DESC
 				OFFSET (in_page * in_limit) LIMIT in_limit
@@ -207,7 +207,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -223,9 +223,9 @@ BEGIN
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
-					AND psr.status_2 = true
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
+					AND psr.status_t2 = true
+					AND ( branch.cd = in_branch OR in_branch IS null )
+					AND ( dep.cd = in_department OR in_department IS null )
 					ORDER BY psr."createdAt" 
 				) inn
 				ORDER BY inn.created_at DESC
@@ -260,7 +260,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -280,9 +280,9 @@ BEGIN
 					EXTRACT (YEAR FROM psr."createdAt") = in_year
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
-					AND psr.status_2 = true
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
+					AND psr.status_t2 = true
+					AND ( branch.cd = in_branch OR in_branch IS null )
+					AND ( dep.cd = in_department OR in_department IS null )
 					ORDER BY psr."createdAt" 
 				) inn
 				ORDER BY inn.created_at DESC
@@ -316,7 +316,7 @@ BEGIN
 						row_number() OVER (ORDER BY psr."createdAt" DESC) AS rn,
 						CAST(COUNT(*) OVER() AS INTEGER) AS totalrecords,
 						psr.id,
-						CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
+						CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(psr.psr_no AS VARCHAR) AS VARCHAR) AS psr_no,
 						psr."createdAt" AS created_at,
 						myuser.firstname AS create_user,
 						myuser2.firstname AS approve_user
@@ -333,9 +333,9 @@ BEGIN
 					AND to_date(in_date, 'YYYY-MM-DD') = psr."createdAt"
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
-					AND psr.status_2 = true
-					AND branch.cd = in_branch
-					AND dep.cd = in_department
+					AND psr.status_t2 = true
+					AND ( branch.cd = in_branch OR in_branch IS null )
+					AND ( dep.cd = in_department OR in_department IS null )
 					ORDER BY psr."createdAt" 
 				) inn
 				ORDER BY inn.created_at DESC

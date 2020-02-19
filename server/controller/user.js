@@ -141,7 +141,7 @@ exports.reset_password = function (req, res, next) {
                 id: req.user.id
             }
         }).then(user2 => {
-            if(bcrypt.compareSync(req.body.userObj._in_param_1, user2.password)) {
+            if (bcrypt.compareSync(req.body.userObj._in_param_1, user2.password)) {
                 if (req.body.userObj._in_param_2 == req.body.userObj._in_param_3) {
                     return models.Users.update({
                         password: generateHash(req.body.userObj._in_param_2)
@@ -160,10 +160,14 @@ exports.reset_password = function (req, res, next) {
                         res.status(500).send(err);
                     });
                 } else {
-                    res.send({err: "repeat wrong password"});
+                    res.send({
+                        err: "repeat wrong password"
+                    });
                 }
             } else {
-                res.send({err: "password wrong"})
+                res.send({
+                    err: "password wrong"
+                })
             }
         }).catch(err => {
             winston.error({
@@ -174,4 +178,44 @@ exports.reset_password = function (req, res, next) {
             res.status(500).send(err);
         })
     }
+}
+
+exports.getDepartmentBranch = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'user',
+        message: 'department_branch'
+    })
+
+    return new Promise((resolve, reject) => {
+        return models.Users.findOne({
+            attributes: [],
+            where: {
+                id: req.user.id
+            },
+            include: [
+                {
+                    model: models.department,
+                    required: false,
+                    as: 'department',
+                    attributes: ['cd']
+                },
+                {
+                    model: models.branch,
+                    required: false,
+                    as: 'branch',
+                    attributes: ['cd']
+                }
+            ]
+        }).then(userDetail => {
+            resolve(userDetail.dataValues)
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'department_branch',
+                message: err
+            });
+            reject(err);
+        })
+    })
 }

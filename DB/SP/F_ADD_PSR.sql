@@ -74,7 +74,7 @@ BEGIN
 	RETURN QUERY
 		SELECT 
 			inn.id,
-			CAST(dep.cd||'/'||branch.cd||'/PSR/'||CAST(inn.psr_no AS VARCHAR) AS VARCHAR) AS psr_no
+			CAST(branch.cd||'/'||dep.cd||'/PSR/'||CAST(inn.psr_no AS VARCHAR) AS VARCHAR) AS psr_no
 		FROM (
 			SELECT 
 				psr.id,

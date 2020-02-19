@@ -4,6 +4,7 @@ var winston = require('../logs/winston');
 var CONST = require('../const');
 const op = sequelize.Op;
 const db = require('../models/index');
+let users = require('./user');
 
 //WORKING
 exports.show_po_page = function (req, res, next) {
@@ -17,7 +18,7 @@ exports.show_po_page = function (req, res, next) {
     const po_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
-                // attributes: ['id', 'po_no', 'createdAt', 'po_date', 'delete_req', 'status_t1', 'status_t2'],
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -52,6 +53,18 @@ exports.show_po_page = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department2',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch2',
+                        attributes: []
                     }
                 ]
             }).then(po => {
@@ -97,6 +110,7 @@ exports.show_po_page = function (req, res, next) {
             })
             res.status(500).send(err);
         })
+
 }
 
 exports.show_own_po_page = function (req, res, next) {
@@ -110,7 +124,7 @@ exports.show_own_po_page = function (req, res, next) {
     const po_own_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
-                // attributes: ['id', 'psr_no', 'createdAt', 'psr_date', 'delete_req', 'status_t1', 'status_t2'],
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -145,6 +159,18 @@ exports.show_own_po_page = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department2',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch2',
+                        attributes: []
                     }
                 ],
                 where: {
@@ -207,6 +233,7 @@ exports.find = function (req, res, next) {
     })
 
     return models.purchase_order.findOne({
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
         include: [{
                 model: models.Users,
                 required: true,
@@ -242,6 +269,18 @@ exports.find = function (req, res, next) {
                 required: false,
                 as: 'psr',
                 attributes: ['psr_no']
+            },
+            {
+                model: models.department,
+                required: true,
+                as: 'department2',
+                attributes: []
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch2',
+                attributes: []
             }
         ],
         where: {
@@ -268,10 +307,12 @@ exports.get_submits = function (req, res, next) {
         message: 'get_submits'
     })
     const limit = CONST.CONST_page_limit; //can be changed
+    let departmentBranch, userBranch, userDep;
 
     const getSubmits = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -306,6 +347,18 @@ exports.get_submits = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department2',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch2',
+                        attributes: []
                     }
                 ],
                 where: {
@@ -335,7 +388,9 @@ exports.get_submits = function (req, res, next) {
                         t3_user: {
                             [op.is]: null
                         }
-                    }]
+                    }],
+                    '$branch2.cd$': userBranch,
+                    '$department2.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(po => {
                 resolve(po)
@@ -353,6 +408,20 @@ exports.get_submits = function (req, res, next) {
     const getSubmitsTotal = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.count({
+                include: [
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department2',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch2',
+                        attributes: []
+                    }
+                ],
                 where: {
                     delete_req: false,
                     [op.or]: [{
@@ -380,7 +449,9 @@ exports.get_submits = function (req, res, next) {
                         t3_user: {
                             [op.is]: null
                         }
-                    }]
+                    }],
+                    '$branch2.cd$': userBranch,
+                    '$department2.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(total => {
                 resolve(Math.ceil(total / limit));
@@ -395,19 +466,24 @@ exports.get_submits = function (req, res, next) {
         })
     }
 
-    Promise.all([getSubmits(req), getSubmitsTotal(req)])
-        .then(result => {
-            res.status(200).send({
-                result
-            });
-        }).catch(err => {
-            winston.error({
-                level: 'error',
-                label: 'po_get_submits_promise',
-                message: err
+    departmentBranch = users.getDepartmentBranch(req, res, next).then(data => {
+        userBranch = data.branch.cd
+        userDep = data.department.cd
+    }).then(doPromise => {
+        Promise.all([getSubmits(req), getSubmitsTotal(req)])
+            .then(result => {
+                res.status(200).send({
+                    result
+                });
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'po_get_submits_promise',
+                    message: err
+                })
+                res.status(500).send(err);
             })
-            res.status(500).send(err);
-        })
+    });
 }
 
 
@@ -424,6 +500,7 @@ exports.get_pending = function (req, res, next) {
     const getPending = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
                 where: {
                     delete_req: false,
                     status_t1_1: true,
@@ -464,6 +541,18 @@ exports.get_pending = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department2',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch2',
+                        attributes: []
                     }
                 ]
             }).then(po => {
@@ -529,6 +618,7 @@ exports.get_del_req = function (req, res, next) {
     const getDel = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
                 where: {
                     delete_req: true
                 },
@@ -566,6 +656,18 @@ exports.get_del_req = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_po',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department2',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch2',
+                        attributes: []
                     }
                 ]
             }).then(po => {
@@ -641,8 +743,8 @@ exports.po_add = function (req, res, next) {
                 po_desc: (req.body.poObj._po_desc == null ? null : JSON.stringify(req.body.poObj._po_desc)),
                 cl_name: (req.body.poObj._cl_name == null ? null : req.body.poObj._cl_name),
                 cl_company: (req.body.poObj._cl_company == null ? null : req.body.poObj._cl_company),
-                department: (req.body.poObj._department == null ? null : req.body.poObj._department),
-                branch: (req.body.poObj._branch == null ? null : req.body.poObj._branch),
+                department: (req.body.poObj._department == null ? null : req.body.poObj._department.toUpperCase()),
+                branch: (req.body.poObj._branch == null ? null : req.body.poObj._branch.toUpperCase()),
                 create_user: req.user.id
             }
         }).then(po => {
@@ -667,6 +769,7 @@ exports.report = function (req, res, next) {
     })
 
     return models.purchase_order.findOne({
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', ['status_t2', 'status']],
         include: [{
                 model: models.Users,
                 required: true,
@@ -696,6 +799,18 @@ exports.report = function (req, res, next) {
                 required: false,
                 as: 'del_req_user_po',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.department,
+                required: true,
+                as: 'department2',
+                attributes: []
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch2',
+                attributes: []
             }
         ]
     }, {
@@ -982,8 +1097,8 @@ exports.search_po = function (req, res, next) {
                         d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month
                         e: (req.body.poObj._in_param_5 == null ? null : parseInt(req.body.poObj._in_param_5)), //in_year
                         f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6), //in_approve
-                        g: (req.body.psrObj._in_param_7 == null ? null : req.body.psrObj._in_param_7), //in_department
-                        h: (req.body.psrObj._in_param_8 == null ? null : req.body.psrObj._in_param_8), //in_branch
+                        g: (req.body.poObj._in_param_7 == null ? null : req.body.poObj._in_param_7.toUpperCase()), //in_department
+                        h: (req.body.poObj._in_param_8 == null ? null : req.body.poObj._in_param_8.toUpperCase()), //in_branch
                         i: parseInt(req.body.poObj._in_page) - 1,
                         j: parseInt(CONST.CONST_page_limit)
                     }

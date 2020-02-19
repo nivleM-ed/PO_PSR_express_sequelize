@@ -95,7 +95,7 @@ CREATE SEQUENCE public.psr_psr_no_seq
     CACHE 1;
 
 ALTER SEQUENCE public.psr_psr_no_seq
-    OWNER TO "nivleM";
+    OWNER TO "postgres";
 	
 ALTER TABLE public."psr"  
 ALTER COLUMN psr_no SET DEFAULT nextval('psr_psr_no_seq'::regclass);
@@ -109,7 +109,7 @@ CREATE SEQUENCE public.purchase_order_po_no_seq
     CACHE 1;
 
 ALTER SEQUENCE public.purchase_order_po_no_seq
-    OWNER TO "nivleM";
+    OWNER TO "postgres";
 	
 ALTER TABLE public."purchase_order"  
 ALTER COLUMN po_no SET DEFAULT nextval('purchase_order_po_no_seq'::regclass);

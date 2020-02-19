@@ -24,6 +24,30 @@ exports.run_db = function() {
         targetKey: 'id'
     });
 
+    //user - department
+    models.department.hasOne(models.Users, {
+        as: 'user_department',
+        foreignKey: 'department_id',
+        targetKey: 'id'
+    });
+    models.Users.belongsTo(models.department, {
+        as: 'department',
+        foreignKey: 'department_id'
+    });
+    
+
+    //user - branch
+    models.branch.hasOne(models.Users, {
+        as: 'user_branch',
+        foreignKey: 'branch_id',
+        targetKey: 'id'
+    });
+    models.Users.belongsTo(models.branch, {
+        as: 'branch',
+        foreignKey: 'branch_id'
+    });
+   
+
     //----------------------------------------------------------
 
     //po is dependant on psr
@@ -94,6 +118,29 @@ exports.run_db = function() {
         targetKey: 'id'
     });
 
+    //psr - department
+    models.department.hasOne(models.psr, {
+        as: 'psr_department',
+        foreignKey: 'department_id',
+        targetKey: 'id'
+    });
+    models.psr.belongsTo(models.department, {
+        as: 'department1',
+        foreignKey: 'department_id'
+    });
+
+    //psr - branch
+    models.branch.hasOne(models.psr, {
+        as: 'psr_branch',
+        foreignKey: 'branch_id',
+        targetKey: 'id'
+    });
+    models.psr.belongsTo(models.branch, {
+        as: 'branch1',
+        foreignKey: 'department_id'
+    });
+    
+
     //------------------------------------------------------------
 
     //user can create po (required:true -inner join)
@@ -150,5 +197,29 @@ exports.run_db = function() {
         foreignKey: 'del_user',
         targetKey: 'id'
     });
+
+    //po - department
+    models.department.hasOne(models.purchase_order, {
+        as: 'po_department',
+        foreignKey: 'department_id',
+        targetKey: 'id'
+    });
+    models.purchase_order.belongsTo(models.department, {
+        as: 'department2',
+        foreignKey: 'department_id'
+    });
+    
+    //po - branch
+    models.branch.hasOne(models.purchase_order, {
+        as: 'po_branch',
+        foreignKey: 'branch_id',
+        targetKey: 'id'
+    });
+    models.purchase_order.belongsTo(models.branch, {
+        as: 'branch2',
+        foreignKey: 'branch_id'
+    });
+    
+
 
 }
