@@ -65,35 +65,39 @@ exports.login = function (req, res, next) {
 
     verifyUserLog(req, res, next)
         .then(user => {
-            return models.Users.findOne({
-                attributes: ['id', 'username', 'firstname', 'lastname', 'email', 'contact_no', 'address_1', 'address_2', 'address_3', 'address_4', 'acct_t', 't1', 't2', 't3', 't4', 'is_admin' ],
-                include: [
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department',
-                        attributes: ['cd']
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch',
-                        attributes: ['cd']
+            if(user.is_admin) {
+                res.send(user)
+            } else {
+                return models.Users.findOne({
+                    attributes: ['id', 'username', 'firstname', 'lastname', 'email', 'contact_no', 'address_1', 'address_2', 'address_3', 'address_4', 'acct_t', 't1', 't2', 't3', 't4', 'is_admin' ],
+                    include: [
+                        {
+                            model: models.department,
+                            required: false,
+                            as: 'department',
+                            attributes: ['cd']
+                        },
+                        {
+                            model: models.branch,
+                            required: true,
+                            as: 'branch',
+                            attributes: ['cd']
+                        }
+                    ],
+                    where: {
+                        id: user.id
                     }
-                ],
-                where: {
-                    id: user.id
-                }
-            }).then(users => {
-                res.status(200).send(users)
-            }).catch(err => {
-                winston.error({
-                    level: 'error',
-                    label: 'login',
-                    message: err
+                }).then(users => {
+                    res.status(200).send(users)
+                }).catch(err => {
+                    winston.error({
+                        level: 'error',
+                        label: 'login',
+                        message: err
+                    })
+                    res.status(500).send(err);
                 })
-                res.status(500).send(err);
-            })
+            }
         }).catch(err => {
             res.status(500).send(err);
         })

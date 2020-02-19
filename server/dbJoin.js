@@ -137,7 +137,7 @@ exports.run_db = function() {
     });
     models.psr.belongsTo(models.branch, {
         as: 'branch1',
-        foreignKey: 'department_id'
+        foreignKey: 'branch_id'
     });
     
 
