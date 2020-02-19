@@ -142,19 +142,19 @@ exports.add_user = function (req, res, next) {
                         firstname: (req.body.userObj._firstname == null ? null : req.body.userObj._firstname),
                         lastname: (req.body.userObj._lastname == null ? null : req.body.userObj._lastname),
                         email: (req.body.userObj._email == null ? null : req.body.userObj._email),
-                        department: (req.body.userObj._department == null ? null : req.body.userObj._department),
-                        branch: (req.body.userObj._branch == null ? null : req.body.userObj._branch),
+                        department: (req.body.userObj._department == null ? null : req.body.userObj._department.toUpperCase()),
+                        branch: (req.body.userObj._branch == null ? null : req.body.userObj._branch.toUpperCase()),
                         contact_no: (req.body.userObj._contact_no == null ? null : req.body.userObj._contact_no),
                         address_1: (req.body.userObj._address_1 == null ? null : req.body.userObj._address_1),
                         address_2: (req.body.userObj._address_2 == null ? null : req.body.userObj._address_2),
                         address_3: (req.body.userObj._address_3 == null ? null : req.body.userObj._address_3),
                         address_4: (req.body.userObj._address_4 == null ? null : req.body.userObj._address_4),
                         t1: (req.body.userObj._t1 == null ? false : req.body.userObj._t1),
-                        t2: (req.body.userObj._t1 == null ? false : req.body.userObj._t2),
-                        t3: (req.body.userObj._t1 == null ? false : req.body.userObj._t3),
-                        t4: (req.body.userObj._t1 == null ? false : req.body.userObj._t4),
-                        acct_t: (req.body.userObj._t1 == null ? false : req.body.userObj._acct_t),
-                        is_admin: (req.body.userObj._t1 == null ? false : req.body.userObj._is_admin)
+                        t2: (req.body.userObj._t2 == null ? false : req.body.userObj._t2),
+                        t3: (req.body.userObj._t3 == null ? false : req.body.userObj._t3),
+                        t4: (req.body.userObj._t4 == null ? false : req.body.userObj._t4),
+                        acct_t: (req.body.userObj._acct_t == null ? false : req.body.userObj._acct_t),
+                        is_admin: (req.body.userObj._is_admin == null ? false : req.body.userObj._is_admin)
                     }
                 })
                 .then(result => {
