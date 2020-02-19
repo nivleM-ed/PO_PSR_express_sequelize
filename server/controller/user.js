@@ -16,6 +16,45 @@ const generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
 
+const verifyUserLog = (req, res, next) => {
+    winston.info({
+        level: 'info',
+        label: 'user',
+        message: 'verify_user_log'
+    })
+
+    return new Promise((resolve, reject) => {
+        passport.authenticate('local', {
+            session: true
+        }, function (err, user, info) {
+            if (err) {
+                res.send(err);
+            } else if (!user) {
+                res.send(info);
+            } else {
+                req.logIn(user, function (err) {
+                    if (req.app.settings.env === 'development') {
+                        winston.debug({
+                            level: 'debug',
+                            label: 'user_login',
+                            message: user.username
+                        })
+                    }
+                    if (err) {
+                        winston.error({
+                            level: 'error',
+                            label: 'user_login',
+                            message: err
+                        })
+                        reject(err)
+                    }
+                    resolve(user);
+                })
+            }
+        })(req, res, next);
+    })
+}
+
 //login
 exports.login = function (req, res, next) {
     winston.info({
@@ -23,34 +62,41 @@ exports.login = function (req, res, next) {
         label: 'user',
         message: 'login'
     })
-    passport.authenticate('local', {
-        session: true
-    }, function (err, user, info) {
-        if (err) {
-            res.send(err);
-        } else if (!user) {
-            res.send(info);
-        } else {
-            req.logIn(user, function (err) {
-                if (req.app.settings.env === 'development') {
-                    winston.debug({
-                        level: 'debug',
-                        label: 'user_login',
-                        message: user.username
-                    })
+
+    verifyUserLog(req, res, next)
+        .then(user => {
+            return models.Users.findOne({
+                attributes: ['id', 'username', 'firstname', 'lastname', 'email', 'contact_no', 'address_1', 'address_2', 'address_3', 'address_4', 'acct_t', 't1', 't2', 't3', 't4', 'is_admin' ],
+                include: [
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department',
+                        attributes: ['cd']
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch',
+                        attributes: ['cd']
+                    }
+                ],
+                where: {
+                    id: user.id
                 }
-                if (err) {
-                    winston.error({
-                        level: 'error',
-                        label: 'user_login',
-                        message: err
-                    })
-                    return res.send(err)
-                }
-                return res.send(user);
+            }).then(users => {
+                res.status(200).send(users)
+            }).catch(err => {
+                winston.error({
+                    level: 'error',
+                    label: 'login',
+                    message: err
+                })
+                res.status(500).send(err);
             })
-        }
-    })(req, res, next);
+        }).catch(err => {
+            res.status(500).send(err);
+        })
 }
 
 //check if logged in
