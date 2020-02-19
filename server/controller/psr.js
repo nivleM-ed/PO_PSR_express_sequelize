@@ -960,7 +960,6 @@ exports.report = function (req, res, next) {
                 attributes: []
             }
         ],
-    }, {
         where: {
             id: req.params.psr_id
         }
@@ -1231,7 +1230,7 @@ exports.search_psr = function (req, res, next) {
     let strSplit, in_str, in_department, in_branch;
     let strToken = false;
     let runSP;
-    if(req.body.psrObj._in_param_1) {
+    if (req.body.psrObj._in_param_1) {
         strSplit = req.body.psrObj._in_param_1.split('/');
         if (strSplit.length > 1) {
             in_str = strSplit[3]
@@ -1239,9 +1238,9 @@ exports.search_psr = function (req, res, next) {
             in_branch = strSplit[1].toUpperCase()
             strToken = true;
         }
-    } 
+    }
 
-    if(strToken) {
+    if (strToken) {
         runSP = (req, res, next) => {
             return new Promise((resolve, reject) => {
                 return db.sequelize
@@ -1290,7 +1289,7 @@ exports.search_psr = function (req, res, next) {
             })
         }
     }
-    
+
 
     return runSP(req, res, next).then(data => {
         winston.info({

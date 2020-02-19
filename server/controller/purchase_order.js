@@ -768,7 +768,7 @@ exports.report = function (req, res, next) {
     })
 
     return models.purchase_order.findOne({
-        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', 'decline_reason', 'delete_req', 'status_t1_1', 'status_t1_2', 'status_t2', 'status_decline', 'date_pending_1', 'date_pending_2', 'date_approve', 'date_decline'],
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', 'decline_reason', 'delete_req', 'status_t1_1', 'status_t1_2', 'status_t2', 'status_decline', 'date_pending_1', 'date_pending_2', 'date_approve', 'date_decline'],
         include: [{
                 model: models.Users,
                 required: true,
@@ -811,8 +811,7 @@ exports.report = function (req, res, next) {
                 as: 'branch2',
                 attributes: []
             }
-        ]
-    }, {
+        ],
         where: {
             id: req.params.po_id
         }
@@ -842,7 +841,6 @@ exports.po_req_del = function (req, res, next) {
     }, {
         where: {
             id: req.params.po_id,
-
         }
     }).then(po => {
         res.status(200).send(po);
