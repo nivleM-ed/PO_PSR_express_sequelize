@@ -124,7 +124,7 @@ exports.show_own_po_page = function (req, res, next) {
     const po_own_page = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.findAll({
-                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', 'decline_reason', 'delete_req', 'status_t1_1', 'status_t1_2', 'status_t2', 'status_decline', 'date_pending_1', 'date_pending_2', 'date_approve', 'date_decline'],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -408,8 +408,7 @@ exports.get_submits = function (req, res, next) {
     const getSubmitsTotal = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.purchase_order.count({
-                include: [
-                    {
+                include: [{
                         model: models.department,
                         required: true,
                         as: 'department2',
@@ -769,7 +768,7 @@ exports.report = function (req, res, next) {
     })
 
     return models.purchase_order.findOne({
-        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', ['status_t2', 'status']],
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', 'decline_reason', 'delete_req', 'status_t1_1', 'status_t1_2', 'status_t2', 'status_decline', 'date_pending_1', 'date_pending_2', 'date_approve', 'date_decline'],
         include: [{
                 model: models.Users,
                 required: true,
@@ -1085,30 +1084,69 @@ exports.po_stat_decline = function (req, res, next) {
 }
 
 exports.search_po = function (req, res, next) {
+    let strSplit, in_str, in_department, in_branch;
+    let strToken = false;
+    let runSP;
+    if (req.body.psrObj._in_param_1) {
+        strSplit = req.body.psrObj._in_param_1.split('/');
+        if (strSplit.length > 1) {
+            in_str = strSplit[3]
+            in_department = strSplit[0].toUpperCase()
+            in_branch = strSplit[1].toUpperCase()
+            strToken = true;
+        }
+    }
 
-    const runSP = (req, res, next) => {
-        return new Promise((resolve, reject) => {
-            return db.sequelize
-                .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h, :i, :j)', {
-                    replacements: {
-                        a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1), //in_str 
-                        b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2), //in_company,
-                        c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3), //in_date,
-                        d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month
-                        e: (req.body.poObj._in_param_5 == null ? null : parseInt(req.body.poObj._in_param_5)), //in_year
-                        f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6), //in_approve
-                        g: (req.body.poObj._in_param_7 == null ? null : req.body.poObj._in_param_7.toUpperCase()), //in_department
-                        h: (req.body.poObj._in_param_8 == null ? null : req.body.poObj._in_param_8.toUpperCase()), //in_branch
-                        i: parseInt(req.body.poObj._in_page) - 1,
-                        j: parseInt(CONST.CONST_page_limit)
-                    }
-                })
-                .then(data => {
-                    resolve(data[0]);
-                }).catch(err => {
-                    reject(err);
-                });
-        })
+    if (strToken) {
+        runSP = (req, res, next) => {
+            return new Promise((resolve, reject) => {
+                return db.sequelize
+                    .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h, :i, :j)', {
+                        replacements: {
+                            a: in_str, //in_str 
+                            b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2), //in_company,
+                            c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3), //in_date,
+                            d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month
+                            e: (req.body.poObj._in_param_5 == null ? null : parseInt(req.body.poObj._in_param_5)), //in_year
+                            f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6), //in_approve
+                            g: in_department, //in_department
+                            h: in_branch, //in_branch
+                            i: parseInt(req.body.poObj._in_page) - 1,
+                            j: parseInt(CONST.CONST_page_limit)
+                        }
+                    })
+                    .then(data => {
+                        resolve(data[0]);
+                    }).catch(err => {
+                        reject(err);
+                    });
+            })
+        }
+    } else {
+        runSP = (req, res, next) => {
+            return new Promise((resolve, reject) => {
+                return db.sequelize
+                    .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h, :i, :j)', {
+                        replacements: {
+                            a: (req.body.poObj._in_param_1 == null ? null : req.body.poObj._in_param_1), //in_str 
+                            b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2), //in_company,
+                            c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3), //in_date,
+                            d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month
+                            e: (req.body.poObj._in_param_5 == null ? null : parseInt(req.body.poObj._in_param_5)), //in_year
+                            f: (req.body.poObj._in_param_6 == null ? null : req.body.poObj._in_param_6), //in_approve
+                            g: (req.body.poObj._in_param_7 == null ? null : req.body.poObj._in_param_7.toUpperCase()), //in_department
+                            h: (req.body.poObj._in_param_8 == null ? null : req.body.poObj._in_param_8.toUpperCase()), //in_branch
+                            i: parseInt(req.body.poObj._in_page) - 1,
+                            j: parseInt(CONST.CONST_page_limit)
+                        }
+                    })
+                    .then(data => {
+                        resolve(data[0]);
+                    }).catch(err => {
+                        reject(err);
+                    });
+            })
+        }
     }
 
     return runSP(req, res, next).then(data => {
