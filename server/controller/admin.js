@@ -197,32 +197,85 @@ exports.del_user = function (req, res, next) {
 
 
 //update the tier of user 
-exports.update_tier = function (req, res, next) {
+exports.admin_update = function (req, res, next) {
     winston.info({
         level: 'info',
         label: 'Admin',
-        message: 'update_tier'
+        message: 'admin_update'
     })
-    return models.Users.update({
-        t1: req.body.userObj._t1,
-        t2: req.body.userObj._t2,
-        t3: req.body.userObj._t3,
-        t4: req.body.userObj._t4,
-        acct_t: req.body.userObj._acct_t
-    }, {
-        where: {
-            id: req.params.user_id
-        }
-    }).then(result => {
-        res.status(200).send();
-    }).catch(err => {
-        winston.error({
-            level: 'error',
-            label: 'Admin_update_tier',
-            message: err
+    return db.sequelize
+        .query('SELECT * FROM F_UPDATE_USR(:id, :firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :acct_t, :t1, :t2,:t3, :t4, :is_admin, :update_typ)', {
+            replacements: {
+                id: req.body.userObj._id,
+                firstname: req.body.userObj._firstname,
+                lastname: req.body.userObj._lastname,
+                email: req.body.userObj._email,
+                department: req.body.userObj._department,
+                branch: req.body.userObj._branch,
+                contact_no: req.body.userObj._contact_no,
+                address_1: req.body.userObj._address_1,
+                address_2: req.body.userObj._address_2,
+                address_3: req.body.userObj._address_3,
+                address_4: req.body.userObj._address_4,
+                acct_t: (req.body.userObj._acct_t == null ? false : req.body.userObj._acct_t),
+                t1: (req.body.userObj._t1 == null ? false : req.body.userObj._t1),
+                t2: (req.body.userObj._t2 == null ? false : req.body.userObj._t2),
+                t3: (req.body.userObj._t3 == null ? false : req.body.userObj._t3),
+                t4: (req.body.userObj._t4 == null ? false : req.body.userObj._t4),
+                is_admin: (req.body.userObj._is_admin == null ? false : req.body.userObj._is_admin),
+                update_typ: true
+            }
+        }).then(po => {
+            res.status(201).send(po[0][0])
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'Admin_update',
+                message: err
+            })
+            res.status(500).send(err);
         })
-        res.status(500).send(err);
+}
+
+//update the tier of user 
+exports.user_update = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'Admin',
+        message: 'user_update'
     })
+    return db.sequelize
+        .query('SELECT * FROM F_UPDATE_USR(:id, :firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :acct_t, :t1, :t2,:t3, :t4, :is_admin, :update_typ)', {
+            replacements: {
+                id: req.body.userObj._id,
+                firstname: req.body.userObj._firstname,
+                lastname: req.body.userObj._lastname,
+                email: req.body.userObj._email,
+                department: null,
+                branch: null,
+                contact_no: req.body.userObj._contact_no,
+                address_1: req.body.userObj._address_1,
+                address_2: req.body.userObj._address_2,
+                address_3: req.body.userObj._address_3,
+                address_4: req.body.userObj._address_4,
+                acct_t: false,
+                t1: false,
+                t2: false,
+                t3: false,
+                t4: false,
+                is_admin: false,
+                update_typ: false
+            }
+        }).then(po => {
+            res.status(201).send(po[0][0])
+        }).catch(err => {
+            winston.error({
+                level: 'error',
+                label: 'user_update',
+                message: err
+            })
+            res.status(500).send(err);
+        })
 }
 
 exports.random_password = function (req, res, next) {

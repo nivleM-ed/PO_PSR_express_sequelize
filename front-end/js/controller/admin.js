@@ -78,11 +78,28 @@ class admin {
     });
   }
 
-  static upd_tier(userObj) {
+  static admin_upd(userObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${userObj._id}/upd_tier`, {
+          `${url}${userObj._id}adm_upd`, {
+            userObj
+          }, {
+            withCredentials: true
+          }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static user_upd(userObj) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(
+          `${url}${userObj._id}edit`, {
             userObj
           }, {
             withCredentials: true
