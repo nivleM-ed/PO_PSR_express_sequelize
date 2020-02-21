@@ -52,6 +52,20 @@ exports.get_all_user = function (req, res, next) {
     })
     return models.Users.findAll({
         // attributes: ['username', 'firstname', 'lastname'],
+        include: [
+            {
+                model: models.department,
+                required: false,
+                as: 'department',
+                attributes: ['cd']
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch',
+                attributes: ['cd']
+            }
+        ],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -74,6 +88,20 @@ exports.get_user = function (req, res, next) {
         message: 'get_user'
     })
     return models.Users.findOne({
+        include: [
+            {
+                model: models.department,
+                required: false,
+                as: 'department',
+                attributes: ['cd']
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch',
+                attributes: ['cd']
+            }
+        ],
         where: {
             id: req.params.user_id
         }

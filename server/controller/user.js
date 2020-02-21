@@ -33,13 +33,6 @@ const verifyUserLog = (req, res, next) => {
                 res.send(info);
             } else {
                 req.logIn(user, function (err) {
-                    if (req.app.settings.env === 'development') {
-                        winston.debug({
-                            level: 'debug',
-                            label: 'user_login',
-                            message: user.username
-                        })
-                    }
                     if (err) {
                         winston.error({
                             level: 'error',
