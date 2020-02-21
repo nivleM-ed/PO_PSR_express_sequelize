@@ -55,7 +55,7 @@ class admin {
   static get_user(userObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}${userObj._id}/get`, {
+        const res = await axios.get(`${url}${userObj._id}/get`, {
           withCredentials: true
         });
         resolve(res.data);
