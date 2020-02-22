@@ -9,7 +9,7 @@ module.exports = {
     //instances: 'max', //enable cluster for multiprocessing
     //exec_mode: 'cluster',
     autorestart: true,
-    watch: false,
+    watch: true,
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development'
