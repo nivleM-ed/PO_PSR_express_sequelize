@@ -82,7 +82,7 @@ class admin {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${userObj._id}adm_upd`, {
+          `${url}${userObj._id}/adm_upd`, {
             userObj
           }, {
             withCredentials: true
@@ -99,7 +99,7 @@ class admin {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${userObj._id}edit`, {
+          `${url}${userObj._id}/edit`, {
             userObj
           }, {
             withCredentials: true

@@ -41,8 +41,8 @@ CREATE OR REPLACE FUNCTION public.F_UPDATE_USR(
     LANGUAGE 'plpgsql'
 AS $$
 DECLARE
-dep_id VARCHAR,
-branch_id VARCHAR
+dep_id VARCHAR;
+branch_id VARCHAR;
 
 BEGIN
 	SELECT dep.id INTO dep_id 
@@ -85,6 +85,7 @@ BEGIN
 			address_3 = in_address_3,
 			address_4 = in_address_4
 		WHERE public."Users".id = in_id;
+	END IF;
 	
 	RETURN QUERY
 		SELECT
