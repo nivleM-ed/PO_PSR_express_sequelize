@@ -1,6 +1,7 @@
 -- Update user
 CREATE OR REPLACE FUNCTION public.F_UPDATE_USR(
 	IN in_id VARCHAR,
+	IN in_username VARCHAR,
 	IN in_firstname VARCHAR,
 	IN in_lastname VARCHAR,
 	IN in_email VARCHAR,
@@ -21,6 +22,7 @@ CREATE OR REPLACE FUNCTION public.F_UPDATE_USR(
 )
     RETURNS TABLE(
 	id VARCHAR,
+	username VARCHAR,
 	firstname VARCHAR,
 	lastname VARCHAR,
 	email VARCHAR,
@@ -41,26 +43,27 @@ CREATE OR REPLACE FUNCTION public.F_UPDATE_USR(
     LANGUAGE 'plpgsql'
 AS $$
 DECLARE
-dep_id VARCHAR;
-branch_id VARCHAR;
+in_dep_id VARCHAR;
+in_branch_id VARCHAR;
 
 BEGIN
-	SELECT dep.id INTO dep_id 
+	SELECT dep.id INTO in_dep_id 
 	FROM public."department" AS dep 
 	WHERE dep.cd = in_department;
 
-	SELECT branch.id INTO branch_id 
+	SELECT branch.id INTO in_branch_id 
 	FROM public."branch" AS branch 
 	WHERE branch.cd = in_branch;	
 	
-	IF in_update_typ IS true THEN 
+	IF in_update_typ THEN 
 		UPDATE public."Users" SET
 			"updatedAt" = current_timestamp,
+			username = in_username,
 			firstname = in_firstname,
 			lastname = in_lastname,
 			email = in_email,
-			department_id = dep_id,
-			branch_id = branch_id,
+			department_id = in_dep_id,
+			branch_id = in_branch_id,
 			contact_no = in_contact_no,
 			address_1 = in_address_1,
 			address_2 = in_address_2,
@@ -90,11 +93,12 @@ BEGIN
 	RETURN QUERY
 		SELECT
 			users.id,
+			users.username,
 			users.firstname,
 			users.lastname,
 			users.email,
-			users.department,
-			users.branch,
+			dep.cd as department,
+			branch.cd as branch,
 			users.contact_no,
 			users.address_1,
 			users.address_2,
@@ -107,6 +111,10 @@ BEGIN
 			users.t4,
 			users.is_admin
 		FROM public."Users" AS users 
-		WHERE users.id = in_id;
+		INNER JOIN public."department" AS dep
+		ON dep.id = users.department_id
+		INNER JOIN public."branch" AS branch
+		ON branch.id = users.branch_id
+		WHERE users.id = in_id;	
 END;
 $$;

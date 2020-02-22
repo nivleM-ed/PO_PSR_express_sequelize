@@ -232,14 +232,15 @@ exports.admin_update = function (req, res, next) {
         message: 'admin_update'
     })
     return db.sequelize
-        .query('SELECT * FROM F_UPDATE_USR(:id, :firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :acct_t, :t1, :t2,:t3, :t4, :is_admin, :update_typ)', {
+        .query('SELECT * FROM F_UPDATE_USR(:id, :username ,:firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :acct_t, :t1, :t2,:t3, :t4, :is_admin, :update_typ)', {
             replacements: {
                 id: req.body.userObj._id,
+                username: req.body.userObj._username,
                 firstname: req.body.userObj._firstname,
                 lastname: req.body.userObj._lastname,
                 email: req.body.userObj._email,
-                department: req.body.userObj._department,
-                branch: req.body.userObj._branch,
+                department: (req.body.userObj._department == null ? null : req.body.userObj._department.toUpperCase()),
+                branch: (req.body.userObj._branch == null ? null : req.body.userObj._branch.toUpperCase()),
                 contact_no: req.body.userObj._contact_no,
                 address_1: req.body.userObj._address_1,
                 address_2: req.body.userObj._address_2,
@@ -273,9 +274,10 @@ exports.user_update = function (req, res, next) {
         message: 'user_update'
     })
     return db.sequelize
-        .query('SELECT * FROM F_UPDATE_USR(:id, :firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :acct_t, :t1, :t2,:t3, :t4, :is_admin, :update_typ)', {
+        .query('SELECT * FROM F_UPDATE_USR(:id, :username ,:firstname, :lastname, :email, :department, :branch, :contact_no, :address_1, :address_2, :address_3, :address_4, :acct_t, :t1, :t2,:t3, :t4, :is_admin, :update_typ)', {
             replacements: {
                 id: req.body.userObj._id,
+                username: null,
                 firstname: req.body.userObj._firstname,
                 lastname: req.body.userObj._lastname,
                 email: req.body.userObj._email,

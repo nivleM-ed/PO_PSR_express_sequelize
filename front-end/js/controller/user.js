@@ -4,12 +4,12 @@ const url = CONST.CONST_URL;
 
 class user {
 
-  static login(userObj) {
+  static login(username, password) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
           `${url}login`, {
-            userObj
+            username, password
           }, {
             withCredentials: true
           }

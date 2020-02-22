@@ -7,7 +7,7 @@ CREATE OR REPLACE FUNCTION public.F_ADD_USR(
 	IN in_email VARCHAR,
 	IN in_department VARCHAR,
 	IN in_branch VARCHAR,
-	IN in_contact_no INTEGER,
+	IN in_contact_no VARCHAR,
 	IN in_address_1 VARCHAR,
 	IN in_address_2 VARCHAR,
 	IN in_address_3 VARCHAR,

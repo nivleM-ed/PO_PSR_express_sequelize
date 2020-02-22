@@ -118,14 +118,14 @@ exports.check_logged = function (req, res, next) {
                 err: "noCookie"
             });
         }
-    } catch (error) {
+    } catch (err) {
         winston.error({
             level: 'error',
             label: 'check_logged',
-            message: error
+            message: err
         })
         res.send({
-            error: "systemErr"
+            err: "systemErr"
         })
     }
 }
