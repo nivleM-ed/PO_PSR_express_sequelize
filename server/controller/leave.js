@@ -322,7 +322,6 @@ exports.report = function (req, res, next) {
             }
         ],
         where: {
-            user_id: req.user.id,
             id: req.params.leave_id
         }
     }).then(leave => {
