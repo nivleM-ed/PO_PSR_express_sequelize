@@ -25,47 +25,67 @@ exports.show_po_page = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department2',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch2',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department2',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch2',
+                    attributes: []
+                },
+                {
+                    model: models.psr,
+                    required: true,
+                    as: 'psr',
+                    attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+                    include: [
+                        {
+                            model: models.department,
+                            required: true,
+                            as: 'department1',
+                            attributes: ['cd']
+                        },
+                        {
+                            model: models.branch,
+                            required: true,
+                            as: 'branch1',
+                            attributes: ['cd']
+                        }
+                    ]
+                }
                 ]
             }).then(po => {
                 resolve(po);
@@ -131,47 +151,67 @@ exports.show_own_po_page = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department2',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch2',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department2',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch2',
+                    attributes: []
+                },
+                {
+                    model: models.psr,
+                    required: true,
+                    as: 'psr',
+                    attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+                    include: [
+                        {
+                            model: models.department,
+                            required: true,
+                            as: 'department1',
+                            attributes: ['cd']
+                        },
+                        {
+                            model: models.branch,
+                            required: true,
+                            as: 'branch1',
+                            attributes: ['cd']
+                        }
+                    ]
+                }
                 ],
                 where: {
                     create_user: req.user.id
@@ -235,53 +275,73 @@ exports.find = function (req, res, next) {
     return models.purchase_order.findOne({
         attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('purchase_order.po_no')), 'po_no'], 'createdAt', ['status_t2', 'status']],
         include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't3_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.psr,
-                required: false,
-                as: 'psr',
-                attributes: ['psr_no']
-            },
-            {
-                model: models.department,
-                required: true,
-                as: 'department2',
-                attributes: []
-            },
-            {
-                model: models.branch,
-                required: true,
-                as: 'branch2',
-                attributes: []
-            }
+            model: models.Users,
+            required: true,
+            as: 'create_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't2_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't3_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'del_req_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.psr,
+            required: false,
+            as: 'psr',
+            attributes: ['psr_no']
+        },
+        {
+            model: models.department,
+            required: true,
+            as: 'department2',
+            attributes: []
+        },
+        {
+            model: models.branch,
+            required: true,
+            as: 'branch2',
+            attributes: []
+        },
+        {
+            model: models.psr,
+            required: true,
+            as: 'psr',
+            attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+            include: [
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: ['cd']
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: ['cd']
+                }
+            ]
+        }
         ],
         where: {
             po_no: req.params.po_no
@@ -319,56 +379,76 @@ exports.get_submits = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: false,
-                        as: 'create_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department2',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch2',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: false,
+                    as: 'create_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department2',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch2',
+                    attributes: []
+                },
+                {
+                    model: models.psr,
+                    required: true,
+                    as: 'psr',
+                    attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+                    include: [
+                        {
+                            model: models.department,
+                            required: true,
+                            as: 'department1',
+                            attributes: ['cd']
+                        },
+                        {
+                            model: models.branch,
+                            required: true,
+                            as: 'branch1',
+                            attributes: ['cd']
+                        }
+                    ]
+                }
                 ],
                 where: {
                     delete_req: false,
                     [op.or]: [{
-                            status_t1_1: false
-                        },
-                        {
-                            status_t1_2: false
-                        }
+                        status_t1_1: false
+                    },
+                    {
+                        status_t1_2: false
+                    }
                     ],
                     status_t2: false,
                     [op.or]: [{
@@ -409,26 +489,26 @@ exports.get_submits = function (req, res, next) {
         return new Promise((resolve, reject) => {
             return models.purchase_order.count({
                 include: [{
-                        model: models.department,
-                        required: true,
-                        as: 'department2',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch2',
-                        attributes: []
-                    }
+                    model: models.department,
+                    required: true,
+                    as: 'department2',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch2',
+                    attributes: []
+                }
                 ],
                 where: {
                     delete_req: false,
                     [op.or]: [{
-                            status_t1_1: false
-                        },
-                        {
-                            status_t1_2: false
-                        }
+                        status_t1_1: false
+                    },
+                    {
+                        status_t1_2: false
+                    }
                     ],
                     status_t2: false,
                     [op.or]: [{
@@ -512,47 +592,67 @@ exports.get_pending = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department2',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch2',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department2',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch2',
+                    attributes: []
+                },
+                {
+                    model: models.psr,
+                    required: true,
+                    as: 'psr',
+                    attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+                    include: [
+                        {
+                            model: models.department,
+                            required: true,
+                            as: 'department1',
+                            attributes: ['cd']
+                        },
+                        {
+                            model: models.branch,
+                            required: true,
+                            as: 'branch1',
+                            attributes: ['cd']
+                        }
+                    ]
+                }
                 ]
             }).then(po => {
                 resolve(po)
@@ -627,47 +727,67 @@ exports.get_del_req = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_po',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department2',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch2',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_po',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department2',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch2',
+                    attributes: []
+                },
+                {
+                    model: models.psr,
+                    required: true,
+                    as: 'psr',
+                    attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+                    include: [
+                        {
+                            model: models.department,
+                            required: true,
+                            as: 'department1',
+                            attributes: ['cd']
+                        },
+                        {
+                            model: models.branch,
+                            required: true,
+                            as: 'branch1',
+                            attributes: ['cd']
+                        }
+                    ]
+                }
                 ]
             }).then(po => {
                 resolve(po)
@@ -770,47 +890,67 @@ exports.report = function (req, res, next) {
     return models.purchase_order.findOne({
         attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch2.cd'), '/', models.sequelize.col('department2.cd'), '/PO/', models.sequelize.col('po_no')), 'po_no'], 'createdAt', 'po_ref', 'quotation', 'delv_due', 'ship_mode', 'cca_no', 'psr_id', 'pay_mode', 'address_1', 'address_2', 'address_3', 'address_4', 'po_desc', 'cl_name', 'cl_company', 'decline_reason', 'delete_req', 'status_t1_1', 'status_t1_2', 'status_t2', 'status_decline', 'date_pending_1', 'date_pending_2', 'date_approve', 'date_decline'],
         include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't3_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_po',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.department,
-                required: true,
-                as: 'department2',
-                attributes: []
-            },
-            {
-                model: models.branch,
-                required: true,
-                as: 'branch2',
-                attributes: []
-            }
+            model: models.Users,
+            required: true,
+            as: 'create_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't2_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't3_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'del_req_user_po',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.department,
+            required: true,
+            as: 'department2',
+            attributes: []
+        },
+        {
+            model: models.branch,
+            required: true,
+            as: 'branch2',
+            attributes: []
+        },
+        {
+            model: models.psr,
+            required: true,
+            as: 'psr',
+            attributes: ['psr_no', [models.sequelize.fn('CONCAT', models.sequelize.col('psr->branch1.cd'), '/', models.sequelize.col('psr->department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'no']],
+            include: [
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: ['cd']
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: ['cd']
+                }
+            ]
+        }
         ],
         where: {
             id: req.params.po_id
