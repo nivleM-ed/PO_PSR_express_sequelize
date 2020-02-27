@@ -66,6 +66,39 @@ class user {
       }
     });
   }
+
+  static find_user(userObj) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.post(
+          `${url}/search_user`,
+          {
+            userObj
+            //username - in_param_1
+          },
+          { withCredentials: true }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static get_all_user() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(
+          `${url}/get_all_user`,
+          { withCredentials: true }
+        );
+        resolve(res.data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
 }
 
 

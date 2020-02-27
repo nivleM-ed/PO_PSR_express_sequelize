@@ -36,6 +36,12 @@ exports.show_leave_page = function (req, res, next) {
                         required: false,
                         as: 'approver_leave',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'replace_user',
+                        attributes: ['username', 'firstname', 'lastname']
                     }
                 ],
                 where: {
@@ -123,6 +129,12 @@ exports.show_own_leave = function (req, res, next) {
                         required: false,
                         as: 'approver_leave',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'replace_user',
+                        attributes: ['username', 'firstname', 'lastname']
                     }
                 ],
                 where: {
@@ -199,6 +211,12 @@ exports.show_pending_leave = function (req, res, next) {
                         model: models.Users,
                         required: false,
                         as: 'approver_leave',
+                        attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.Users,
+                        required: false,
+                        as: 'replace_user',
                         attributes: ['username', 'firstname', 'lastname']
                     }
                 ]
@@ -278,6 +296,12 @@ exports.show_all_leave = function (req, res, next) {
                 required: false,
                 as: 'approver_leave',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'replace_user',
+                attributes: ['username', 'firstname', 'lastname']
             }
         ],
         where: {
@@ -319,6 +343,12 @@ exports.report = function (req, res, next) {
                 required: false,
                 as: 'approver_leave',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.Users,
+                required: false,
+                as: 'replace_user',
+                attributes: ['username', 'firstname', 'lastname']
             }
         ],
         where: {
@@ -346,7 +376,9 @@ exports.add_leave = function (req, res, next) {
         user_id: req.user.id,
         date_from: req.body.leaveObj._date_from,
         date_to: req.body.leaveObj._date_to,
-        reason: req.body.leaveObj._reason
+        reason: req.body.leaveObj._reason,
+        emergency: req.body.leaveObj._emergency_contact,
+        replace_id: req.body.leaveObj._replace_id
     }).then(leave => {
         res.status(201).send(leave)
     }).catch(err => {

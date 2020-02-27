@@ -1227,7 +1227,7 @@ exports.search_po = function (req, res, next) {
     let runSP;
     if (req.body.poObj._in_param_1) {
         strSplit = req.body.poObj._in_param_1.split('/');
-        if (strSplit.length > 1) {
+        if (strSplit.length > 1) { 
             in_str = strSplit[3]
             in_department = strSplit[0].toUpperCase()
             in_branch = strSplit[1].toUpperCase()

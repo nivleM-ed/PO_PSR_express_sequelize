@@ -58,11 +58,11 @@ exports.login = function (req, res, next) {
 
     verifyUserLog(req, res, next)
         .then(user => {
-            if(user.is_admin) {
+            if (user.is_admin) {
                 res.send(user)
             } else {
                 return models.Users.findOne({
-                    attributes: ['id', 'username', 'firstname', 'lastname', 'email', 'contact_no', 'address_1', 'address_2', 'address_3', 'address_4', 'acct_t', 't1', 't2', 't3', 't4', 'is_admin' ],
+                    attributes: ['id', 'username', 'firstname', 'lastname', 'email', 'contact_no', 'address_1', 'address_2', 'address_3', 'address_4', 'acct_t', 't1', 't2', 't3', 't4', 'is_admin'],
                     include: [
                         {
                             model: models.department,
@@ -156,7 +156,7 @@ exports.search = function (req, res, next) {
         attributes: ['id', 'username', 'firstname', 'lastname'],
         where: {
             username: {
-                [op.like]: '%' + req.body.username.toLowerCase() + '%'
+                [op.like]: '%' + req.body.userObj._in_param_1.toLowerCase() + '%'
             }
         }
     }).then(users => {
@@ -165,6 +165,33 @@ exports.search = function (req, res, next) {
         winston.error({
             level: 'error',
             label: 'user_search',
+            message: err
+        })
+        res.status(500).send(err);
+    })
+}
+
+//search
+exports.get_all_username = function (req, res, next) {
+    winston.info({
+        level: 'info',
+        label: 'user',
+        message: 'get_all_username'
+    })
+
+    return models.Users.findAll({
+        attributes: ['id', 'username'],
+        where: {
+            is_admin: {
+                [op.not]: true
+            }
+        }
+    }).then(users => {
+        res.status(200).send(users);
+    }).catch(err => {
+        winston.error({
+            level: 'error',
+            label: 'get_all_username',
             message: err
         })
         res.status(500).send(err);

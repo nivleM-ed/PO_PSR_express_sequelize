@@ -24,6 +24,17 @@ exports.run_db = function() {
         targetKey: 'id'
     });
 
+    //replace username for leaves
+    models.Users.hasMany(models.leave, {
+        as: 'leave3',
+        foreignKey: 'replace_id'
+    });
+    models.leave.belongsTo(models.Users, {
+        as: 'replace_user',
+        foreignKey: 'replace_id',
+        targetKey: 'id'
+    });
+
     //user - department
     models.department.hasOne(models.Users, {
         as: 'user_department',
