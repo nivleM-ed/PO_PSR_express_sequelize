@@ -68,6 +68,7 @@ app.use(morgan('combined', { stream: winston.stream }));
 run_db();
 console.log("Update 18.02.2020 - 1652")
 console.log("NODE_ENV: " + process.env.NODE_ENV)
+console.log("DB CONN:", CONST.dbPool)
 //For production
 if (process.env.NODE_ENV === 'production') {
   //Static folder of vue.js dist

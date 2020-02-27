@@ -297,6 +297,7 @@ exports.approved_nopage = function (req, res, next) {
     })
 
     return models.psr.findAll({
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt'],
         include: [{
                 model: models.Users,
                 required: true,
@@ -326,6 +327,18 @@ exports.approved_nopage = function (req, res, next) {
                 required: false,
                 as: 'del_req_user_psr',
                 attributes: ['username', 'firstname', 'lastname']
+            },
+            {
+                model: models.department,
+                required: true,
+                as: 'department1',
+                attributes: []
+            },
+            {
+                model: models.branch,
+                required: true,
+                as: 'branch1',
+                attributes: []
             }
         ],
         where: {
@@ -359,6 +372,7 @@ exports.get_approved = function (req, res, next) {
     const getApproved = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return models.psr.findAll({
+                attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt'],
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
                 order: [
@@ -393,6 +407,18 @@ exports.get_approved = function (req, res, next) {
                         required: false,
                         as: 'del_req_user_psr',
                         attributes: ['username', 'firstname', 'lastname']
+                    },
+                    {
+                        model: models.department,
+                        required: true,
+                        as: 'department1',
+                        attributes: []
+                    },
+                    {
+                        model: models.branch,
+                        required: true,
+                        as: 'branch1',
+                        attributes: []
                     }
                 ],
                 where: {

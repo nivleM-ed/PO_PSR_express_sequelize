@@ -1,6 +1,7 @@
 {
   "development": {
     "username": "nivleM",
+    "user": "nivleM",
     "password": "password",
     "database": "po_psr",
     "host": "127.0.0.1",
@@ -12,6 +13,7 @@
   },
   "production": {
     "username": "postgres",
+    "user":"postgres",
     "password": "password",
     "database": "po_psr",
     "host": "127.0.0.1",
