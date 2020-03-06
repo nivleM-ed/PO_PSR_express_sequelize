@@ -235,7 +235,7 @@ class po {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}/search`, {
+          `${url}search`, {
             poObj
           }, {
             withCredentials: true

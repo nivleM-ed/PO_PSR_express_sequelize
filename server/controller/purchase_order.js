@@ -442,35 +442,45 @@ exports.get_submits = function (req, res, next) {
                 }
                 ],
                 where: {
-                    delete_req: false,
-                    [op.or]: [{
-                        status_t1_1: false
-                    },
-                    {
-                        status_t1_2: false
-                    }
+                    [op.and]: [
+                        {
+                            [op.or]:
+                                [{
+                                    status_t1_1: false
+                                },
+                                {
+                                    status_t1_2: false
+                                }],
+                        },
+                        {
+                            [op.or]:
+                                [{
+                                    t2_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t2_user: {
+                                        [op.is]: null
+                                    }
+                                }]
+                        },
+                        {
+                            [op.or]:
+                                [{
+                                    t3_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t3_user: {
+                                        [op.is]: null
+                                    }
+                                }]
+                        }
                     ],
+                    delete_req: false,
                     status_t2: false,
-                    [op.or]: [{
-                        t2_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t2_user: {
-                            [op.is]: null
-                        }
-                    }],
-                    [op.or]: [{
-                        t3_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t3_user: {
-                            [op.is]: null
-                        }
-                    }],
-                    '$branch2.cd$': userBranch,
-                    '$department2.cd$': userDep
+                    '$branch1.cd$': userBranch,
+                    '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(po => {
                 resolve(po)
@@ -502,35 +512,45 @@ exports.get_submits = function (req, res, next) {
                 }
                 ],
                 where: {
-                    delete_req: false,
-                    [op.or]: [{
-                        status_t1_1: false
-                    },
-                    {
-                        status_t1_2: false
-                    }
+                    [op.and]: [
+                        {
+                            [op.or]:
+                                [{
+                                    status_t1_1: false
+                                },
+                                {
+                                    status_t1_2: false
+                                }],
+                        },
+                        {
+                            [op.or]:
+                                [{
+                                    t2_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t2_user: {
+                                        [op.is]: null
+                                    }
+                                }]
+                        },
+                        {
+                            [op.or]:
+                                [{
+                                    t3_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t3_user: {
+                                        [op.is]: null
+                                    }
+                                }]
+                        }
                     ],
+                    delete_req: false,
                     status_t2: false,
-                    [op.or]: [{
-                        t2_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t2_user: {
-                            [op.is]: null
-                        }
-                    }],
-                    [op.or]: [{
-                        t3_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t3_user: {
-                            [op.is]: null
-                        }
-                    }],
-                    '$branch2.cd$': userBranch,
-                    '$department2.cd$': userDep
+                    '$branch1.cd$': userBranch,
+                    '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(total => {
                 resolve(Math.ceil(total / limit));
@@ -1227,10 +1247,10 @@ exports.search_po = function (req, res, next) {
     let runSP;
     if (req.body.poObj._in_param_1) {
         strSplit = req.body.poObj._in_param_1.split('/');
-        if (strSplit.length > 1) { 
+        if (strSplit.length > 1) {
             in_str = strSplit[3]
-            in_department = strSplit[0].toUpperCase()
-            in_branch = strSplit[1].toUpperCase()
+            in_department = strSplit[1].toUpperCase()
+            in_branch = strSplit[0].toUpperCase()
             strToken = true;
         }
     }
@@ -1241,7 +1261,7 @@ exports.search_po = function (req, res, next) {
                 return db.sequelize
                     .query('SELECT * from F_SEARCH_PO(:a, :b, :c, :d, :e, :f, :g, :h, :i, :j)', {
                         replacements: {
-                            a: in_str, //in_str 
+                            a: parseInt(in_str), //in_str 
                             b: (req.body.poObj._in_param_2 == null ? null : req.body.poObj._in_param_2), //in_company,
                             c: (req.body.poObj._in_param_3 == null ? null : req.body.poObj._in_param_3), //in_date,
                             d: (req.body.poObj._in_param_4 == null ? null : parseInt(req.body.poObj._in_param_4)), //in_month

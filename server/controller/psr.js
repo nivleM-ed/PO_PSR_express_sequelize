@@ -25,47 +25,47 @@ exports.show_psr_page = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: []
+                }
                 ]
             }).then(psr => {
                 resolve(psr);
@@ -128,47 +128,47 @@ exports.show_own_psr_page = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: []
+                }
                 ],
                 where: {
                     create_user: req.user.id
@@ -230,49 +230,49 @@ exports.find = function (req, res, next) {
     })
 
     return models.psr.findOne({
-        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status', ]],
+        attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', ['status_t2', 'status',]],
         include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't3_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.department,
-                required: true,
-                as: 'department1',
-                attributes: []
-            },
-            {
-                model: models.branch,
-                required: true,
-                as: 'branch1',
-                attributes: []
-            }
+            model: models.Users,
+            required: true,
+            as: 'create_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't2_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't3_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'del_req_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.department,
+            required: true,
+            as: 'department1',
+            attributes: []
+        },
+        {
+            model: models.branch,
+            required: true,
+            as: 'branch1',
+            attributes: []
+        }
         ],
         where: {
             psr_no: parseInt(req.params.psr_no)
@@ -299,47 +299,47 @@ exports.approved_nopage = function (req, res, next) {
     return models.psr.findAll({
         attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt'],
         include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't3_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.department,
-                required: true,
-                as: 'department1',
-                attributes: []
-            },
-            {
-                model: models.branch,
-                required: true,
-                as: 'branch1',
-                attributes: []
-            }
+            model: models.Users,
+            required: true,
+            as: 'create_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't2_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't3_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'del_req_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.department,
+            required: true,
+            as: 'department1',
+            attributes: []
+        },
+        {
+            model: models.branch,
+            required: true,
+            as: 'branch1',
+            attributes: []
+        }
         ],
         where: {
             delete_req: false,
@@ -379,47 +379,47 @@ exports.get_approved = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: []
+                }
                 ],
                 where: {
                     delete_req: false,
@@ -499,76 +499,86 @@ exports.get_submits = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: []
+                }
                 ],
                 where: {
-                    delete_req: false,
-                    [op.or]: [{
-                            status_t1_1: false
+                    [op.and]: [
+                        {
+                            [op.or]:
+                                [{
+                                    status_t1_1: false
+                                },
+                                {
+                                    status_t1_2: false
+                                }],
                         },
                         {
-                            status_t1_2: false
+                            [op.or]:
+                                [{
+                                    t2_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t2_user: {
+                                        [op.is]: null
+                                    }
+                                }]
+                        },
+                        {
+                            [op.or]:
+                                [{
+                                    t3_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t3_user: {
+                                        [op.is]: null
+                                    }
+                                }]
                         }
                     ],
+                    delete_req: false,
                     status_t2: false,
-                    [op.or]: [{
-                        t2_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t2_user: {
-                            [op.is]: null
-                        }
-                    }],
-                    [op.or]: [{
-                        t3_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t3_user: {
-                            [op.is]: null
-                        }
-                    }],
                     '$branch1.cd$': userBranch,
                     '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
@@ -589,46 +599,56 @@ exports.get_submits = function (req, res, next) {
         return new Promise((resolve, reject) => {
             return models.psr.count({
                 include: [{
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                        attributes: []
-                    }
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: []
+                }
                 ],
                 where: {
-                    delete_req: false,
-                    [op.or]: [{
-                            status_t1_1: false
+                    [op.and]: [
+                        {
+                            [op.or]:
+                                [{
+                                    status_t1_1: false
+                                },
+                                {
+                                    status_t1_2: false
+                                }],
                         },
                         {
-                            status_t1_2: false
+                            [op.or]:
+                                [{
+                                    t2_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t2_user: {
+                                        [op.is]: null
+                                    }
+                                }]
+                        },
+                        {
+                            [op.or]:
+                                [{
+                                    t3_user: {
+                                        [op.not]: req.user.id
+                                    }
+                                }, {
+                                    t3_user: {
+                                        [op.is]: null
+                                    }
+                                }]
                         }
                     ],
+                    delete_req: false,
                     status_t2: false,
-                    [op.or]: [{
-                        t2_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t2_user: {
-                            [op.is]: null
-                        }
-                    }],
-                    [op.or]: [{
-                        t3_user: {
-                            [op.not]: req.user.id
-                        }
-                    }, {
-                        t3_user: {
-                            [op.is]: null
-                        }
-                    }],
                     '$branch1.cd$': userBranch,
                     '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
@@ -692,46 +712,46 @@ exports.get_pending = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                }
                 ],
             }).then(psr => {
                 resolve(psr)
@@ -806,47 +826,47 @@ exports.get_del_req = function (req, res, next) {
                     ['createdAt', 'DESC']
                 ],
                 include: [{
-                        model: models.Users,
-                        required: true,
-                        as: 'create_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't2_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 't3_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'approver_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.Users,
-                        required: false,
-                        as: 'del_req_user_psr',
-                        attributes: ['username', 'firstname', 'lastname']
-                    },
-                    {
-                        model: models.department,
-                        required: true,
-                        as: 'department1',
-                        attributes: []
-                    },
-                    {
-                        model: models.branch,
-                        required: true,
-                        as: 'branch1',
-                        attributes: []
-                    }
+                    model: models.Users,
+                    required: true,
+                    as: 'create_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't2_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 't3_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'approver_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.Users,
+                    required: false,
+                    as: 'del_req_user_psr',
+                    attributes: ['username', 'firstname', 'lastname']
+                },
+                {
+                    model: models.department,
+                    required: true,
+                    as: 'department1',
+                    attributes: []
+                },
+                {
+                    model: models.branch,
+                    required: true,
+                    as: 'branch1',
+                    attributes: []
+                }
                 ],
             }).then(psr => {
                 resolve(psr)
@@ -944,47 +964,47 @@ exports.report = function (req, res, next) {
     return models.psr.findOne({
         attributes: ['id', [models.sequelize.fn('CONCAT', models.sequelize.col('branch1.cd'), '/', models.sequelize.col('department1.cd'), '/PSR/', models.sequelize.col('psr.psr_no')), 'psr_no'], 'createdAt', 'purchase_class', 'purchase_typ', 'purchase_just', 'cost_typ', 'date_req', 'project_title', 'vessel_code', 'delv', 'psr_desc', 'decline_reason', 'delete_req', 'status_t1_1', 'status_t1_2', 'status_t2', 'status_decline', 'date_pending_1', 'date_pending_2', 'date_approve', 'date_decline'],
         include: [{
-                model: models.Users,
-                required: true,
-                as: 'create_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't2_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 't3_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'approver_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.Users,
-                required: false,
-                as: 'del_req_user_psr',
-                attributes: ['username', 'firstname', 'lastname']
-            },
-            {
-                model: models.department,
-                required: true,
-                as: 'department1',
-                attributes: []
-            },
-            {
-                model: models.branch,
-                required: true,
-                as: 'branch1',
-                attributes: []
-            }
+            model: models.Users,
+            required: true,
+            as: 'create_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't2_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 't3_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'approver_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.Users,
+            required: false,
+            as: 'del_req_user_psr',
+            attributes: ['username', 'firstname', 'lastname']
+        },
+        {
+            model: models.department,
+            required: true,
+            as: 'department1',
+            attributes: []
+        },
+        {
+            model: models.branch,
+            required: true,
+            as: 'branch1',
+            attributes: []
+        }
         ],
         where: {
             id: req.params.psr_id
@@ -1260,8 +1280,8 @@ exports.search_psr = function (req, res, next) {
         strSplit = req.body.psrObj._in_param_1.split('/');
         if (strSplit.length > 1) {
             in_str = strSplit[3]
-            in_department = strSplit[0].toUpperCase()
-            in_branch = strSplit[1].toUpperCase()
+            in_department = strSplit[1].toUpperCase()
+            in_branch = strSplit[0].toUpperCase()
             strToken = true;
         }
     }
@@ -1272,7 +1292,7 @@ exports.search_psr = function (req, res, next) {
                 return db.sequelize
                     .query('SELECT * from F_SEARCH_PSR(:a, :b, :c, :d, :e, :f, :g, :h, :i)', {
                         replacements: {
-                            a: in_str, //in_str 
+                            a: parseInt(in_str), //in_str 
                             b: (req.body.psrObj._in_param_2 == null ? null : req.body.psrObj._in_param_2), //in_date
                             c: (req.body.psrObj._in_param_3 == null ? null : parseInt(req.body.psrObj._in_param_3)), //in_month
                             d: (req.body.psrObj._in_param_4 == null ? null : parseInt(req.body.psrObj._in_param_4)), //in_year

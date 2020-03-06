@@ -263,7 +263,7 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}/search`, {
+          `${url}search`, {
             psrObj
           }, {
             withCredentials: true
