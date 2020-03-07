@@ -1149,7 +1149,35 @@ exports.psr_stat_1 = function (req, res, next) {
             id: req.params.psr_id
         }
     }).then(exist => {
-        if (exist.status_t1_1) {
+        if (req.user.t2) {
+            if (req.user.id == exist.t2_user) {
+                res.status(200).send({
+                    err: "notAllowed"
+                });
+            } else {
+                return models.psr.update({
+                    status_t1_1: true,
+                    date_pending_1: new Date(),
+                    t2_user: req.user.id
+                }, {
+                    where: {
+                        id: req.params.psr_id,
+                        delete_req: {
+                            [op.not]: true
+                        }
+                    }
+                }).then(psr => {
+                    res.status(200).send(psr);
+                }).catch(err => {
+                    winston.error({
+                        level: 'error',
+                        label: 'psr_stat_1_2',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                });
+            }
+        } else if (req.user.t3) {
             if (req.user.id == exist.t3_user) {
                 res.status(200).send({
                     err: "notAllowed"
@@ -1178,34 +1206,67 @@ exports.psr_stat_1 = function (req, res, next) {
                 });
             }
         } else {
-            if (req.user.id == exist.t2_user) {
-                res.status(200).send({
-                    err: "notAllowed"
-                });
-            } else {
-                return models.psr.update({
-                    status_t1_1: true,
-                    date_pending_1: new Date(),
-                    t2_user: req.user.id
-                }, {
-                    where: {
-                        id: req.params.psr_id,
-                        delete_req: {
-                            [op.not]: true
-                        }
-                    }
-                }).then(psr => {
-                    res.status(200).send(psr);
-                }).catch(err => {
-                    winston.error({
-                        level: 'error',
-                        label: 'psr_stat_1_2',
-                        message: err
-                    })
-                    res.status(500).send(err);
-                });
-            }
+            res.status(200).send({
+                err: "notAllowed"
+            });
         }
+        // if (exist.status_t1_1) {
+        //     if (req.user.id == exist.t3_user) {
+        //         res.status(200).send({
+        //             err: "notAllowed"
+        //         });
+        //     } else {
+        //         return models.psr.update({
+        //             status_t1_2: true,
+        //             date_pending_2: new Date(),
+        //             t3_user: req.user.id
+        //         }, {
+        //             where: {
+        //                 id: req.params.psr_id,
+        //                 delete_req: {
+        //                     [op.not]: true
+        //                 }
+        //             }
+        //         }).then(psr => {
+        //             res.status(200).send(psr);
+        //         }).catch(err => {
+        //             winston.error({
+        //                 level: 'error',
+        //                 label: 'psr_stat_1_1',
+        //                 message: err
+        //             })
+        //             res.status(500).send(err);
+        //         });
+        //     }
+        // } else {
+        //     if (req.user.id == exist.t2_user) {
+        //         res.status(200).send({
+        //             err: "notAllowed"
+        //         });
+        //     } else {
+        //         return models.psr.update({
+        //             status_t1_1: true,
+        //             date_pending_1: new Date(),
+        //             t2_user: req.user.id
+        //         }, {
+        //             where: {
+        //                 id: req.params.psr_id,
+        //                 delete_req: {
+        //                     [op.not]: true
+        //                 }
+        //             }
+        //         }).then(psr => {
+        //             res.status(200).send(psr);
+        //         }).catch(err => {
+        //             winston.error({
+        //                 level: 'error',
+        //                 label: 'psr_stat_1_2',
+        //                 message: err
+        //             })
+        //             res.status(500).send(err);
+        //         });
+        //     }
+        // }
     }).catch(err => {
         winston.error({
             level: 'error',

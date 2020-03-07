@@ -1118,7 +1118,35 @@ exports.po_stat_1 = function (req, res, next) {
             id: req.params.po_id
         }
     }).then(exist => {
-        if (exist.status_t1_1) {
+        if (req.user.t2) {
+            if (req.user.id == exist.t2_user) {
+                res.status(200).send({
+                    err: "notAllowed"
+                });
+            } else {
+                return models.purchase_order.update({
+                    status_t1_1: true,
+                    date_pending_1: new Date(),
+                    t2_user: req.user.id
+                }, {
+                    where: {
+                        id: req.params.po_id,
+                        delete_req: {
+                            [op.not]: true
+                        }
+                    }
+                }).then(po => {
+                    res.status(200).send(po);
+                }).catch(err => {
+                    winston.error({
+                        level: 'error',
+                        label: 'po_stat_1_2',
+                        message: err
+                    })
+                    res.status(500).send(err);
+                });
+            }
+        } else if (req.user.t3) {
             if (req.user.id == exist.t3_user) {
                 res.status(200).send({
                     err: "notAllowed"
@@ -1147,34 +1175,67 @@ exports.po_stat_1 = function (req, res, next) {
                 });
             }
         } else {
-            if (req.user.id == exist.t2_user) {
-                res.status(200).send({
-                    err: "notAllowed"
-                });
-            } else {
-                return models.purchase_order.update({
-                    status_t1_1: true,
-                    date_pending_1: new Date(),
-                    t2_user: req.user.id
-                }, {
-                    where: {
-                        id: req.params.po_id,
-                        delete_req: {
-                            [op.not]: true
-                        }
-                    }
-                }).then(po => {
-                    res.status(200).send(po);
-                }).catch(err => {
-                    winston.error({
-                        level: 'error',
-                        label: 'po_stat_1_2',
-                        message: err
-                    })
-                    res.status(500).send(err);
-                });
-            }
+            res.status(200).send({
+                err: "notAllowed"
+            });
         }
+        // if (exist.status_t1_1) {
+        //     if (req.user.id == exist.t3_user) {
+        //         res.status(200).send({
+        //             err: "notAllowed"
+        //         });
+        //     } else {
+        //         return models.purchase_order.update({
+        //             status_t1_2: true,
+        //             date_pending_2: new Date(),
+        //             t3_user: req.user.id
+        //         }, {
+        //             where: {
+        //                 id: req.params.po_id,
+        //                 delete_req: {
+        //                     [op.not]: true
+        //                 }
+        //             }
+        //         }).then(po => {
+        //             res.status(200).send(po);
+        //         }).catch(err => {
+        //             winston.error({
+        //                 level: 'error',
+        //                 label: 'po_stat_1_1',
+        //                 message: err
+        //             })
+        //             res.status(500).send(err);
+        //         });
+        //     }
+        // } else {
+        //     if (req.user.id == exist.t2_user) {
+        //         res.status(200).send({
+        //             err: "notAllowed"
+        //         });
+        //     } else {
+        //         return models.purchase_order.update({
+        //             status_t1_1: true,
+        //             date_pending_1: new Date(),
+        //             t2_user: req.user.id
+        //         }, {
+        //             where: {
+        //                 id: req.params.po_id,
+        //                 delete_req: {
+        //                     [op.not]: true
+        //                 }
+        //             }
+        //         }).then(po => {
+        //             res.status(200).send(po);
+        //         }).catch(err => {
+        //             winston.error({
+        //                 level: 'error',
+        //                 label: 'po_stat_1_2',
+        //                 message: err
+        //             })
+        //             res.status(500).send(err);
+        //         });
+        //     }
+        // }
     }).catch(err => {
         winston.error({
             level: 'error',
