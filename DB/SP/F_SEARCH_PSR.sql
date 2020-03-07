@@ -168,7 +168,7 @@ BEGIN
 					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
 					AND
-					to_date(in_date, 'YYYY-MM-DD') = psr."createdAt"
+					to_char(psr."createdAt", 'YYYY-MM-DD') = in_date
 					AND ( branch.cd = in_branch OR in_branch IS null )
 					AND ( dep.cd = in_department OR in_department IS null )
 				) inn
@@ -330,7 +330,7 @@ BEGIN
 					INNER JOIN public."branch" AS branch
 					ON branch.id = psr.branch_id
 					WHERE ( psr.psr_no = in_str OR in_str IS null )
-					AND to_date(in_date, 'YYYY-MM-DD') = psr."createdAt"
+					AND to_char(psr."createdAt", 'YYYY-MM-DD') = in_date
 					AND psr.status_t1_1 = true
 					AND psr.status_t1_2 = true
 					AND psr.status_t2 = true

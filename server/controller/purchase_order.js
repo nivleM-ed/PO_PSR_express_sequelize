@@ -479,8 +479,8 @@ exports.get_submits = function (req, res, next) {
                     ],
                     delete_req: false,
                     status_t2: false,
-                    '$branch1.cd$': userBranch,
-                    '$department1.cd$': userDep
+                    '$branch2.cd$': userBranch,
+                    '$department2.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(po => {
                 resolve(po)
@@ -549,8 +549,8 @@ exports.get_submits = function (req, res, next) {
                     ],
                     delete_req: false,
                     status_t2: false,
-                    '$branch1.cd$': userBranch,
-                    '$department1.cd$': userDep
+                    '$branch2.cd$': userBranch,
+                    '$department2.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
             }).then(total => {
                 resolve(Math.ceil(total / limit));

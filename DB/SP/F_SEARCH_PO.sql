@@ -171,7 +171,7 @@ BEGIN
 					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
-					AND to_date(in_date, 'YYYY-MM-DD') = po."createdAt"
+					AND to_char(po."createdAt", 'YYYY-MM-DD') = in_date
 					AND ( branch.cd = in_branch OR in_branch IS null )
 					AND ( dep.cd = in_department OR in_department IS null )
 				) inn
@@ -334,7 +334,7 @@ BEGIN
 					ON branch.id = po.branch_id
 					WHERE ( po.po_no = in_str OR in_str IS null )
 					AND	( po.cl_company = in_company OR in_company IS null )
-					AND to_date(in_date, 'YYYY-MM-DD') = po."createdAt"
+					AND to_char(po."createdAt", 'YYYY-MM-DD') = in_date
 					AND po.status_t1_1 = true
 					AND po.status_t1_2 = true
 					AND po.status_t2 = true
