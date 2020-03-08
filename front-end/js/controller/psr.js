@@ -128,10 +128,10 @@ class psr {
       try {
         const res = await axios.post(
           `${url}add_psr`, {
-            psrObj
-          }, {
-            withCredentials: true
-          }
+          psrObj
+        }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -197,10 +197,10 @@ class psr {
       try {
         const res = await axios.post(
           `${url}${psrObj._id}/upd_psr`, {
-            psrObj
-          }, {
-            withCredentials: true
-          }
+          psrObj
+        }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -214,8 +214,8 @@ class psr {
       try {
         const res = await axios.post(
           `${url}${psrObj._id}/pending`, {
-            withCredentials: true
-          }
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -229,8 +229,8 @@ class psr {
       try {
         const res = await axios.post(
           `${url}${psrObj._id}/approve`, {
-            withCredentials: true
-          }
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -243,9 +243,9 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psrObj._id}/decline`, {
-            withCredentials: true
-          }
+          `${url}${psrObj._id}/decline`, { psrObj }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -264,10 +264,10 @@ class psr {
       try {
         const res = await axios.post(
           `${url}search`, {
-            psrObj
-          }, {
-            withCredentials: true
-          }
+          psrObj
+        }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {

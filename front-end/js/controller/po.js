@@ -100,10 +100,10 @@ class po {
       try {
         const res = await axios.post(
           `${url}add_po`, {
-            poObj
-          }, {
-            withCredentials: true
-          }
+          poObj
+        }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -169,10 +169,10 @@ class po {
       try {
         const res = await axios.post(
           `${url}${poObj._id}/upd_po`, {
-            poObj
-          }, {
-            withCredentials: true
-          }
+          poObj
+        }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -186,8 +186,8 @@ class po {
       try {
         const res = await axios.post(
           `${url}${poObj._id}/pending`, {
-            withCredentials: true
-          }
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -201,8 +201,8 @@ class po {
       try {
         const res = await axios.post(
           `${url}${poObj._id}/approve`, {
-            withCredentials: true
-          }
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -215,9 +215,9 @@ class po {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${poObj._id}/decline`, {
-            withCredentials: true
-          }
+          `${url}${poObj._id}/decline`, { poObj }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {
@@ -236,10 +236,10 @@ class po {
       try {
         const res = await axios.post(
           `${url}search`, {
-            poObj
-          }, {
-            withCredentials: true
-          }
+          poObj
+        }, {
+          withCredentials: true
+        }
         );
         resolve(res.data);
       } catch (err) {

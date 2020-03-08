@@ -477,6 +477,7 @@ exports.get_submits = function (req, res, next) {
                                 }]
                         }
                     ],
+                    status_decline: false,
                     delete_req: false,
                     status_t2: false,
                     '$branch2.cd$': userBranch,
@@ -547,6 +548,7 @@ exports.get_submits = function (req, res, next) {
                                 }]
                         }
                     ],
+                    status_decline: false,
                     delete_req: false,
                     status_t2: false,
                     '$branch2.cd$': userBranch,
@@ -604,7 +606,8 @@ exports.get_pending = function (req, res, next) {
                     delete_req: false,
                     status_t1_1: true,
                     status_t1_2: true,
-                    status_t2: false
+                    status_t2: false,
+                    status_decline: false
                 },
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
@@ -694,6 +697,7 @@ exports.get_pending = function (req, res, next) {
                     delete_req: false,
                     status_t1_1: true,
                     status_t1_2: true,
+                    status_decline: false,
                     status_t2: false
                 }
             }).then(total => {
@@ -1285,7 +1289,7 @@ exports.po_stat_decline = function (req, res, next) {
         status_decline: true,
         date_decline: new Date(),
         decline_user: req.user.id,
-        decline_reason: (req.body.psrObj._decline_reason == null ? null : req.body.psrObj._decline_reason)
+        decline_reason: (req.body.poObj._decline_reason == null ? null : req.body.poObj._decline_reason)
     }, {
         where: {
             id: req.params.po_id

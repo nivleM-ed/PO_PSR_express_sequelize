@@ -579,6 +579,7 @@ exports.get_submits = function (req, res, next) {
                     ],
                     delete_req: false,
                     status_t2: false,
+                    status_decline: false,
                     '$branch1.cd$': userBranch,
                     '$department1.cd$': userDep
                 } //t2_user_1 != req.user.id || t2_user_1 = null 
@@ -647,6 +648,7 @@ exports.get_submits = function (req, res, next) {
                                 }]
                         }
                     ],
+                    status_decline: false,
                     delete_req: false,
                     status_t2: false,
                     '$branch1.cd$': userBranch,
@@ -704,7 +706,8 @@ exports.get_pending = function (req, res, next) {
                     delete_req: false,
                     status_t1_1: true,
                     status_t1_2: true,
-                    status_t2: false
+                    status_t2: false,
+                    status_decline: false
                 },
                 limit: limit,
                 offset: (req.params.page - 1) * limit,
@@ -773,6 +776,7 @@ exports.get_pending = function (req, res, next) {
                     delete_req: false,
                     status_t1_1: true,
                     status_t1_2: true,
+                    status_decline: false,
                     status_t2: false
                 }
             }).then(total => {
