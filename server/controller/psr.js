@@ -1316,7 +1316,7 @@ exports.psr_stat_decline = function (req, res, next) {
         status_decline: true,
         date_decline: new Date(),
         decline_user: req.user.id,
-        decline_reason: req.body.psrObj._decline_reason
+        decline_reason: (req.body.psrObj._decline_reason == null ? null : req.body.psrObj._decline_reason)
     }, {
         where: {
             id: req.params.psr_id
