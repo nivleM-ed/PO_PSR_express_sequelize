@@ -143,7 +143,7 @@ class psr {
   static psr_del_req(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}req_del_psr/${psrObj._id}`, {
+        const res = await axios.post(`${url}req_del_psr/${psrObj._id}`, { psrObj }, {
           withCredentials: true
         });
         resolve(res.data);
@@ -169,7 +169,7 @@ class psr {
   static psr_decline_del(psrObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}dec_del/${psrObj._id}`, {
+        const res = await axios.post(`${url}dec_del/${psrObj._id}`, { psrObj }, {
           withCredentials: true
         });
         resolve(res.data);
@@ -213,7 +213,7 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psrObj._id}/pending`, {
+          `${url}${psrObj._id}/pending`, { psrObj }, {
           withCredentials: true
         }
         );
@@ -228,7 +228,7 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psrObj._id}/approve`, {
+          `${url}${psrObj._id}/approve`, { psrObj }, {
           withCredentials: true
         }
         );
@@ -243,9 +243,11 @@ class psr {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${psrObj._id}/decline`, { psrObj }, {
-          withCredentials: true
-        }
+          `${url}${psrObj._id}/decline`,
+          { psrObj },
+          {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {

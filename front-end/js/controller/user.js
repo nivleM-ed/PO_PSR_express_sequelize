@@ -24,7 +24,7 @@ class user {
   static check_logged() {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}check_logged`, {
+        const res = await axios.post(`${url}check_logged`, {"checked": "checked"}, {
           withCredentials: true
         });
         resolve(res.data);
@@ -37,7 +37,7 @@ class user {
   static logout() {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}logout`, {
+        const res = await axios.post(`${url}logout`, {"logout": "logout"}, {
           withCredentials: true
         });
         resolve(res.data);
@@ -47,7 +47,7 @@ class user {
     });
   }
 
-  static reset_password(id, ori_password, new_password, repeat_password) {
+  static reset_password(userObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(

@@ -111,12 +111,12 @@ class admin {
       }
     });
   }
-
+ 
   static random_password(userObj) {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${userObj}/rndpass`, {
+          `${url}${userObj._id}/rndpass`, {
             withCredentials: true
           }
         );

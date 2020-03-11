@@ -115,7 +115,7 @@ class po {
   static po_del_req(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}req_del_po/${poObj._id}`, {
+        const res = await axios.post(`${url}req_del_po/${poObj._id}`, { poObj }, {
           withCredentials: true
         });
         resolve(res.data);
@@ -141,7 +141,7 @@ class po {
   static po_decline_del(poObj) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.post(`${url}dec_del/${poObj._id}`, {
+        const res = await axios.post(`${url}dec_del/${poObj._id}`, { poObj }, {
           withCredentials: true
         });
         resolve(res.data);
@@ -185,7 +185,7 @@ class po {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${poObj._id}/pending`, {
+          `${url}${poObj._id}/pending`, { poObj }, {
           withCredentials: true
         }
         );
@@ -200,7 +200,7 @@ class po {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${poObj._id}/approve`, {
+          `${url}${poObj._id}/approve`, { poObj }, {
           withCredentials: true
         }
         );
@@ -215,9 +215,11 @@ class po {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.post(
-          `${url}${poObj._id}/decline`, { poObj }, {
-          withCredentials: true
-        }
+          `${url}${poObj._id}/decline`,
+          { poObj },
+          {
+            withCredentials: true
+          }
         );
         resolve(res.data);
       } catch (err) {
